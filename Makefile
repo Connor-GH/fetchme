@@ -5,9 +5,8 @@ clean:
 	@rm -f $(DESTDIR)$(PREFIX)/bin/fetchme-easy
 	
 
-fetchme-easy: fetchme-easy.c
-	$(CC) $(CFLAGS) -o fetchme-easy fetchme-easy.c
 
 install:
+	$(CC) $(CFLAGS) -o fetchme-easy fetchme-easy.c
 	@cp -p fetchme-easy $(DESTDIR)$(PREFIX)/bin/fetchme-easy
 	@chmod 755 $(DESTDIR)$(PREFIX)/bin/fetchme-easy
