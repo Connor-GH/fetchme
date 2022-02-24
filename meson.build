@@ -3,7 +3,7 @@ project('fetchme-easy-C', 'c',
   license : 'GPL-3.0-or-later',
   default_options : ['warning_level=3'])
 
-default_cflags = ['-Wall', '-Wpedantic']
+default_cflags = []
 
 # Dependencies
 dep_xrandr = dependency('xrandr', version: '>= 1.0')
