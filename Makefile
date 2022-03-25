@@ -1,6 +1,8 @@
 CFLAGS=-Wall -Wpedantic -lpci -lX11 -lXrandr
 CC=gcc
-$(CC) $(CFLAGS) -o fetchme-easy fetchme-easy.c
+
+build:
+	$(CC) $(CFLAGS) -o fetchme-easy fetchme-easy.c
 clean:
 	@rm -f $(DESTDIR)$(PREFIX)/bin/fetchme-easy
 	
