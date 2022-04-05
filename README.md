@@ -4,5 +4,7 @@ Rewrite of fetchme-easy in C. SImiliar to neofetch.
 
 compile with:
 ``meson fetchme-dir``
+
 ``cd fetchme-dir``
+
 ``meson compile``
