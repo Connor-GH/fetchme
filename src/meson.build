@@ -1,6 +1,6 @@
-sources = ['fetchme-easy.c']
+sources = ['fetchme.c']
 
-executable('fetchme-easy',
+executable('fetchme',
            sources,
            c_args: default_cflags,
            dependencies: [dep_pci, dep_xrandr, dep_x11],
