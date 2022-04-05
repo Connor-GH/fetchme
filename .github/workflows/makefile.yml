@@ -15,5 +15,4 @@ jobs:
     - uses: actions/checkout@v2
       
     - name: Install dependencies
-      run: meson fetchme-dir &&
-cd fetchme-dir && meson compile
+      run: meson fetchme-dir && cd fetchme-dir && meson compile
