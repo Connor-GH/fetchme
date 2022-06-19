@@ -46,9 +46,10 @@ int username_at_hostname() {
 	        int hostname_len = \
 		    (strlen(pwd->pw_name) + strlen(hostname_value));
 
-	        char line[100];
+	        char line[hostname_len+1];
 
 	        for (int i= 0; i < hostname_len+1; i++) line[i] = '~';
+            line[(hostname_len+1)] = '\0';
 
 	        printf("\033[1;36m%s\033[0m\n", line);
     }
@@ -59,17 +60,12 @@ int username_at_hostname() {
 	
 
 
-char pretty_name_value[20];
 int distro() { 
 	struct utsname buffer;
 
-	//char pretty_name[20];
-	char os_name0[20];
-	char os_name1[20];              	// temporary value
-	char os_name_fixed[10];	            //real value
+	char os_name[50];
 	
     errno = 0;
-	
     if (uname(&buffer) < 0) {
 		perror("uname");
 		exit(EXIT_FAILURE);
@@ -81,29 +77,18 @@ int distro() {
 	    printf("OS release NULL\n");
 		exit(EXIT_FAILURE);
 	}
-    fscanf(os_release, "%19s %19s", os_name0, os_name1);
-        //     ^file  ^str   ^str value saved in variable
+
+    int c;
+	while ((c = fgetc(os_release)) != '\n' && c != EOF);    // skip two lines
+	while ((c = fgetc(os_release)) != '\n' && c != EOF);
+    fscanf(os_release, "PRETTY_NAME=\"%49[^\"\n]+", os_name);// get everything 
+                                                            // that isn't a 
+                                                            // newline or quote
 	
     fclose(os_release);
-    /*
-     * currently, os_name0 looks something like:
-     * `NAME="Arch'
-     * if you're on arch linux, for example.
-     * this memmove will remove the `NAME="'
-     * and leave just the `Arch'
-     */
-	if(os_name0[0] == 'N')
-		memmove(os_name0, os_name0+6, \
-				strlen(os_name0));
-/**** TODO: fix this memset-strncpy stuff ****/	
-	memset(os_name_fixed, '\0', \
-		sizeof(os_name_fixed));
-	strncpy(os_name_fixed, os_name1, \
-		strlen(os_name_fixed) + \
-		strlen(os_name0)+1); 
+printf("\033[1;36mOS:\033[0m %s %s\n", os_name, buffer.machine);
 
-	printf("\033[1;36mOS:\033[0m %s %s %s\n", \
-	os_name0, os_name_fixed, buffer.machine);
+
 
     return EXIT_SUCCESS;
 }
