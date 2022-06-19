@@ -13,3 +13,7 @@ compile with:
 ``cd fetchme``
 
 ``meson compile``
+
+
+read the changelog
+<a href="CHANGELOG.md">here</a>
