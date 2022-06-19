@@ -6,8 +6,6 @@ project('fetchme', 'c',
 default_cflags = []
 
 # Dependencies
-dep_xrandr = dependency('xrandr', version: '>= 1.0')
-dep_x11 = dependency('x11', version: '>= 1.0')
 dep_pci = dependency('libpci')
 
 # Source directory
