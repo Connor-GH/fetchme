@@ -1,6 +1,6 @@
 # fetchme
 Rewrite of fetchme-bash in C. Similiar to neofetch.
-<img src="fetchme.png" align="right">
+<img src="fetch.png" align="right">
 
 download with:
 
