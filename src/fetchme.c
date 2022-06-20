@@ -78,15 +78,29 @@ int distro() {
 		exit(EXIT_FAILURE);
 	}
 
-    int c;
-	while ((c = fgetc(os_release)) != '\n' && c != EOF);    // skip two lines
-	while ((c = fgetc(os_release)) != '\n' && c != EOF);
-    fscanf(os_release, "PRETTY_NAME=\"%49[^\"\n]+", os_name);// get everything 
-                                                            // that isn't a 
-                                                            // newline or quote
-	
+    fscanf(os_release, "NAME=%49[^\n]+", os_name);  // get everything 
+                                                    // that isn't a 
+                                                    // newline 
     fclose(os_release);
-printf("\033[1;36mOS:\033[0m %s %s\n", os_name, buffer.machine);
+    /*
+     * remove quotation marks from
+     * os name if needed.
+     */
+    if (os_name[0] == '"') {
+        char os_temp[50];
+        sscanf(os_name, "\"%49[^\"]+", os_temp);
+    /*
+     * could be implemented better with
+     * a strncpy of os_temp into os_name 
+     * to have no else statement
+     */
+        printf("\033[1;36mOS:\033[0m %s %s\n", \
+                os_temp, buffer.machine);
+    }
+    else {
+        printf("\033[1;36mOS:\033[0m %s %s\n", \
+                os_name, buffer.machine);
+    }
 
 
 
