@@ -1,6 +1,6 @@
 # fetchme
 Rewrite of fetchme-bash in C. Similiar to neofetch.
-<img src="fetch.png" align="right">
+<img src="https://user-images.githubusercontent.com/72793802/177894933-b078fd2f-9d88-4292-a956-994a9df95aec.png" align="right">
 
 download with:
 
@@ -15,6 +15,7 @@ compile with:
 or to install it to /usr/local/bin:
 
 ``make clean bin/fetchme install``
+
 
 read the changelog
 <a href="CHANGELOG.md">here</a>
