@@ -39,9 +39,6 @@ int cpu_info() {
         TEMP = 0.;
     else {
     char line1_value[100];
-    //char line1temp[100];
-    //fgets(line1temp, sizeof(line1temp), cpu3);
-    //sscanf(line1temp, "%99s", line1_value);
     fscanf(cpu3, "%99s", line1_value);
     fclose(cpu3);
     int x2;
