@@ -8,12 +8,13 @@ download with:
 
 compile with:
 
-``meson fetchme``
-
 ``cd fetchme``
 
-``meson compile``
+``make bin/fetchme``
 
+or to install it to /usr/local/bin:
+
+``make clean bin/fetchme install``
 
 read the changelog
 <a href="CHANGELOG.md">here</a>
