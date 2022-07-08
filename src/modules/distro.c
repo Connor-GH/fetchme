@@ -5,7 +5,7 @@
 
 #include <sys/utsname.h>
 
-#include "./include/distro.h"
+#include "./include/fetchme.h"
 #include "./include/config.h"
 #include "./include/color.h"
 

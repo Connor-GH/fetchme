@@ -3,7 +3,7 @@
 #include <string.h>
 #include <pci/pci.h>
 
-#include "./include/gpu_info.h"
+#include "./include/fetchme.h"
 #include "./include/color.h"
 #include "./include/config.h"
 

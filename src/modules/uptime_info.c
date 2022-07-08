@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "./include/uptime_info.h"
+#include "./include/fetchme.h"
 #include "./include/color.h"
 #include "./include/config.h"
 

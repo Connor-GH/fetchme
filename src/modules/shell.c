@@ -2,7 +2,7 @@
 #include <unistd.h>
 #include <pwd.h>
 
-#include "./include/shell.h"
+#include "./include/fetchme.h"
 #include "./include/color.h"
 #include "./include/config.h"
 int shell() {

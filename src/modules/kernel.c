@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <errno.h>
 #include <sys/utsname.h>
-#include "./include/kernel.h"
+#include "./include/fetchme.h"
 #include "./include/color.h"
 #include "./include/config.h"
 

@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "./include/wm.h"
+#include "./include/fetchme.h"
 #include "./include/color.h"
 #include "./include/config.h"
 

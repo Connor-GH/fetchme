@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "./include/cpu_info.h"
+#include "./include/fetchme.h"
 #include "./include/config.h"
 #include "./include/color.h"
 int cpu_info() {

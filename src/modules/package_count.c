@@ -5,7 +5,7 @@
 #include <unistd.h>
 #include <sys/stat.h>
 
-#include "./include/package_count.h"
+#include "./include/fetchme.h"
 #include "./include/color.h"
 #include "./include/config.h"
 

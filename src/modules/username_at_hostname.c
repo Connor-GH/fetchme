@@ -4,7 +4,7 @@
 #include <unistd.h>
 #include <pwd.h>
 
-#include "./include/username_at_hostname.h"
+#include "./include/fetchme.h"
 #include "./include/color.h"
 #include "./include/config.h"
 

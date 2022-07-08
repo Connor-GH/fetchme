@@ -5,7 +5,7 @@
 
 #include "./include/color.h"
 #include "./include/config.h"
-#include "./include/resolution.h"
+#include "./include/fetchme.h"
 
 int resolution() {
 

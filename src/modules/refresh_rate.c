@@ -2,7 +2,7 @@
 #include <X11/Xlib.h>
 #include <X11/extensions/Xrandr.h>
 
-#include "./include/refresh_rate.h"
+#include "./include/fetchme.h"
 
 int refresh_rate() {
     Display *display = XOpenDisplay(NULL);
