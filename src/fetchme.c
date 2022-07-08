@@ -4,7 +4,7 @@
  * the current state:
  *
  * - 1:1 features with the previous 
- *   version (repo private)
+ *   version
  *
  * - bug patching needed (as always)
  * - code style rework
