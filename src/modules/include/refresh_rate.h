@@ -1,0 +1,1 @@
+int refresh_rate();
