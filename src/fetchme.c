@@ -1,18 +1,4 @@
-#include "./modules/include/username_at_hostname.h"
-#include "./modules/include/distro.h"
-#include "./modules/include/kernel.h"
-#include "./modules/include/uptime_info.h"
-#include "./modules/include/package_count.h"
-#include "./modules/include/shell.h"
-#include "./modules/include/resolution.h"
-#include "./modules/include/refresh_rate.h"
-#include "./modules/include/wm.h"
-#include "./modules/include/terminal.h"
-#include "./modules/include/cpu_info.h"
-#include "./modules/include/gpu_info.h"
-#include "./modules/include/memory_info.h"
-#include "./modules/include/disk.h"
-
+#include "./modules/include/fetchme.h"
 #include "./modules/include/config.h"
 /* 
  * the current state:
