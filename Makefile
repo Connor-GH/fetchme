@@ -1,7 +1,7 @@
 
 TOPDIR 	:=  ./src
 IVAR 	:=  -I. -I $(TOPDIR)/include/
-PREFIX	 =  /usr/local
+PREFIX	 =  /usr
 INSTALLBINDIR=${PREFIX}/bin
 
 
