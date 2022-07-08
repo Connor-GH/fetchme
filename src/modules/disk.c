@@ -30,10 +30,14 @@ int disk() {
             unit = 'T';
         }
         printf(COLOR);
-        printf("Disk:\033[0m %lu%c/%lu%c (%.0f%%)\n", \
+        printf("Disk:\033[0m %lu%c/%lu%c", \
                 (used/1024/1024/1024), \
-                unit, ((used/1024/1024/1024)+free/1024/1024/1024), unit, \
+                unit, ((used/1024/1024/1024)+free/1024/1024/1024), unit);
+#ifdef DISK_PERCENT
+        printf(" (%.0f%%)", \
               (((float)(used/1024/1024/1024.)/(float)((used/1024/1024/1024)+free/1024/1024/1024.)) * 100));
+#endif
+        printf("\n");
         }
         else {
             printf("Couldn't get file system statistics\n");
