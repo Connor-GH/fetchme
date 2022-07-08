@@ -61,7 +61,8 @@ int memory_info() {
     sscanf(reclaimable, "%d", &r);//reclaimable
 
     /* this calculation isn't perfect 
-     * but it has a delta of about 1% */
+     * but it has a delta of about 0.01% 
+     * (compared to free -h --si)*/
     float USED_RAM = (t + s - f - b - ca - r)/1000./1024.;
 
     int TOTAL_RAM = (t/1000/1000);
