@@ -31,5 +31,5 @@
 - cpu temperature working on more cpus
 - disk usage working on more than just the root partition
 - desktop environment detection (not difficult)
-- faster refresh rate detection -
+- faster refresh rate detection
 - resolution and refresh rate support for more than one display
