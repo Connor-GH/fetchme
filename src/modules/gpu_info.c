@@ -24,16 +24,35 @@ int gpu_info() {
         if (((strncmp(&namebuf[7], "GeForce", 7)) == 0) || \
                 ((strncmp(&namebuf[0], "Radeon RX", 9)) == 0)) {
 
-            for(size_t i = 0; i < strlen(namebuf)-1; i++) {
+    printf(COLOR);
+    printf("GPU:\033[0m ");
 
-                // extended ASCII "Non-breaking Space"
-                if (namebuf[i] == '[') namebuf[i] = '\255';
-            }
-            sscanf(namebuf, "%1023[^]]", namebuf);
-            printf(COLOR);
-            printf("GPU:\033[0m %s\n", namebuf);
+    /* the following 15 or so lines are simply to remove 
+     * brackets, and it's for sure not the right way to do it. */
+
+    size_t i = 0;
+    while (i < strlen(namebuf)) {
+
+        if (namebuf[i] == '[' || namebuf[i] == ']') {
+
+            namebuf[i] = namebuf[i+1];
+            i++; /*  in this case, we
+                  *  continue the loop
+                  *  but skip an iteration */
+        }
+        if (i == strlen(namebuf)-1) namebuf[i+1] = '\0';
+
+        /* this does the same thing as 
+         * printf("%c", namechar[i]);
+         * and it's personal preference */
+        putchar(namebuf[i]); 
+        i++;
+    }
+    printf("\n");
+    
         }
     }
+
     pci_cleanup(pciaccess);
     return EXIT_SUCCESS;
 }
