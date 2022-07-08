@@ -12,9 +12,9 @@ compile with:
 
 ``make bin/fetchme``
 
-or to install it to /usr/local/bin:
+or to install it to /usr/bin:
 
-``make clean bin/fetchme install``
+``sudo make clean bin/fetchme install``
 
 
 read the changelog
