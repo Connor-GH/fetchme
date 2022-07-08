@@ -18,4 +18,4 @@ or to install it to /usr/local/bin:
 
 
 read the changelog
-<a href="CHANGELOG.md">here</a>
+<a href="docs/CHANGELOG.md">here</a>
