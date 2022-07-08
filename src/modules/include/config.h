@@ -42,5 +42,6 @@
 #define CPU_CORES
 #define GPU
 #define MEMORY
-//#define MEMORY_PERCENT // does nothing until future release
+#define MEMORY_PERCENT
 #define DISK
+#define DISK_PERCENT
