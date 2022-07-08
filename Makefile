@@ -56,10 +56,6 @@ uninstall:
 	@$(rm) ${INSTALLBINDIR}/$(TARGET)
 	@echo "Exectuable removed!"
 
+# do not run cppcheck unless you are contributing.
 check:
 	cppcheck -j`nproc` --inconclusive -q --std=c99 --force --enable=warning,style,performance,portability $(SOURCES)
-
-#$(TARGET):
-#		cppcheck --force --enable=warning,style,performance,portability $(SOURCES)
-#	    $(CC) $(CFLAGS) $(LDFLAGS) $(WFLAGS) -o $(BINDIR)/$(TARGET) $(SOURCES)
-#		strip $(BINDIR)/$(TARGET)
