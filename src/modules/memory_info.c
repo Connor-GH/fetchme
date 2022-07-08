@@ -46,7 +46,7 @@ int memory_info() {
     sscanf(total, "%d", &t);      // total
 
     int f;
-    sscanf(free, "%d", &f);       // memfree
+    sscanf(free, "%d", &f);       // free
                             
     int b;
     sscanf(buffers, "%d", &b);    // buffers
@@ -60,7 +60,9 @@ int memory_info() {
     int r;
     sscanf(reclaimable, "%d", &r);//reclaimable
 
-    float USED_RAM = (t + s - f - b - ca - r)/1024./1024.;
+    /* this calculation isn't perfect 
+     * but it has a delta of about 1% */
+    float USED_RAM = (t + s - f - b - ca - r)/1000./1024.;
 
     int TOTAL_RAM = (t/1000/1000);
 
@@ -71,10 +73,15 @@ int memory_info() {
     }
     else {
         MorG = 'G';
-    }
+    } 
     printf(COLOR);
-    printf("Memory:\033[0m %.1f%c/%dG\n", \
+    printf("Memory:\033[0m %.1f%c/%dG", \
             USED_RAM, MorG, TOTAL_RAM);
+#ifdef MEMORY_PERCENT
+    printf(" (%.0f%%)", ((float) \
+    (t + s - f - b - ca - r) / (float) t) * 100);
+#endif
+    printf("\n");
 
     return EXIT_SUCCESS;
 }
