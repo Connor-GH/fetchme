@@ -37,7 +37,7 @@
 #define TERMINAL
 #define CPU
 #define CPU_THREADS
-#define CPU_TEMP // VERY EXPERIMENTAL! 
+// #define CPU_TEMP // VERY EXPERIMENTAL! 
 #define CPU_FREQUENCY
 #define CPU_CORES
 #define GPU
