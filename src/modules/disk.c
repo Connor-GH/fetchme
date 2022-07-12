@@ -5,7 +5,7 @@
 #include "./include/config.h"
 
 int disk() {
-    char *filename = "/";
+    const char *filename = "/";
 
     struct statvfs buf;
     if (!statvfs(filename, &buf)) {

@@ -1,3 +1,4 @@
+#define _POSIX_C_SOURCE 2
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -13,7 +14,7 @@
 
 int wm() {
 
-    char *supported_wm[] = {
+    const char *supported_wm[] = {
         "fluxbox", "openbox", "blackbox",
         "xfwm4", "metacity", "kwin",
         "twin", "icewm", "pekwm", 

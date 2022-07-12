@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <unistd.h>
+#include <sys/types.h>
 #include <pwd.h>
 
 #include "./include/fetchme.h"

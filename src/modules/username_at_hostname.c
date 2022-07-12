@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#include <sys/types.h>
 #include <pwd.h>
 
 #include "./include/fetchme.h"
@@ -17,7 +18,7 @@
                 exit(EXIT_FAILURE);
         }
         fscanf(host, "%99s", hostname_value);
-        //     ^file  ^str   ^str value saved in variable
+
         fclose(host);
         struct passwd *pwd;
 
@@ -34,10 +35,16 @@
             int hostname_len = \
             (strlen(pwd->pw_name) + strlen(hostname_value));
 
-            char line[hostname_len+1];
+            char line[hostname_len+1]; /* Accounts for user 'foo',
+                                        * hostname 'bar', and the '+1'
+                                        * accounts for the @ symbol.
+                                        *
+                                        * Variable length arrays are
+                                        * forbidden in ISO C90 so this
+                                        * should be changed to avoid a warning. */
 
             for (int i= 0; i < hostname_len+1; i++) line[i] = '~';
-            line[(hostname_len+1)] = '\0';
+            line[hostname_len+1] = '\0';
 
             printf(COLOR);
             printf("%s\033[0m\n", line);
