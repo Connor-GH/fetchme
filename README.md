@@ -27,7 +27,7 @@ read the changelog
 <a href="docs/CHANGELOG.md">here</a>
 
 # Dependencies:
-clang or gcc
-libx11
-libpci
-libxrandr
+- clang or gcc
+- libx11
+- libpci
+- libxrandr
