@@ -8,8 +8,22 @@ INSTALLBINDIR=${PREFIX}/bin
 TARGET 	 =  fetchme
 
 
-CC       =	gcc
-CFLAGS	 =  -std=c99 -march=native -O2 -pipe $(WFLAGS) $(WNOFLAGS) $(WGCC) $(IVAR) 
+CFLAGS	 =  -std=c99 -march=native -O2 -pipe $(WFLAGS) $(WNOFLAGS) $(IVAR)
+
+# detect if the user chose GCC or Clang
+ifeq ($(CC),gcc)
+
+	CC 		= gcc
+	CFLAGS += $(WGCC)
+	LINKER 	= gcc
+
+else ifeq ($(CC),clang)
+
+	CC = clang
+	CFLAGS += $(WCLANG)
+	LINKER 	= clang
+
+endif
 
 WGCC   = -Wlogical-op -Wcast-align=strict
 WGCC  += -fanalyzer
@@ -17,15 +31,17 @@ WGCC  += -Wsuggest-attribute=format -Wsuggest-attribute=malloc
 WGCC  += -Wsuggest-attribute=pure -Wsuggest-attribute=const
 WGCC  += -Wsuggest-attribute=noreturn -Wsuggest-attribute=cold
 
+WCLANG = -Weverything
+
 WFLAGS = -Wall -Wextra -Wpedantic \
          -Wshadow -Wvla -Wpointer-arith -Wwrite-strings -Wfloat-equal \
          -Wcast-align -Wcast-qual -Wbad-function-cast \
          -Wstrict-overflow=4 -Wunreachable-code -Wformat=2 \
-         -Wundef -Wmaybe-uninitialized -Wsign-compare 
+         -Wundef -Wuninitialized -Wsign-compare 
 WNOFLAGS= \
-		 -Wno-unused-parameter
+		 -Wno-unused-parameter \
+		 -Wno-declaration-after-statement
 
-LINKER 	 =  gcc
 LFLAGS	 =	-Wall $(IVAR) -lpci -lX11 -lXrandr -lm
 
 SRCDIR   = 	src
@@ -70,9 +86,3 @@ uninstall:
 
 check:
 	cppcheck -j`nproc` --inconclusive -q --std=c99 --force --enable=warning,style,performance,portability $(SOURCES)
-
-#$(TARGET):
-#		cppcheck --force --enable=warning,style,performance,portability $(SOURCES)
-#	    $(CC) $(CFLAGS) $(LDFLAGS) $(WFLAGS) -o $(BINDIR)/$(TARGET) $(SOURCES)
-#		strip $(BINDIR)/$(TARGET)
-
