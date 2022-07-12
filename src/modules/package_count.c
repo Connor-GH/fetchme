@@ -21,9 +21,13 @@ int package_count() {
 
     if (stat(path, &sb) == 0 && S_ISDIR(sb.st_mode)) {
     DIR *folder = opendir(path);
+        if (folder == NULL) {
+            // open other dir
+            printf("ERROR: unable to open package count directory\n");
+            return -1;
+        }
 
         if (access (path, F_OK) != -1 ) {
-            if (folder) {
                 struct dirent *res;
                 while ((res = readdir(folder))) {
                     if (strcmp(res->d_name, ".") && strcmp(res->d_name, ".." )) {
@@ -32,11 +36,6 @@ int package_count() {
                 }
 
                 closedir(folder);
-            }
-            else {
-                perror ("Could not open the directory");
-                exit(EXIT_FAILURE);
-            }
         }
    }
     else {
