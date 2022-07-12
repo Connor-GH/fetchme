@@ -10,11 +10,11 @@ compile with:
 
 ``cd fetchme``
 
-# [You have to make a choice here: do you want to compile with gcc?]
+# [Do you want to compile with gcc?]
 
 ``make CC=gcc bin/fetchme``
 
-# [Or do you want to compile with Clang?]
+# [Do you want to compile with clang?]
 
 ``make CC=clang bin/fetchme``
 
