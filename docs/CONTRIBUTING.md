@@ -31,7 +31,8 @@ Small contributions such as fixing spelling errors are fine to do in a PR as lon
   - Moving source files from one directory or package to another
 
 [//]:  # "If you find a security vulnerability, do NOT open an issue. Email <this will be added soon> instead."
-(You can open an issue currently, but this will be changed in the future.)
+# For security Vulnerabilities:
+You can open an issue currently, but this will be changed in the future.
 
 Lastly, 
 ## When filing an issue, make sure to answer these five questions:
