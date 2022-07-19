@@ -16,12 +16,14 @@ compile with:
 
 # [Do you want to compile with clang?]
 
-``make CC=clang bin/fetchme``
+``make CC=clang fetchme``
 
 or to install it to /usr/bin:
 
-``sudo make clean CC=gcc-or-clang bin/fetchme install``
+``sudo make CC=gcc-or-clang fetchme install``
 
+reinstall:
+``sudo make clean CC=gcc=or-clang fetchme install``
 
 read the changelog
 <a href="docs/CHANGELOG.md">here</a>
