@@ -4,13 +4,18 @@
  * the current state:
  *
  * - 1:1 features with the previous 
- *   version
+ *   version (repo private)
  *
  * - bug patching needed (as always)
  * - code style rework
  */
 
 int main(int argc, char** argv, char** envp) {
+    // disable line wrapping.
+    // yes, I disabled 
+    // line wrapping for
+    // something this simple.
+    printf("\033[?7l");
 #ifdef USERNAME_HOSTNAME 
     username_at_hostname(); 
 #endif
@@ -66,6 +71,8 @@ int main(int argc, char** argv, char** envp) {
 #ifdef DISK
     disk();
 #endif
+    // enable line wrapping
+    printf("\033[?7h");
 
 return 0;
 }
