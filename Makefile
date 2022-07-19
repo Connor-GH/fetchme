@@ -13,13 +13,13 @@ CFLAGS	 =  -std=c99 -march=native -O2 -pipe $(WFLAGS) $(WNOFLAGS) $(IVAR)
 # detect if the user chose GCC or Clang
 ifeq ($(CC),gcc)
 
-	CC 		= gcc
+	CC  	= gcc
 	CFLAGS += $(WGCC)
 	LINKER 	= gcc
 
 else ifeq ($(CC),clang)
 
-	CC = clang
+	CC  	= clang
 	CFLAGS += $(WCLANG)
 	LINKER 	= clang
 
@@ -30,6 +30,8 @@ WGCC  += -fanalyzer
 WGCC  += -Wsuggest-attribute=format -Wsuggest-attribute=malloc
 WGCC  += -Wsuggest-attribute=pure -Wsuggest-attribute=const
 WGCC  += -Wsuggest-attribute=noreturn -Wsuggest-attribute=cold
+WGCC  += -Wformat-security -Wstack-protector -fstack-clash-protection
+WGCC  += -fcf-protection=full -D_FORTIFY_SOURCE=2
 
 WCLANG = -Weverything
 
@@ -40,7 +42,8 @@ WFLAGS = -Wall -Wextra -Wpedantic \
          -Wundef -Wuninitialized -Wsign-compare 
 WNOFLAGS= \
 		 -Wno-unused-parameter \
-		 -Wno-declaration-after-statement
+		 -Wno-declaration-after-statement \
+		 -Wno-unknown-pragmas -Wno-vla
 
 LFLAGS	 =	-Wall $(IVAR) -lpci -lX11 -lXrandr -lm
 
@@ -54,13 +57,13 @@ OBJECTS :=  $(SOURCES:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
 rm       =  rm -rf
 
 
-$(BINDIR)/$(TARGET): $(OBJECTS)
-	@$(LINKER) $(OBJECTS) $(LFLAGS) -o $@
+$(TARGET): $(OBJECTS)
+	$(LINKER) $(OBJECTS) $(LFLAGS) -o $(BINDIR)/$@
 	@strip $(BINDIR)/$(TARGET)
 	@echo "Linking complete!"
 
 $(OBJECTS): $(OBJDIR)/%.o : $(SRCDIR)/%.c
-	@$(CC) $(CFLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) -c $< -o $@
 	@echo "Compiled "$<" successfully!"
 .PHONY: clean
 
