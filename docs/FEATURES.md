@@ -30,6 +30,6 @@
 - package count working on more distros
 - cpu temperature working on more cpus
 - disk usage working on more than just the root partition
-- desktop environment detection (not difficult)
-- faster refresh rate detection
+- desktop environment detection (not difficult, already half-implemented)
+- faster refresh rate detection (possible but methods seem difficult. Xlib is awful)
 - resolution and refresh rate support for more than one display
