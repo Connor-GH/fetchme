@@ -2,7 +2,7 @@
 
 - removed every Variable Length Array (hooray!)
 - fixed a (rather useless) format specifier "bug" in package_count.c 
-- upgraded default build optimisation to -O3
+- upgraded default build optimisation to -O2 with -flto
 - moved some debugging features to DEBUG=true instead of being default in the build.
 
 The project's code style guidelines will be posted if requested.
