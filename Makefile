@@ -7,13 +7,13 @@ INSTALLBINDIR=${PREFIX}/bin
 TARGET 	 =  fetchme
 
 
-CFLAGS	 =  -std=c99 -march=native -O3 -pipe $(WFLAGS) $(WNOFLAGS) $(IVAR)
+CFLAGS	 =  -std=c99 -march=native -O2 -flto -pipe $(WFLAGS) $(WNOFLAGS) $(IVAR)
 
 WGCC   = -Wlogical-op -Wcast-align=strict
 WGCC  += -Wsuggest-attribute=format -Wsuggest-attribute=malloc
 WGCC  += -Wsuggest-attribute=pure -Wsuggest-attribute=const
 WGCC  += -Wsuggest-attribute=noreturn -Wsuggest-attribute=cold
-WGCC  += -Wformat-security -Wstack-protector -Wno-unused-result
+WGCC  += -Wformat-security -Wstack-protector
 
 WCLANG = -Weverything
 
@@ -24,7 +24,7 @@ WFLAGS = -Wall -Wextra -Wpedantic \
          -Wundef -Wuninitialized -Wsign-compare
 WNOFLAGS=-Wno-unknown-pragmas
 
-LFLAGS	 =	-Wall $(IVAR) -lpci -lX11 -lXrandr -lm
+LFLAGS	 =	-Wall $(IVAR) -flto -lpci -lX11 -lXrandr -lm
 # detect if the user chose GCC or Clang
 ifeq ($(CC),gcc)
 
