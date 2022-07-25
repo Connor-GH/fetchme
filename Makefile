@@ -13,7 +13,7 @@ WGCC   = -Wlogical-op -Wcast-align=strict
 WGCC  += -Wsuggest-attribute=format -Wsuggest-attribute=malloc
 WGCC  += -Wsuggest-attribute=pure -Wsuggest-attribute=const
 WGCC  += -Wsuggest-attribute=noreturn -Wsuggest-attribute=cold
-WGCC  += -Wformat-security -Wstack-protector
+WGCC  += -Wformat-security -Wstack-protector -Wno-unused-result
 
 WCLANG = -Weverything
 
