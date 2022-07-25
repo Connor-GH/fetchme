@@ -35,6 +35,12 @@ read the changelog
 
 # Dependencies:
 - clang or gcc (debugging requires clang and cppcheck)
+
+[Resolution detection]
 - libx11
-- libpci
+
+[Refresh Rate detection]
 - libxrandr
+
+[GPU detection]
+- libpci
