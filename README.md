@@ -23,7 +23,7 @@ or to install it to /usr/bin:
 ``sudo make CC=gcc-or-clang fetchme install``
 
 reinstall:
-``sudo make clean CC=gcc=or-clang fetchme install``
+``sudo make clean CC=gcc-or-clang fetchme install``
 
 # debugging (or for development):
 
