@@ -1,3 +1,4 @@
+#include <stdio.h> // for those two printfs
 #include "./modules/include/fetchme.h"
 #include "./modules/include/config.h"
 /* 
@@ -10,7 +11,7 @@
  * - code style rework
  */
 
-int main(int argc, char** argv, char** envp) {
+int main(int argc __attribute__((unused)), char** argv __attribute__((unused)), char** envp) {
     // disable line wrapping.
     // yes, I disabled 
     // line wrapping for
