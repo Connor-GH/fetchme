@@ -12,6 +12,15 @@
  int username_at_hostname() {
         char hostname_value[100];
         uid_t  uid;
+        struct passwd *pwd;
+        char line[200];            /* Accounts for user 'foo',
+                                    * hostname 'bar', and the '+1'
+                                    * accounts for the @ symbol.
+                                    *
+                                    * This is fine as long as 
+                                    * the username is not 101
+                                    * bytes long. (this "fixes" a VLA) */
+
         FILE *host = fopen("/etc/hostname", "r");
         if(host == NULL) {
                 printf("No hostname found, exiting...\n");
@@ -20,10 +29,16 @@
         fscanf(host, "%99s", hostname_value);
 
         fclose(host);
-        struct passwd *pwd;
 
         if ((pwd = getpwuid(uid = geteuid())) == NULL) {
             perror("getpwuid() error");
+            exit(EXIT_FAILURE);
+        }
+
+        /* if this fails, we know that
+         * username is a sane size */
+        if (strlen(pwd->pw_name) >= 100) { 
+            perror("username too long");  
             exit(EXIT_FAILURE);
         }
         else {
@@ -32,19 +47,22 @@
             printf(COLOR);
             printf("%s\033[0m\n", hostname_value);
 
-            int hostname_len = \
-            (strlen(pwd->pw_name) + strlen(hostname_value));
 
-            char line[hostname_len+1]; /* Accounts for user 'foo',
-                                        * hostname 'bar', and the '+1'
-                                        * accounts for the @ symbol.
-                                        *
-                                        * Variable length arrays are
-                                        * forbidden in ISO C90 so this
-                                        * should be changed to avoid a warning. */
-
-            for (int i= 0; i < hostname_len+1; i++) line[i] = '~';
-            line[hostname_len+1] = '\0';
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wsign-compare"
+    /*
+     * explanation for pragma:
+     * pwd->pw_name and hostname_value have been 
+     * error checked to confirm they are under 100 bytes
+     * for the hostname, and under 101 bytes for the username.
+     * with the max of 199 bytes, it is not actually not large
+     * enough to warrant an unsigned long. strlen is declared
+     * as a `size_t', which is an unsigned long by the C standard,
+     * and thus returns one. this is no issue here.
+     */
+            for (int i= 0; i < (strlen(pwd->pw_name) + strlen(hostname_value)+1); i++) line[i] = '~';
+#pragma clang diagnostic pop
+            line[(strlen(pwd->pw_name) + strlen(hostname_value)+1)] = '\0';
 
             printf(COLOR);
             printf("%s\033[0m\n", line);

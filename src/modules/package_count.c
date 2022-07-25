@@ -17,7 +17,6 @@ int package_count() {
      */
     const char *path = "/var/lib/pacman/local";
 
-    // this is an awful amount of tabs and if statements
 
     if (stat(path, &sb) == 0 && S_ISDIR(sb.st_mode)) {
     DIR *folder = opendir(path);

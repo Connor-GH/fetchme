@@ -11,6 +11,7 @@ int gpu_info() {
     struct pci_access* pciaccess;
     struct pci_dev* dev;
     char namebuf[1024];
+    size_t i = 0;
 
     pciaccess = pci_alloc();
     pci_init(pciaccess);
@@ -21,6 +22,11 @@ int gpu_info() {
         pci_lookup_name(pciaccess, namebuf, sizeof(namebuf) - 1, \
             PCI_LOOKUP_DEVICE, dev->vendor_id, dev->device_id);
 
+        /* 
+         * This will for SURE change in the future. 
+         * It's awful that this is hardcoded but I will
+         * come up with a better solution.
+         */
         if (((strncmp(&namebuf[7], "GeForce", 7)) == 0) || \
                 ((strncmp(&namebuf[0], "Radeon RX", 9)) == 0)) {
 
@@ -30,7 +36,6 @@ int gpu_info() {
     /* the following 15 or so lines are simply to remove 
      * brackets, and it's for sure not the right way to do it. */
 
-    size_t i = 0;
     while (i < strlen(namebuf)) {
 
         if (namebuf[i] == '[' || namebuf[i] == ']') {
@@ -52,7 +57,6 @@ int gpu_info() {
     
         }
     }
-
     pci_cleanup(pciaccess);
     return EXIT_SUCCESS;
 }
