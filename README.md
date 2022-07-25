@@ -25,9 +25,10 @@ or to install it to /usr/bin:
 reinstall:
 ``sudo make clean CC=gcc=or-clang fetchme install``
 
-debugging (or for development):
-``make CC=clang DEBUG=true remove check fetchme`` (requires cppcheck and clang)
-``make CC=gcc DEBUG=true remove check fetchme`` (requires cppcheck and gcc; worse at debugging)
+# debugging (or for development):
+
+``make CC=gcc-or-clang DEBUG=true remove check fetchme`` (requires cppcheck and clang/gcc; gcc is worse at debugging)
+
 
 read the changelog
 <a href="docs/CHANGELOG.md">here</a>
