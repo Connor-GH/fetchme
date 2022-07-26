@@ -11,7 +11,6 @@ int gpu_info() {
     struct pci_access* pciaccess;
     struct pci_dev* dev;
     char namebuf[1024];
-    size_t i = 0;
 
     pciaccess = pci_alloc();
     pci_init(pciaccess);
@@ -33,27 +32,17 @@ int gpu_info() {
     printf(COLOR);
     printf("GPU:\033[0m ");
 
-    /* the following 15 or so lines are simply to remove 
-     * brackets, and it's for sure not the right way to do it. */
+    /* the following lines are simply to remove brackets, */
 
-    while (i < strlen(namebuf)) {
+            for (size_t i = 0; i < strlen(namebuf); i++) {
 
-        if (namebuf[i] == '[' || namebuf[i] == ']') {
-
-            namebuf[i] = namebuf[i+1];
-            i++; /*  in this case, we
-                  *  continue the loop
-                  *  but skip an iteration */
-        }
-        if (i == strlen(namebuf)-1) namebuf[i+1] = '\0';
-
-        /* this does the same thing as 
-         * printf("%c", namechar[i]);
-         * and it's personal preference */
-        putchar(namebuf[i]); 
-        i++;
-    }
-    printf("\n");
+                if (!(namebuf[i] == '[' || namebuf[i] == ']')) {
+                    putchar(namebuf[i]);
+                }
+            }
+    /* brackets are now removed. print the newline and exit. */
+    putchar('\n');
+    
     
         }
     }

@@ -38,7 +38,9 @@
         /* if this fails, we know that
          * username is a sane size */
         if (strlen(pwd->pw_name) >= 100) { 
-            perror("username too long");  
+            perror("Username too long.");
+            printf("Username is %lu bytes, expected less than "
+                    "or equal to 100 bytes.\n", strlen(pwd->pw_name));
             exit(EXIT_FAILURE);
         }
         else {
