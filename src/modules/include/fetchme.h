@@ -1,14 +1,17 @@
-int cpu_info();
-int disk();
-int distro();
-int gpu_info();
-int kernel();
-int memory_info();
-int package_count();
-int refresh_rate();
-int resolution();
-int shell();
+#ifndef FETCHME_H
+#define FETCHME_H
+int cpu_info(void);
+int disk(void);
+int distro(void);
+int gpu_info(void);
+int kernel(void);
+int memory_info(void);
+int package_count(void);
+int refresh_rate(void);
+int resolution(void);
+int shell(void);
 int terminal(char* const* envp);
-int uptime_info();
-int username_at_hostname();
-int wm();
+int uptime_info(void);
+int username_at_hostname(void);
+int wm(void);
+#endif
