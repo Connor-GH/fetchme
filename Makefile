@@ -17,16 +17,13 @@ WGCC  += -Wformat-security -Wstack-protector
 
 WCLANG = -Weverything
 
-WFLAGS = -Wall -Wextra -Wpedantic \
-         -Wshadow -Wvla -Wpointer-arith -Wwrite-strings -Wfloat-equal \
-         -Wcast-align -Wcast-qual -Wbad-function-cast \
-         -Wstrict-overflow=4 -Wunreachable-code -Wformat=2 \
-         -Wundef -Wuninitialized -Wsign-compare
-WNOFLAGS=-Wno-unknown-pragmas
+WFLAGS = -Wall -Wextra -Wpedantic -Wshadow -Wvla -Wpointer-arith -Wwrite-strings \
+		 -Wfloat-equal -Wcast-align -Wcast-qual -Wbad-function-cast -Wstrict-overflow=4 \
+		 -Wunreachable-code -Wformat=2 -Wundef -Wuninitialized -Wsign-compare
 
-LFLAGS	 =	-Wall $(IVAR) -flto -lpci -lX11 -lXrandr -lm
+WNOFLAGS= -Wno-unknown-pragmas
 
-STRIP = @strip $(BINDIR)/$(TARGET)
+LFLAGS  = -Wall $(IVAR) -flto -lpci -lX11 -lXrandr -lm -Wl,--strip-all
 
 # detect if the user chose GCC or Clang
 ifeq ($(CC),gcc)
@@ -38,7 +35,7 @@ ifeq ($(CC),gcc)
 ifeq ($(DEBUG),true)
 	WGCC   += -fanalyzer -fcf-protection=full -D_FORTIFY_SOURCE=2 -fstack-clash-protection
 	CFLAGS	= -std=c99 -march=native -Og -ggdb -pipe $(WFLAGS) $(WNOFLAGS) $(IVAR) $(WGCC)
-	STRIP   =
+	LFLAGS  = -Wall $(IVAR) -lpci -lX11 -lXrandr -lm
 
 endif #debug
 
@@ -49,11 +46,10 @@ else ifeq ($(CC),clang)
 	LINKER 	= clang
 
 ifeq ($(DEBUG),true)
-	LFLAGS += -fsanitize=address
 	WCLANG += -fsanitize=undefined,signed-integer-overflow,null,alignment,address,leak \
 			  -fsanitize-undefined-trap-on-error -fno-omit-frame-pointer -fstack-clash-protection
 	CFLAGS	= -std=c99 -march=native -g -gdwarf-4 -Og -pipe $(WFLAGS) $(WNOFLAGS) $(IVAR) $(WCLANG)
-	STRIP   =
+	LFLAGS  = -Wall $(IVAR) -lpci -lX11 -lXrandr -lm -fsanitize=address
 endif #debug
 
 endif #compiler
@@ -71,7 +67,6 @@ rm       =  rm -rf
 
 $(TARGET): $(OBJECTS)
 	$(LINKER) $(OBJECTS) $(LFLAGS) -o $(BINDIR)/$@
-	$(STRIP)
 	@echo "Linking complete!"
 
 $(OBJECTS): $(OBJDIR)/%.o : $(SRCDIR)/%.c
