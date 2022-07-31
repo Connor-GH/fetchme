@@ -25,6 +25,9 @@ WFLAGS = -Wall -Wextra -Wpedantic \
 WNOFLAGS=-Wno-unknown-pragmas
 
 LFLAGS	 =	-Wall $(IVAR) -flto -lpci -lX11 -lXrandr -lm
+
+STRIP = @strip $(BINDIR)/$(TARGET)
+
 # detect if the user chose GCC or Clang
 ifeq ($(CC),gcc)
 
@@ -35,6 +38,7 @@ ifeq ($(CC),gcc)
 ifeq ($(DEBUG),true)
 	WGCC   += -fanalyzer -fcf-protection=full -D_FORTIFY_SOURCE=2 -fstack-clash-protection
 	CFLAGS	= -std=c99 -march=native -Og -ggdb -pipe $(WFLAGS) $(WNOFLAGS) $(IVAR) $(WGCC)
+	STRIP   =
 
 endif #debug
 
@@ -49,6 +53,7 @@ ifeq ($(DEBUG),true)
 	WCLANG += -fsanitize=undefined,signed-integer-overflow,null,alignment,address,leak \
 			  -fsanitize-undefined-trap-on-error -fno-omit-frame-pointer -fstack-clash-protection
 	CFLAGS	= -std=c99 -march=native -g -gdwarf-4 -Og -pipe $(WFLAGS) $(WNOFLAGS) $(IVAR) $(WCLANG)
+	STRIP   =
 endif #debug
 
 endif #compiler
@@ -66,7 +71,7 @@ rm       =  rm -rf
 
 $(TARGET): $(OBJECTS)
 	$(LINKER) $(OBJECTS) $(LFLAGS) -o $(BINDIR)/$@
-	#@strip $(BINDIR)/$(TARGET)
+	$(STRIP)
 	@echo "Linking complete!"
 
 $(OBJECTS): $(OBJDIR)/%.o : $(SRCDIR)/%.c
