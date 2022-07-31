@@ -34,7 +34,7 @@ read the changelog
 <a href="docs/CHANGELOG.md">here</a>
 
 # Dependencies:
-- clang or gcc (debugging requires clang and cppcheck)
+- clang or gcc (debugging requires clang and cppcheck; optionally requires valgrind, gdb, etc)
 
 [Resolution detection]
 - libx11
