@@ -1,4 +1,5 @@
 #include <stdio.h> // for those two printfs
+#include "./modules/include/color.h"
 #include "./modules/include/fetchme.h"
 #include "./modules/include/config.h"
 /* 
@@ -16,6 +17,7 @@ int main(int argc __attribute__((unused)), char** argv __attribute__((unused)), 
     // yes, I disabled 
     // line wrapping for
     // something this simple.
+
     printf("\033[?7l");
 #ifdef USERNAME_HOSTNAME 
     username_at_hostname(); 
