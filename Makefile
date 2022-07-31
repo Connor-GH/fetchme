@@ -7,21 +7,22 @@ INSTALLBINDIR=${PREFIX}/bin
 TARGET 	 =  fetchme
 
 
-CFLAGS	 =  -std=c99 -march=native -O2 -flto -pipe $(WFLAGS) $(WNOFLAGS) $(IVAR)
 
 WGCC   = -Wlogical-op -Wcast-align=strict
 WGCC  += -Wsuggest-attribute=format -Wsuggest-attribute=malloc
 WGCC  += -Wsuggest-attribute=pure -Wsuggest-attribute=const
 WGCC  += -Wsuggest-attribute=noreturn -Wsuggest-attribute=cold
-WGCC  += -Wformat-security -Wstack-protector
+WGCC  += -Wformat-security -Warray-bounds -Wstack-protector
 
-WCLANG = -Weverything
 
 WFLAGS = -Wall -Wextra -Wpedantic -Wshadow -Wvla -Wpointer-arith -Wwrite-strings \
 		 -Wfloat-equal -Wcast-align -Wcast-qual -Wbad-function-cast -Wstrict-overflow=4 \
-		 -Wunreachable-code -Wformat=2 -Wundef -Wuninitialized -Wsign-compare
+		 -Wunreachable-code -Wformat=2 -Wundef -Wuninitialized -Wsign-compare \
+		 -Werror=format-security -Werror=array-bounds
 
 WNOFLAGS= -Wno-unknown-pragmas
+
+CFLAGS	=  -m64 -std=c99 -march=x86-64 -O2 -flto -pipe $(WFLAGS) $(WNOFLAGS) $(IVAR)
 
 LFLAGS  = -Wall $(IVAR) -flto -lpci -lX11 -lXrandr -lm -Wl,--strip-all
 
@@ -33,26 +34,40 @@ ifeq ($(CC),gcc)
 	LINKER 	= gcc
 
 ifeq ($(DEBUG),true)
-	WGCC   += -fanalyzer -fcf-protection=full -D_FORTIFY_SOURCE=2 -fstack-clash-protection
-	CFLAGS	= -std=c99 -march=native -Og -ggdb -pipe $(WFLAGS) $(WNOFLAGS) $(IVAR) $(WGCC)
-	LFLAGS  = -Wall $(IVAR) -lpci -lX11 -lXrandr -lm
+	# gcc-specific security/debug flags
+	WGCC   += -fanalyzer 
+	CFLAGS	= -ggdb $(WGCC)
+	LFLAGS  =
 
 endif #debug
 
 else ifeq ($(CC),clang)
 
 	CC  	= clang
-	CFLAGS += $(WCLANG)
+	CFLAGS += -Weverything 
 	LINKER 	= clang
+	WFLAGS += -mspeculative-load-hardening -mretpoline
 
 ifeq ($(DEBUG),true)
-	WCLANG += -fsanitize=undefined,signed-integer-overflow,null,alignment,address,leak \
-			  -fsanitize-undefined-trap-on-error -fno-omit-frame-pointer -fstack-clash-protection
-	CFLAGS	= -std=c99 -march=native -g -gdwarf-4 -Og -pipe $(WFLAGS) $(WNOFLAGS) $(IVAR) $(WCLANG)
-	LFLAGS  = -Wall $(IVAR) -lpci -lX11 -lXrandr -lm -fsanitize=address
+	# clang-specific security/debug flags
+	WFLAGS += -fsanitize=undefined,signed-integer-overflow,null,alignment,address,leak,cfi \
+			  -fsanitize-undefined-trap-on-error -ftrivial-auto-var-init=pattern \
+			  -fvisibility=hidden 
+	CFLAGS	= -gdwarf-4 -Weverything
+	LFLAGS  = -fsanitize=address
 endif #debug
 
 endif #compiler
+ifeq ($(DEBUG),true)
+	# generic security/debug flags
+	CFLAGS += -m64 -std=c99 -flto -march=x86-64 -g3 -O1 -pipe $(WFLAGS) $(WNOFLAGS) $(IVAR)
+	WFLAGS += -fomit-frame-pointer -fstack-clash-protection -D_FORTIFY_SOURCE=2 \
+			  -fcf-protection -fstack-protector-all -fexceptions -fasynchronous-unwind-tables \
+			  -Werror=format-security -D_DEBUG -fstack-check
+	LFLAGS += $(IVAR) -flto -lpci -lX11 -lXrandr -lm -fPIE -pie -Wl,-z,relro -Wl,--as-needed -Wl,-z,now \
+			  -Wl,-z,noexecstack
+endif
+
 
 SRCDIR   = 	src
 OBJDIR   = 	obj
