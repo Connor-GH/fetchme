@@ -1,13 +1,15 @@
 ## Changelog
+- added automatic color detection based on distro
+- added "CUSTOM_COLOR" and "CUSTOM_COLOR_VALUE" macros to replace the "COLOR" macro
+- removed some (harmless) compiler warnings about formatting with types that were 'size_t'
 
-- removed every Variable Length Array (hooray!)
-- fixed a (rather useless) format specifier "bug" in package_count.c 
-- upgraded default build optimisation to -O2 with -flto
-- moved some debugging features to DEBUG=true instead of being default in the build.
+# older changed
 
-The project's code style guidelines will be posted if requested.
+removed every Variable Length Array (hooray!)
+fixed a (rather useless) format specifier "bug" in package_count.c 
+upgraded default build optimisation to -O2 with -flto
+moved some debugging features to DEBUG=true instead of being default in the build.
 
-# older changes
 
 codebase moved to c99 instead of gnu99
 
@@ -16,3 +18,5 @@ These dependencies were for the display size and refresh rate modules. (You will
 
 Codebase sorting and build toolchain mostly complete. (This means getting rid of bugs and security issues, 
 whilst making the code more readable.)
+
+The project's code style guidelines will be posted if requested.
