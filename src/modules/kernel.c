@@ -13,7 +13,7 @@ int kernel() {
         perror("uname");
         exit(EXIT_FAILURE);
         }
-    printf(COLOR);
+    printf("%s", color_distro());
     printf("Kernel:\033[0m %s\n", buffer.release);
 
     return EXIT_SUCCESS;

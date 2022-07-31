@@ -11,10 +11,11 @@ int disk() {
     if (!statvfs(filename, &buf)) {
 
         unsigned long blksize, blocks, freeblks, disk_size, used, free;
+        char unit = 0;
+
         blksize = buf.f_bsize;
         blocks = buf.f_blocks;
         freeblks = buf.f_bfree;
-        int unit;
 
         disk_size = blocks * blksize;
         free = freeblks * blksize;
@@ -29,8 +30,8 @@ int disk() {
         else {
             unit = 'T';
         }
-        printf(COLOR);
-        printf("Disk:\033[0m %lu%c/%lu%c", \
+        printf("%s", color_distro());
+        printf("Disk:\033[0m %ld%c/%ld%c", \
                 (used/1024/1024/1024), \
                 unit, ((used/1024/1024/1024)+free/1024/1024/1024), unit);
 #ifdef DISK_PERCENT

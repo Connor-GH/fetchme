@@ -25,9 +25,9 @@ int terminal(char* const* envp) {
         exit(EXIT_FAILURE);
     }
     else {
-        printf(COLOR);
+        printf("%s", color_distro());
         printf("Terminal:\033[0m %s\n", terminal_emulator);
         return 0;
     }
-    return -1;
+    // anything here is unreachable
 }

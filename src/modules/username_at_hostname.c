@@ -39,14 +39,14 @@
          * username is a sane size */
         if (strlen(pwd->pw_name) >= 100) { 
             perror("Username too long.");
-            printf("Username is %lu bytes, expected less than "
+            printf("Username is %ld bytes, expected less than "
                     "or equal to 100 bytes.\n", strlen(pwd->pw_name));
             exit(EXIT_FAILURE);
         }
         else {
-            printf(COLOR);
+            printf("%s", color_distro());
             printf("%s\033[0m@", pwd->pw_name);
-            printf(COLOR);
+            printf("%s", color_distro());
             printf("%s\033[0m\n", hostname_value);
 
 
@@ -66,7 +66,7 @@
 #pragma clang diagnostic pop
             line[(strlen(pwd->pw_name) + strlen(hostname_value)+1)] = '\0';
 
-            printf(COLOR);
+            printf("%s", color_distro());
             printf("%s\033[0m\n", line);
     }
     return EXIT_SUCCESS;

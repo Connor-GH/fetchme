@@ -10,7 +10,7 @@
 #include "./include/config.h"
 
 int package_count() {
-    size_t count = 0;
+    signed long count = 0;
     struct stat sb;
     /* you can do a case statement around *path
      * if you want to get other distros' package counts
@@ -41,7 +41,7 @@ int package_count() {
         printf("The %s it cannot be opened or is not a directory\n", path);
         exit (EXIT_FAILURE);
     }
-    printf(COLOR);
-    printf("Packages:\033[0m %zu\n", count-1);
+    printf("%s", color_distro());
+    printf("Packages:\033[0m %ld\n", count-1);
     return 0;
 }

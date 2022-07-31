@@ -14,6 +14,7 @@
 
 int wm() {
 
+    char lookup[128];
     const char *supported_wm[] = {
         "fluxbox", "openbox", "blackbox",
         "xfwm4", "metacity", "kwin",
@@ -39,7 +40,6 @@ int wm() {
             printf("\033[1;31mDo you not have `ps'?\033[0m\n");
             return -1;
         }
-        char lookup[128];
 
         while (fgets(lookup, sizeof(lookup) - 1, fp) != NULL) {
 
@@ -47,7 +47,7 @@ int wm() {
 
                 if(strstr(lookup, supported_wm[i]) != NULL) {
 
-                    printf(COLOR);
+                    printf("%s", color_distro());
                     printf("WM:\033[0m %s\n", supported_wm[i]);
                     pclose(fp);
                     return 0;

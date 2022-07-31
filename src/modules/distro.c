@@ -14,13 +14,13 @@
 
     char os_name[50];
 
+    FILE *os_release = fopen("/etc/os-release", "r");
     errno = 0;
+
     if (uname(&buffer) < 0) {
         perror("uname");
         exit(EXIT_FAILURE);
     }
-
-    FILE *os_release = fopen("/etc/os-release", "r");
 
     if(os_release == NULL) {
         printf("OS release NULL\n");
@@ -36,7 +36,7 @@
      * os name if needed.
      */
         sscanf(os_name, "\"%49[^\"]+", os_name);
-        printf(COLOR);
+        printf("%s", color_distro());
         printf("OS:\033[0m %s %s\n", \
                 os_name, buffer.machine);
 

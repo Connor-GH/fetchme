@@ -29,7 +29,7 @@ int gpu_info() {
         if (((strncmp(&namebuf[7], "GeForce", 7)) == 0) || \
                 ((strncmp(&namebuf[0], "Radeon RX", 9)) == 0)) {
 
-    printf(COLOR);
+    printf("%s", color_distro());
     printf("GPU:\033[0m ");
 
     /* the following lines are simply to remove brackets, */

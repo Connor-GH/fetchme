@@ -10,16 +10,18 @@
 int resolution() {
 
     Display *d;
+    int width = 0;
+    int height = 0;
 
     if(!(d = XOpenDisplay(NULL)))
         errx(1, "cannot open display '%s'\n", XDisplayName(0));
 
-    int width  = DisplayWidth (d, DefaultScreen(d));
-    int height = DisplayHeight(d, DefaultScreen(d));
+    width  = DisplayWidth (d, DefaultScreen(d));
+    height = DisplayHeight(d, DefaultScreen(d));
 
     XCloseDisplay(d);
 
-    printf(COLOR);
+    printf("%s", color_distro());
     printf("Resolution:\033[0m %dx%d", width, height); 
 #ifdef REFRESH_RATE
     /* 
