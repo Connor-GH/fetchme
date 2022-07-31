@@ -1,13 +1,13 @@
 ## Changelog
 - added automatic color detection based on distro
-- added "CUSTOM_COLOR" and "CUSTOM_COLOR_VALUE" macros to replace the "COLOR" macro
-- removed some (harmless) compiler warnings about formatting with types that were 'size_t'
+- added ``CUSTOM_COLOR`` and ``CUSTOM_COLOR_VALUE`` macros to replace the ``COLOR`` macro
+- removed some (harmless) compiler warnings about formatting with types that were ``size_t``
 
 # older changes
 
 removed every Variable Length Array (hooray!)
 fixed a (rather useless) format specifier "bug" in package_count.c 
-upgraded default build optimisation to -O2 with -flto
+upgraded default build optimisation to ``-O2`` with ``-flto``
 moved some debugging features to DEBUG=true instead of being default in the build.
 
 
