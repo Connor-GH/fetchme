@@ -34,7 +34,7 @@ ifeq ($(CC),gcc)
 
 ifeq ($(DEBUG),true)
 	WGCC   += -fanalyzer -fcf-protection=full -D_FORTIFY_SOURCE=2 -fstack-clash-protection
-	CFLAGS	= -std=c99 -march=native -g -Og -pipe $(WFLAGS) $(WNOFLAGS) $(IVAR) $(WGCC)
+	CFLAGS	= -std=c99 -march=native -Og -ggdb -pipe $(WFLAGS) $(WNOFLAGS) $(IVAR) $(WGCC)
 
 endif #debug
 
@@ -48,7 +48,7 @@ ifeq ($(DEBUG),true)
 	LFLAGS += -fsanitize=address
 	WCLANG += -fsanitize=undefined,signed-integer-overflow,null,alignment,address,leak \
 			  -fsanitize-undefined-trap-on-error -fno-omit-frame-pointer -fstack-clash-protection
-	CFLAGS	= -std=c99 -march=native -g -Og -pipe $(WFLAGS) $(WNOFLAGS) $(IVAR) $(WCLANG)
+	CFLAGS	= -std=c99 -march=native -g -gdwarf-4 -Og -pipe $(WFLAGS) $(WNOFLAGS) $(IVAR) $(WCLANG)
 endif #debug
 
 endif #compiler
@@ -66,7 +66,7 @@ rm       =  rm -rf
 
 $(TARGET): $(OBJECTS)
 	$(LINKER) $(OBJECTS) $(LFLAGS) -o $(BINDIR)/$@
-	@strip $(BINDIR)/$(TARGET)
+	#@strip $(BINDIR)/$(TARGET)
 	@echo "Linking complete!"
 
 $(OBJECTS): $(OBJDIR)/%.o : $(SRCDIR)/%.c
