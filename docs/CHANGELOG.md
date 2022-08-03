@@ -1,9 +1,10 @@
 ## Changelog
-- added automatic color detection based on distro
-- added ``CUSTOM_COLOR`` and ``CUSTOM_COLOR_VALUE`` macros to replace the ``COLOR`` macro
-- removed some (harmless) compiler warnings about formatting with types that were ``size_t``
+- changed license to the (GPLv3-compatible) Apache License, Version 2.0.
 
 # older changes
+added automatic color detection based on distro
+added ``CUSTOM_COLOR`` and ``CUSTOM_COLOR_VALUE`` macros to replace the ``COLOR`` macro
+removed some (harmless) compiler warnings about formatting with types that were ``size_t``
 
 removed every Variable Length Array (hooray!)
 fixed a (rather useless) format specifier "bug" in package_count.c 
