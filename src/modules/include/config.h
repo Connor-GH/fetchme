@@ -28,7 +28,7 @@
 #define DISTRO
 #define KERNEL
 #define UPTIME
-#define PACKAGE
+//#define PACKAGE uncommented for compatability
 #define SHELL
 #define RESOLUTION
 /*
