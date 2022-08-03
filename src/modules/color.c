@@ -15,14 +15,15 @@ const char *color_distro() {
         exit(EXIT_FAILURE);
     }
 
-    fscanf(os_release, "NAME=\"%49[^\"\n]+", os_name);  /* get everything
+    fscanf(os_release, "NAME=\"%49[^\n]+", os_name);  /* get everything
                                                          * that isn't a
-                                                         * newline or quotes */
+                                                         * newline */
     fclose(os_release);
     /*
      * remove quotation marks from
      * os name if needed.
      */
+    sscanf(os_name, "\"%[^\"]", os_name); // get everything that isn't quotes
         /* if statement for distro name */
 #ifndef CUSTOM_COLOR
     if (strstr(os_name, "Gentoo") != NULL) COLOR = PURPLE;
