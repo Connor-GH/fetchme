@@ -29,5 +29,4 @@ int terminal(char* const* envp) {
         printf("Terminal:\033[0m %s\n", terminal_emulator);
         return 0;
     }
-    // anything here is unreachable
 }

@@ -10,35 +10,38 @@
 int gpu_info() {
     struct pci_access* pciaccess;
     struct pci_dev* dev;
-    char namebuf[1024];
+    char namebuf[128];
 
     pciaccess = pci_alloc();
     pci_init(pciaccess);
     pci_scan_bus(pciaccess);
 
     for(dev = pciaccess->devices; dev; dev = dev->next) {
-        pci_fill_info(dev, PCI_FILL_IDENT | PCI_FILL_BASES | PCI_FILL_CLASS);
-        pci_lookup_name(pciaccess, namebuf, sizeof(namebuf) - 1, \
-            PCI_LOOKUP_DEVICE, dev->vendor_id, dev->device_id);
+        pci_fill_info(dev, 
+                PCI_FILL_IDENT | PCI_FILL_BASES | PCI_FILL_CLASS);
 
-        /* 
-         * This will for SURE change in the future. 
-         * It's awful that this is hardcoded but I will
-         * come up with a better solution.
-         */
-        if (((strncmp(&namebuf[7], "GeForce", 7)) == 0) || \
-                ((strncmp(&namebuf[0], "Radeon RX", 9)) == 0)) {
+        pci_lookup_name(pciaccess, namebuf, sizeof(namebuf) - 1, 
+                PCI_LOOKUP_DEVICE, dev->vendor_id, dev->device_id);
 
-    printf("%s", color_distro());
-    printf("GPU:\033[0m ");
+        /* This is only marginally a better solution. */
+
+        if (((strstr(namebuf, "Graphics")) != NULL) /* Intel or AMD/ATI */
+                || ((strstr(namebuf, "QXL")) != NULL) /* QEMU QXL */
+                || ((strstr(namebuf, "VMware SVGA")) != NULL) /* VMware */
+                || ((strstr(namebuf, "VirtualBox Graphics Adapter")) != NULL)
+                || ((strstr(namebuf, "Radeon")) != NULL) /* AMD/ATI */
+                || ((strstr(namebuf, "Tesla")) != NULL) /* NVIDIA */
+                || ((strstr(namebuf, "Quadro")) != NULL) /* NVIDIA */
+                || ((strstr(namebuf, "GeForce")) != NULL)) { /* NVIDIA */
+
+            printf("%sGPU:\033[0m ", color_distro());
 
     /* the following lines are simply to remove brackets, */
 
             for (size_t i = 0; i < strlen(namebuf); i++) {
 
-                if (!(namebuf[i] == '[' || namebuf[i] == ']')) {
+                if (!(namebuf[i] == '[' || namebuf[i] == ']')) 
                     putchar(namebuf[i]);
-                }
             }
     /* brackets are now removed. print the newline and exit. */
     putchar('\n');
@@ -49,3 +52,4 @@ int gpu_info() {
     pci_cleanup(pciaccess);
     return EXIT_SUCCESS;
 }
+
