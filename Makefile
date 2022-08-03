@@ -81,6 +81,8 @@ OBJECTS :=  $(SOURCES:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
 rm       =  rm -rf
 
 $(TARGET):
+	mkdir obj/
+	mkdir bin/
 	$(MAKE) $(OBJECTS)
 	$(MAKE) link
 
