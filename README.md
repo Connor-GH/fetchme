@@ -12,7 +12,7 @@ compile with:
 
 # [Do you want to compile with gcc?]
 
-``make CC=gcc -j$(nproc) bin/fetchme``
+``make CC=gcc -j$(nproc) fetchme``
 
 # [Do you want to compile with clang?]
 
