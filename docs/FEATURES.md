@@ -1,7 +1,7 @@
 
 ## Current Features
 
-- color (not automatic yet, but it is customizable)
+- color (automatically chosen from distro, with a manual override if desired)
 - username@hostname
 - distro name
 - kernel
@@ -24,9 +24,7 @@
 
 ## Planned features
 
-- color controlled by distro information 
-(This might add an unplanned dependency to distro.h though)
-- ascii logo (same distro.h dependency)
+- ascii logo
 - package count working on more distros
 - cpu temperature working on more cpus
 - disk usage working on more than just the root partition
