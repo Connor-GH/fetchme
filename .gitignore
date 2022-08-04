@@ -1,2 +1,7 @@
-/.vscode/
-/.idea/
+.vscode/
+.idea/
+bin/
+obj/
+*~
+*.o
+*.bin
