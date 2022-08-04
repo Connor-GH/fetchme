@@ -81,8 +81,10 @@ OBJECTS :=  $(SOURCES:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
 rm       =  rm -rf
 
 $(TARGET):
+	# create these directories if needed
 	mkdir -p obj/modules
 	mkdir -p bin/
+	# compile with multiple threads, then link.
 	$(MAKE) $(OBJECTS)
 	$(MAKE) link
 
