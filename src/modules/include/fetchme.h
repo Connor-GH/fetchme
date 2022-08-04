@@ -10,7 +10,7 @@ int package_count(void);
 int refresh_rate(void);
 int resolution(void);
 int shell(void);
-int terminal(char* const* envp);
+int terminal(void);
 int uptime_info(void);
 int username_at_hostname(void);
 int wm(void);
