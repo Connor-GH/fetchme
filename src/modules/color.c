@@ -15,7 +15,7 @@ const char *color_distro() {
         exit(EXIT_FAILURE);
     }
 
-    fscanf(os_release, "NAME=\"%49[^\n]+", os_name);  /* get everything
+    fscanf(os_release, "NAME=%49[^\n]+", os_name);  /* get everything
                                                          * that isn't a
                                                          * newline */
     fclose(os_release);
@@ -41,7 +41,7 @@ const char *color_distro() {
     else if ((strstr(os_name, "Arch")) \
             || (strstr(os_name, "Artix")) != NULL) COLOR = CYAN;
     else { 
-        printf("Exception: distro color not found.");
+        fprintf(stderr, "Exception: distro color not found.");
         exit(EXIT_FAILURE); // return value is 1
     }
 #endif
