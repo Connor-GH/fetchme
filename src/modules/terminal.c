@@ -7,15 +7,17 @@
 #include "./include/color.h"
 #include "./include/config.h"
 
-int terminal(char* const* envp) {
+int terminal() {
+
+    extern char **environ;
     char* terminal_emulator = NULL;
 
-    for (size_t i = 0; envp[i] != NULL; i += 1) {
-        char* eq = strchr(envp[i], '=');
+    for (size_t i = 0; environ[i] != NULL; i++) {
+        char* eq = strchr(environ[i], '=');
         assert(eq != NULL);
         *eq = '\0';
 
-        if (strcmp(envp[i], "TERM") == 0) {
+        if (strcmp(environ[i], "TERM") == 0) {
             terminal_emulator = eq + 1;
         }
         *eq = '=';
