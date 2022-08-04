@@ -12,7 +12,7 @@
  * - code style rework
  */
 
-int main(int argc __attribute__((unused)), char** argv __attribute__((unused)), char** envp) {
+int main(void) {
     // disable line wrapping.
     // yes, I disabled 
     // line wrapping for
@@ -56,7 +56,7 @@ int main(int argc __attribute__((unused)), char** argv __attribute__((unused)), 
 #endif
 
 #ifdef TERMINAL
-    terminal(envp);
+    terminal();
 #endif
 
 #ifdef CPU
