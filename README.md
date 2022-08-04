@@ -12,22 +12,22 @@ compile with:
 
 # [Do you want to compile with gcc?]
 
-``make CC=gcc -j$(nproc) fetchme``
+``make CC=gcc -j$(nproc)``
 
 # [Do you want to compile with clang?]
 
-``make CC=clang -j$(nproc) fetchme``
+``make CC=clang -j$(nproc)``
 
 or to install it to /usr/bin:
 
-``make CC=gcc-or-clang -j$(nproc) fetchme && sudo make install``
+``make CC=gcc-or-clang -j$(nproc) && sudo make install``
 
 reinstall:
-``make remove CC=gcc-or-clang -j$(nproc) fetchme && sudo make uninstall && sudo make install``
+``make CC=gcc-or-clang -j$(nproc) && sudo make uninstall && sudo make install``
 
 # debugging (or for development):
 
-``make CC=gcc-or-clang DEBUG=true -j$(nproc) remove check fetchme`` (requires cppcheck and clang/gcc)
+``make CC=gcc-or-clang DEBUG=true -j$(nproc) check fetchme`` (requires cppcheck and clang/gcc)
 
 
 read the changelog
