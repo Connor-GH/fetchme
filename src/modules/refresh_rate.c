@@ -5,6 +5,7 @@
 #include "./include/fetchme.h"
 
 int refresh_rate() {
+    double active_rate = 0;
     Display *display = XOpenDisplay(NULL);
     Window default_root_window = XDefaultRootWindow(display);
 
@@ -25,7 +26,6 @@ int refresh_rate() {
         XRRFreeCrtcInfo(crtc_info);
     }
 
-    double active_rate = 0;
 
     for (int i = 0; i < screen_resources->nmode; ++i) {
         XRRModeInfo mode_info = screen_resources->modes[i];

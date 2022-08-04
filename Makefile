@@ -81,6 +81,8 @@ OBJECTS :=  $(SOURCES:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
 rm       =  rm -rf
 
 $(TARGET):
+	# rebuild and build with just `make'
+	$(MAKE) remove
 	# create these directories if needed
 	mkdir -p obj/modules
 	mkdir -p bin/
