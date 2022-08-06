@@ -41,7 +41,7 @@ endif
 endif # CUSTOM_COLOR
 
 # username@hostname
-ifneq (,$(filter $M_(USERNAME_HOSTNAME),Y y))
+ifneq (,$(filter $(M_USERNAME_HOSTNAME),Y y))
 	MODULES += -DUSERNAME_HOSTNAME
 	SOURCES += $(SRCDIR)/modules/username_at_hostname.c
 endif
