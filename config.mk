@@ -6,49 +6,47 @@
 # to set a custom color, 
 # uncomment both CUSTOM_COLOR
 # and CUSTOM_COLOR_VALUE
-# CUSTOM_COLOR=y
+# M_CUSTOM_COLOR=y
 # options are: RED,GREEN,YELLOW,BLUE,PURPLE,CYAN,WHITE
-# CUSTOM_COLOR_VALUE=CYAN
+# M_CUSTOM_COLOR_VALUE=CYAN
 
-USERNAME_HOSTNAME=y
+M_USERNAME_HOSTNAME=y
 
-DISTRO=y
+M_DISTRO=y
 
-KERNEL=y
+M_KERNEL=y
 
-UPTIME=y
+M_UPTIME=y
 
-PACKAGE=y
+#M_PACKAGE=y
 
-# has to be named with an underscore
-# to avoid environment variable $SHELL
-_SHELL=y
+M_SHELL=y
 
-RESOLUTION=y
+M_RESOLUTION=y
 
-REFRESH_RATE=y
+M_REFRESH_RATE=y
 
-WM=y
+M_WM=y
 
-TERMINAL=y
+M_TERMINAL=y
 
 # any option associated with CPU 
 # needs to have CPU=y
-CPU=y
-CPU_THREADS=y
+M_CPU=y
+M_CPU_THREADS=y
 # commented out by default since 
 # it's **experimental**
-# CPU_TEMP=y
- CPU_FREQUENCY=y
+# M_CPU_TEMP=y
+M_CPU_FREQUENCY=y
 
-GPU=y
+M_GPU=y
 
 # any option associated with MEMORY
 # needs to have MEMORY=y
-MEMORY=y
-MEMORY_PERCENT=y
+M_MEMORY=y
+M_MEMORY_PERCENT=y
 
 # any option associated with DISK
 # needs to have DISK=y
-DISK=y
-DISK_PERCENT=y
+M_DISK=y
+M_DISK_PERCENT=y
