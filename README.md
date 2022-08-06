@@ -33,6 +33,9 @@ reinstall:
 read the changelog
 <a href="docs/CHANGELOG.md">here</a>
 
+# Configuration
+- configuration is done in the provided config.mk. the instructions are given in the file.
+
 # Dependencies:
 - clang or gcc (debugging requires clang and cppcheck; optionally requires valgrind, gdb, etc)
 
