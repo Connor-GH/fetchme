@@ -1,7 +1,11 @@
 ## Changelog
-- changed license to the (GPLv3-compatible) Apache License, Version 2.0.
+- improved the config to be Makefile variables instead of C header macros.
+- added the ability to only link and compile files that are specified in the config. (leads to small and fast binaries)
+
 
 # older changes
+changed license to the (GPLv3-compatible) Apache License, Version 2.0.
+
 added automatic color detection based on distro
 added ``CUSTOM_COLOR`` and ``CUSTOM_COLOR_VALUE`` macros to replace the ``COLOR`` macro
 removed some (harmless) compiler warnings about formatting with types that were ``size_t``
