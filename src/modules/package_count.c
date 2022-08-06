@@ -7,7 +7,6 @@
 
 #include "./include/fetchme.h"
 #include "./include/color.h"
-#include "./include/config.h"
 
 int package_count() {
     signed long count = 0;

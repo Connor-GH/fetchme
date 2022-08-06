@@ -7,7 +7,6 @@
 
 #include "./include/fetchme.h"
 #include "./include/color.h"
-#include "./include/config.h"
 
  int username_at_hostname() {
     char hostname_value[100];

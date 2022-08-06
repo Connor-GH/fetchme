@@ -4,7 +4,6 @@
 #include <sys/utsname.h>
 #include "./include/fetchme.h"
 #include "./include/color.h"
-#include "./include/config.h"
 
 int kernel() {
     struct utsname buffer;

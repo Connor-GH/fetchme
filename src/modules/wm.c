@@ -5,7 +5,6 @@
 
 #include "./include/fetchme.h"
 #include "./include/color.h"
-#include "./include/config.h"
 
 /*
  * Thank you to Nyctanthous for the 

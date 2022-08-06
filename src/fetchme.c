@@ -1,7 +1,6 @@
 #include <stdio.h> // for those two printfs
 #include "./modules/include/color.h"
 #include "./modules/include/fetchme.h"
-#include "./modules/include/config.h"
 /* 
  * the current state:
  *

@@ -6,7 +6,6 @@
 #include <sys/utsname.h>
 
 #include "./include/fetchme.h"
-#include "./include/config.h"
 #include "./include/color.h"
 
  int distro() {

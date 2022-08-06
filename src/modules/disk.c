@@ -2,7 +2,6 @@
 #include <sys/statvfs.h>
 #include "./include/fetchme.h"
 #include "./include/color.h"
-#include "./include/config.h"
 
 int disk() {
     const char *filename = "/";

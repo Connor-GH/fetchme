@@ -5,7 +5,6 @@
 
 #include "./include/fetchme.h"
 #include "./include/color.h"
-#include "./include/config.h"
 
 int gpu_info() {
     struct pci_access* pciaccess;
@@ -52,4 +51,3 @@ int gpu_info() {
     pci_cleanup(pciaccess);
     return EXIT_SUCCESS;
 }
-

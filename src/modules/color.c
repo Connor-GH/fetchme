@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "include/config.h"
 #include "include/color.h"
 const char *color_distro() {
     char os_name[50];

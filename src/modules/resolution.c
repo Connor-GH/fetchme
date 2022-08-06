@@ -4,7 +4,6 @@
 #include <err.h>
 
 #include "./include/color.h"
-#include "./include/config.h"
 #include "./include/fetchme.h"
 
 int resolution() {

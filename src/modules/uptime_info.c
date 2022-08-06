@@ -3,7 +3,6 @@
 
 #include "./include/fetchme.h"
 #include "./include/color.h"
-#include "./include/config.h"
 
 int uptime_info() {
     char uptime[100];
