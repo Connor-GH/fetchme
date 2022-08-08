@@ -26,7 +26,7 @@ int memory_info() {
 
     FILE *fp = fopen("/proc/meminfo", "r");
     if(fp == NULL) {
-        printf("Unable to return meminfo\n");
+        perror("/proc/meminfo");
         exit(EXIT_FAILURE);
     }
     // this is a mess to look at but I don't see another alternative
@@ -89,7 +89,7 @@ int memory_info() {
             USED_RAM, MorG, TOTAL_RAM);
 #ifdef MEMORY_PERCENT
     printf(" (%.0f%%)", ((float) \
-    (t + s - f - b - ca - r) / (float) t) * 100);
+        (t + s - f - b - ca - r) / (float) t) * 100);
 #pragma clang diagnostic pop
 #endif
     printf("\n");

@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <errno.h>
 
 #include <sys/utsname.h>
 
@@ -14,7 +13,6 @@
     char os_name[50];
 
     FILE *os_release = fopen("/etc/os-release", "r");
-    errno = 0;
 
     if (uname(&buffer) < 0) {
         perror("uname");
@@ -22,7 +20,7 @@
     }
 
     if(os_release == NULL) {
-        printf("OS release NULL\n");
+        perror("/etc/os-release");
         exit(EXIT_FAILURE);
     }
 
@@ -35,9 +33,9 @@
      * os name if needed.
      */
         sscanf(os_name, "\"%49[^\"]+", os_name);
-        printf("%s", color_distro());
-        printf("OS:\033[0m %s %s\n", \
-                os_name, buffer.machine);
+
+        printf("%sOS:\033[0m %s %s\n", \
+                color_distro(), os_name, buffer.machine);
 
 
 

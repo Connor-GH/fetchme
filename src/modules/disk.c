@@ -29,9 +29,8 @@ int disk() {
         else {
             unit = 'T';
         }
-        printf("%s", color_distro());
-        printf("Disk:\033[0m %ld%c/%ld%c", \
-                (used/1024/1024/1024), \
+        printf("%sDisk:\033[0m %ld%c/%ld%c", \
+                color_distro(), (used/1024/1024/1024), \
                 unit, ((used/1024/1024/1024)+free/1024/1024/1024), unit);
 #ifdef DISK_PERCENT
         printf(" (%.0f%%)", \
@@ -40,7 +39,8 @@ int disk() {
         printf("\n");
         }
         else {
-            printf("Couldn't get file system statistics\n");
+            fprintf(stderr, "Couldn't get file system statistics\n");
+            return 1;
         }
     return 0;
 }

@@ -10,7 +10,7 @@ const char *color_distro() {
 
 
     if(os_release == NULL) {
-        printf("OS release NULL\n");
+        perror("/etc/os-release");
         exit(EXIT_FAILURE);
     }
 

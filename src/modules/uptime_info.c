@@ -11,8 +11,8 @@ int uptime_info() {
 
     FILE *up = fopen("/proc/uptime", "r");
         if (up == NULL) {
-            printf("No uptime found, exiting");
-            return -1;
+            perror("/proc/uptime");
+            exit(EXIT_FAILURE);
         }
     fscanf(up, "%99s %*99s", uptime);
     fclose(up);
@@ -20,9 +20,9 @@ int uptime_info() {
     sscanf(uptime, "%f", &uptime_f);
 
     min = (((float)uptime_f / 3600 - ((int)uptime_f / 3600)) * 60);
-    printf("%s", color_distro());
-    printf("Uptime:\033[0m %d hours, %d mins\n", \
-            (int)(uptime_f / 3600), min);
+
+    printf("%sUptime:\033[0m %d hours, %d mins\n", \
+            color_distro(), (int)(uptime_f / 3600), min);
     return 0;
 
 }

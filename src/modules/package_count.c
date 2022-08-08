@@ -21,8 +21,8 @@ int package_count() {
         DIR *folder = opendir(path);
         if (folder == NULL) {
             // open other dir
-            printf("ERROR: unable to open package count directory\n");
-            return -1;
+            fprintf(stderr, "%s: cannot open directory for reading\n", path);
+            return 1;
         }
 
         if (access (path, F_OK) != -1 ) {
@@ -38,10 +38,10 @@ int package_count() {
         }
    }
     else {
-        printf("%s cannot be opened or is not a directory\n", path);
+        perror(path);
         exit (EXIT_FAILURE);
     }
-    printf("%s", color_distro());
-    printf("Packages:\033[0m %ld\n", count-1);
+    printf("%sPackages:\033[0m %ld\n", \
+            color_distro(), count-1);
     return 0;
 }

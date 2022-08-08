@@ -36,8 +36,8 @@ int wm() {
 
         FILE *fp = popen("ps aux", "r");
         if (fp == NULL) { 
-            printf("\033[1;31mDo you not have `ps'?\033[0m\n");
-            return -1;
+            fprintf(stderr, "Do you not have `ps'?\n");
+            return 1;
         }
 
         while (fgets(lookup, sizeof(lookup) - 1, fp) != NULL) {
@@ -45,10 +45,10 @@ int wm() {
             for(int i = 0; i < 49; i++) {
 
                 if(strstr(lookup, supported_wm[i]) != NULL) {
-
-                    printf("%s", color_distro());
-                    printf("WM:\033[0m %s\n", supported_wm[i]);
                     pclose(fp);
+
+                    printf("%sWM:\033[0m %s\n", \
+                            color_distro(), supported_wm[i]);
                     return 0;
                 }
             }
@@ -56,6 +56,6 @@ int wm() {
 
     pclose(fp);
 
-    printf("\033[1;31mYour WM was not found\033[0m\n");
-    return -1;
+    fprintf(stderr, "Your WM was not found\n");
+    return 1;
 }

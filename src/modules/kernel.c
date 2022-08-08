@@ -12,8 +12,8 @@ int kernel() {
         perror("uname");
         exit(EXIT_FAILURE);
         }
-    printf("%s", color_distro());
-    printf("Kernel:\033[0m %s\n", buffer.release);
+    printf("%sKernel:\033[0m %s\n", \
+            color_distro(), buffer.release);
 
     return EXIT_SUCCESS;
 

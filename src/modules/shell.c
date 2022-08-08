@@ -9,12 +9,11 @@ int shell() {
     struct passwd *p;
     uid_t uid;
 
-    if ((p = getpwuid(uid = geteuid())) == NULL)
+    if ((p = getpwuid(uid = geteuid())) == NULL) {
         perror("getpwuid() error");
-    else {
-        printf("%s", color_distro());
-        printf("Shell:\033[0m %s\n", p->pw_shell);
-        return 0;
+        return 1;
     }
-return -1;
+        printf("%sShell:\033[0m %s\n", \
+                color_distro(), p->pw_shell);
+        return 0;
 }

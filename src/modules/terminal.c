@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <assert.h>
 #include <string.h>
 
 #include "./include/fetchme.h"
@@ -13,7 +12,10 @@ int terminal() {
 
     for (size_t i = 0; environ[i] != NULL; i++) {
         char* eq = strchr(environ[i], '=');
-        assert(eq != NULL);
+
+        if (eq == NULL) 
+            exit(EXIT_FAILURE);
+
         *eq = '\0';
 
         if (strcmp(environ[i], "TERM") == 0) {
@@ -22,12 +24,10 @@ int terminal() {
         *eq = '=';
     }
     if (terminal_emulator == NULL) {
-        printf("wrong ENV var directory\n");
+        fprintf(stderr, "wrong ENV var directory\n");
         exit(EXIT_FAILURE);
     }
-    else {
-        printf("%s", color_distro());
-        printf("Terminal:\033[0m %s\n", terminal_emulator);
-        return 0;
-    }
+    printf("%sTerminal:\033[0m %s\n", \
+            color_distro(), terminal_emulator);
+    return 0;
 }

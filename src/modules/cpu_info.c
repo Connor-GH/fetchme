@@ -19,7 +19,7 @@ int cpu_info() {
 
     FILE *cpu = fopen("/proc/cpuinfo", "r");
     if (cpu == NULL) {
-        printf("cpuinfo not found\n");
+        perror("/proc/cpuinfo");
         exit(EXIT_FAILURE);
         }
     // this long line is used to skip lines.
@@ -42,19 +42,18 @@ int cpu_info() {
     if (cpu3 == NULL) TEMP = 0.;
 
     else {
-    char line1_value[100];
-    fscanf(cpu3, "%99s", line1_value);
-    fclose(cpu3);
-    int x2;
-    sscanf(line1_value, "%d", &x2);
-    TEMP =(x2/1000.);
+        char line1_value[100];
+        fscanf(cpu3, "%99s", line1_value);
+        fclose(cpu3);
+        int x2;
+        sscanf(line1_value, "%d", &x2);
+        TEMP =(x2/1000.);
     }
 #endif
 
 
-    printf("%s", color_distro());
-    printf("CPU:\033[0m %s %s %s %s",\
-        brand, lineup, sublineup, model_num);
+    printf("%sCPU:\033[0m %s %s %s %s",\
+        color_distro(), brand, lineup, sublineup, model_num);
 
 
 #ifdef CPU_THREADS

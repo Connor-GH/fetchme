@@ -20,7 +20,7 @@ WFLAGS = -Wall -Wextra -Wpedantic -Wshadow -Wvla -Wpointer-arith -Wwrite-strings
 		 -Wunreachable-code -Wformat=2 -Wundef -Wuninitialized -Wsign-compare \
 		 -Werror=format-security -Werror=array-bounds
 
-WNOFLAGS= -Wno-unknown-pragmas
+WNOFLAGS= -Wno-unknown-pragmas -Wno-unused-result
 
 CFLAGS	= $(MODULES) -D_PACKAGE_NAME=\"fetchme\" -D_PACKAGE_VERSION=\"0.1\" \
 		  -std=c99 -march=x86-64 -O2 -flto -m64 -pipe $(WFLAGS) $(WNOFLAGS) $(IVAR)
@@ -48,6 +48,7 @@ else ifeq ($(CC),clang)
 	CFLAGS += -Weverything 
 	LINKER 	= clang
 	WFLAGS += -mspeculative-load-hardening -mretpoline
+	WNOFLAGS += -Wno-disabled-macro-expansion
 
 ifeq ($(DEBUG),true)
 	# clang-specific security/debug flags
@@ -74,7 +75,6 @@ endif
 OBJDIR   = 	obj
 BINDIR   = 	bin
 
-#SOURCES :=  $(wildcard $(SRCDIR)/*.c) $(wildcard $(SRCDIR)/modules/*.c)
 INCLUDES:=  $(wildcard $(SRCDIR)/modules/include/*.h)
 OBJECTS :=  $(SOURCES:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
 rm       =  rm -rf
