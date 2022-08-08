@@ -36,8 +36,13 @@ read the changelog
 # Configuration
 - configuration is done in the provided config.mk. the instructions are given in the file.
 
-# Dependencies:
-- clang or gcc (debugging requires clang and cppcheck; optionally requires valgrind, gdb, etc)
+# Mandatory Dependencies:
+- clang or gcc
+
+# Optional Dependencies
+
+[Debugging] 
+- cppcheck, valgrind, gdb, etc
 
 [Resolution detection]
 - libx11
