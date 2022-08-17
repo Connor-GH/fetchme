@@ -5,7 +5,9 @@
 
 #include "./include/fetchme.h"
 #include "./include/color.h"
-int shell() {
+int
+shell()
+{
     struct passwd *p;
     uid_t uid;
 

@@ -4,7 +4,9 @@
 #include "./include/fetchme.h"
 #include "./include/color.h"
 
-int memory_info() {
+int
+memory_info()
+{
     char total[100];
     char freemem[100];
     char buffers[100];

@@ -5,7 +5,9 @@
 #include "./include/fetchme.h"
 #include "./include/color.h"
 
-int terminal() {
+int
+terminal()
+{
 
     extern char **environ;
     char* terminal_emulator = NULL;

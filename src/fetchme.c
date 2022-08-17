@@ -11,7 +11,9 @@
  * - code style rework
  */
 
-int main(void) {
+int
+main(void)
+{
     // disable line wrapping.
     // yes, I disabled 
     // line wrapping for

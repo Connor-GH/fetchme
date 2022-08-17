@@ -8,7 +8,9 @@
 #include "./include/fetchme.h"
 #include "./include/color.h"
 
- int username_at_hostname() {
+int
+username_at_hostname()
+{
     char hostname_value[100];
     uid_t  uid;
     struct passwd *pwd;

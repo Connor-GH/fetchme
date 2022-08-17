@@ -4,7 +4,9 @@
 #include "./include/fetchme.h"
 #include "./include/color.h"
 
-int uptime_info() {
+int
+uptime_info()
+{
     char uptime[100];
     int min = 0;
     float uptime_f = 0;

@@ -11,7 +11,9 @@
  * original version of this function
  */
 
-int wm() {
+int
+wm()
+{
 
     char lookup[128];
     const char *supported_wm[] = {

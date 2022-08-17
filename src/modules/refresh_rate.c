@@ -4,7 +4,9 @@
 
 #include "./include/fetchme.h"
 
-int refresh_rate() {
+int
+refresh_rate()
+{
     double active_rate = 0;
     Display *display = XOpenDisplay(NULL);
     Window default_root_window = XDefaultRootWindow(display);

@@ -5,7 +5,9 @@
 #include "./include/fetchme.h"
 #include "./include/color.h"
 
-int kernel() {
+int
+kernel()
+{
     struct utsname buffer;
     errno = 0;
     if (uname(&buffer) < 0) {

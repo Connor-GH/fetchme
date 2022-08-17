@@ -6,7 +6,9 @@
 #include "./include/fetchme.h"
 #include "./include/color.h"
 
-int gpu_info() {
+int
+gpu_info()
+{
     struct pci_access* pciaccess;
     struct pci_dev* dev;
     char namebuf[128];

@@ -5,7 +5,9 @@
 #include "./include/color.h"
 #include "./include/fetchme.h"
 
-int resolution() {
+int
+resolution()
+{
 
     Display *d;
     int width = 0;

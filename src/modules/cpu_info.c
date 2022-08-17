@@ -3,7 +3,10 @@
 
 #include "./include/fetchme.h"
 #include "./include/color.h"
-int cpu_info() {
+
+int
+cpu_info() 
+{
 
     char brand[10];     // cpu brand
     char lineup[10];    // lineup (Ryzen, Core, Xeon, Epyc, etc)

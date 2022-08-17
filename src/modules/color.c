@@ -3,7 +3,10 @@
 #include <string.h>
 
 #include "include/color.h"
-const char *color_distro() {
+
+const char *
+color_distro() 
+{
     char os_name[50];
     const char *COLOR = 0;
     FILE *os_release = fopen("/etc/os-release", "r");

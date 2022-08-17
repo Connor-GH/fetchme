@@ -8,7 +8,9 @@
 #include "./include/fetchme.h"
 #include "./include/color.h"
 
-int package_count() {
+int
+package_count() 
+{
     signed long count = 0;
     struct stat sb;
     /* you can do a case statement around *path

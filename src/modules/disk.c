@@ -3,7 +3,9 @@
 #include "./include/fetchme.h"
 #include "./include/color.h"
 
-int disk() {
+int
+disk()
+{
     const char *filename = "/";
 
     struct statvfs buf;
