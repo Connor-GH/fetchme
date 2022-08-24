@@ -36,7 +36,7 @@ wm()
         "mwm" 
     }; // this system is fragile but works very well
 
-        FILE *fp = popen("ps aux", "r");
+        FILE *fp = popen("ps x", "r");
         if (fp == NULL) { 
             fprintf(stderr, "Do you not have `ps'?\n");
             return 1;
