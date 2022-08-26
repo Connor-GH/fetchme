@@ -13,9 +13,8 @@ memory_info()
     char cache[100];
     char shared[100];
     char reclaimable[100];
-    char inactive[100];
 
-    float USED_RAM = 0;
+    float USED_RAM = 0.0;
     int TOTAL_RAM = 0;
     char MorG = 0;
     int t = 0;
@@ -24,7 +23,6 @@ memory_info()
     int ca =0;
     int s = 0;
     int r = 0;
-    int in =0;
 
     int c = 0;
 
@@ -45,11 +43,8 @@ memory_info()
     while ((c = fgetc(fp)) != '\n' && c != EOF);
 
     fscanf(fp, "%*99s %99s", cache);
-    for (int i = 0; i < 5; i++) while ((c = fgetc(fp)) != '\n' && c != EOF);
+    for (int i = 0; i < 18; i++) while ((c = fgetc(fp)) != '\n' && c != EOF);
     
-    fscanf(fp, "%*99s %99s", inactive);
-    for (int i = 0; i < 13; i++) while ((c = fgetc(fp)) != '\n' && c != EOF);
-
     fscanf(fp, "%*99s %99s", shared);
     for (int i = 0; i < 3; i++) while ((c = fgetc(fp)) != '\n' && c != EOF);
 
@@ -57,7 +52,6 @@ memory_info()
 
 
     fclose(fp);
-
 
     sscanf(total, "%d", &t);      // total
 
@@ -71,11 +65,10 @@ memory_info()
     
     sscanf(reclaimable, "%d", &r);//reclaimable
 
-    sscanf(inactive, "%d", &in);
 
     /* this calculation isn't perfect 
      * but it has a delta of about 1% */
-    USED_RAM = (t + (s - f - b - ca - r -in))/1000./1000.;
+    USED_RAM = (t + s - f - b - ca - r)/1000./1024.;
 
     TOTAL_RAM = (t/1000/1000);
 
@@ -98,7 +91,7 @@ memory_info()
             USED_RAM, MorG, TOTAL_RAM);
 #ifdef MEMORY_PERCENT
     printf(" (%.0f%%)", ((float) \
-        (t + (s - f - b - ca - r-in)) / (float) t) * 100);
+        (t + s - f - b - ca - r) / (float) t) * 100);
 #pragma clang diagnostic pop
 #endif
     printf("\n");
