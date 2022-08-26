@@ -47,7 +47,7 @@ memory_info()
     fscanf(fp, "%*99s %99s", cache);
     for (int i = 0; i < 5; i++) while ((c = fgetc(fp)) != '\n' && c != EOF);
     
-    fscanf(fp, "*%99s %99s", inactive);
+    fscanf(fp, "%*99s %99s", inactive);
     for (int i = 0; i < 13; i++) while ((c = fgetc(fp)) != '\n' && c != EOF);
 
     fscanf(fp, "%*99s %99s", shared);
