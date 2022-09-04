@@ -25,7 +25,7 @@ WNOFLAGS= -Wno-unknown-pragmas -Wno-unused-result
 CFLAGS	= $(MODULES) -D_PACKAGE_NAME=\"fetchme\" -D_PACKAGE_VERSION=\"0.1\" \
 		  -std=c99 -march=x86-64 -O2 -flto -m64 -pipe $(WFLAGS) $(WNOFLAGS) $(IVAR)
 
-LFLAGS  += -Wall $(IVAR) $(M_LFLAGS) -flto -Wl,--strip-all
+LFLAGS  = -Wall $(IVAR) $(M_LFLAGS) -flto -Wl,--strip-all -Wl,-O3
 
 # detect if the user chose GCC or Clang
 ifeq ($(CC),gcc)
@@ -42,19 +42,18 @@ ifeq ($(DEBUG),true)
 
 endif #debug
 
-else ifeq ($(CC),clang)
+else ifeq ($(CC),clang) # clang can be marginally slower
 
 	CC  	= clang
 	CFLAGS += -Weverything 
 	LINKER 	= clang
-	WFLAGS += -mspeculative-load-hardening -mretpoline
 	WNOFLAGS += -Wno-disabled-macro-expansion
 
 ifeq ($(DEBUG),true)
 	# clang-specific security/debug flags
 	WFLAGS += -fsanitize=undefined,signed-integer-overflow,null,alignment,address,leak,cfi \
 			  -fsanitize-undefined-trap-on-error -ftrivial-auto-var-init=pattern \
-			  -fvisibility=hidden  
+			  -fvisibility=hidden -mspeculative-load-hardening -mretpoline 
 	CFLAGS	= -gdwarf-4 -Weverything -mspeculative-load-hardening
 	LFLAGS  = -fsanitize=address
 endif #debug

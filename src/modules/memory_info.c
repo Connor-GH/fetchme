@@ -33,22 +33,20 @@ memory_info()
     }
     // this is a mess to look at but I don't see another alternative
 
-    fscanf(fp, "%*99s %99s", total);
+    fscanf(fp, "%*99s %99s %*99s\n", total);
+
+    fscanf(fp, "%*99s %99s %*99s\n", freemem);
     while ((c = fgetc(fp)) != '\n' && c != EOF);
 
-    fscanf(fp, "%*99s %99s", freemem);
+    fscanf(fp, "%*99s %99s %*99s\n", buffers);
+
+    fscanf(fp, "%*99s %99s %*99s\n", cache);
+    for (int i = 0; i < 15; i++) while ((c = fgetc(fp)) != '\n' && c != EOF);
+    
+    fscanf(fp, "%*99s %99s %*99s\n", shared);
     for (int i = 0; i < 2; i++) while ((c = fgetc(fp)) != '\n' && c != EOF);
 
-    fscanf(fp, "%*99s %99s", buffers);
-    while ((c = fgetc(fp)) != '\n' && c != EOF);
-
-    fscanf(fp, "%*99s %99s", cache);
-    for (int i = 0; i < 18; i++) while ((c = fgetc(fp)) != '\n' && c != EOF);
-    
-    fscanf(fp, "%*99s %99s", shared);
-    for (int i = 0; i < 3; i++) while ((c = fgetc(fp)) != '\n' && c != EOF);
-
-    fscanf(fp, "%*99s %99s", reclaimable);
+    fscanf(fp, "%*99s %99s %*99s\n", reclaimable);
 
 
     fclose(fp);
@@ -66,9 +64,7 @@ memory_info()
     sscanf(reclaimable, "%d", &r);//reclaimable
 
 
-    /* this calculation isn't perfect 
-     * but it has a delta of about 1% */
-    USED_RAM = (t + s - f - b - ca - r)/1000./1024.;
+    USED_RAM = (t + s - f - b - ca - r)/1000./1000.;
 
     TOTAL_RAM = (t/1000/1000);
 
