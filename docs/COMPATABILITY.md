@@ -1,14 +1,12 @@
 # This doc gives information as to what distros work best, work okay, and what isn't mentioned should be assumed to not work at all.
 
 ## Fully-working distros: 
-- Arch Linux
-- Artix Linux
-- (theoretically) any Arch-based distributions
+- any Pacman-based distributions (Arch, Artix tested)
+- any Portage-based distributions (Gentoo tested)
 
 ## Okay-working distros:
 (No package count but otherwise no problems):
 
-- Gentoo
 - Debian/Ubuntu-based distros
 - Void
 - OpenSUSE

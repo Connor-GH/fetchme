@@ -1,9 +1,12 @@
 ## Changelog
-- improved the config to be Makefile variables instead of C header macros.
-- added the ability to only link and compile files that are specified in the config. (leads to small and fast binaries)
-
+- Improved memory usage detection to be more accurate (now there is a ~1% delta between ``free -h --si`` and this program)
+- added gentoo package count detection using ``glob()``
 
 # older changes
+
+improved the config to be Makefile variables instead of C header macros.
+added the ability to only link and compile files that are specified in the config. (leads to small and fast binaries)
+
 changed license to the (GPLv3-compatible) Apache License, Version 2.0.
 
 added automatic color detection based on distro

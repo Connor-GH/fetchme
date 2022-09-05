@@ -18,7 +18,13 @@ M_KERNEL=y
 
 M_UPTIME=y
 
-#M_PACKAGE=y
+# Off by default.
+# Currently only works
+# with pacman-based
+# distros and 
+# portage-based
+# distros.
+# M_PACKAGE=y
 
 M_SHELL=y
 
