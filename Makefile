@@ -22,8 +22,8 @@ WFLAGS = -Wall -Wextra -Wpedantic -Wshadow -Wvla -Wpointer-arith -Wwrite-strings
 
 WNOFLAGS= -Wno-unknown-pragmas -Wno-unused-result
 
-CFLAGS	= $(MODULES) -D_PACKAGE_NAME=\"fetchme\" -D_PACKAGE_VERSION=\"0.1\" \
-		  -std=c99 -march=x86-64 -O2 -flto -m64 -pipe $(WFLAGS) $(WNOFLAGS) $(IVAR)
+CFLAGS	= $(MODULES) -D_PACKAGE_NAME=\"fetchme\" -D_PACKAGE_VERSION=\"0.1.2\" \
+		  -std=c99 -march=native -O2 -flto -m64 -pipe $(WFLAGS) $(WNOFLAGS) $(IVAR)
 
 LFLAGS  = -Wall $(IVAR) $(M_LFLAGS) -flto -Wl,--strip-all -Wl,-O3
 

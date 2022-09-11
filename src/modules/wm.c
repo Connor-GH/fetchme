@@ -16,7 +16,7 @@ wm()
 {
 
     char lookup[128];
-    const char *supported_wm[] = {
+    static const char *supported_wm[] = {
         "fluxbox", "openbox", "blackbox",
         "xfwm4", "metacity", "kwin",
         "twin", "icewm", "pekwm", 
