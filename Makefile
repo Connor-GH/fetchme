@@ -23,7 +23,7 @@ WFLAGS = -Wall -Wextra -Wpedantic -Wshadow -Wvla -Wpointer-arith -Wwrite-strings
 WNOFLAGS= -Wno-unknown-pragmas -Wno-unused-result
 
 CFLAGS	= $(MODULES) -D_PACKAGE_NAME=\"fetchme\" -D_PACKAGE_VERSION=\"0.1.2\" \
-		  -std=c99 -march=native -O2 -flto -m64 -pipe $(WFLAGS) $(WNOFLAGS) $(IVAR)
+		  -std=c99 -march=native -O2 -flto -fno-exceptions -fno-asynchronous-unwind-tables -m64 -pipe $(WFLAGS) $(WNOFLAGS) $(IVAR)
 
 LFLAGS  = -Wall $(IVAR) $(M_LFLAGS) -flto -Wl,--strip-all -Wl,-O3
 
@@ -61,7 +61,7 @@ endif #debug
 endif #compiler
 ifeq ($(DEBUG),true)
 	# generic security/debug flags
-	CFLAGS += $(MODULES) -D_PACKAGE_NAME=\"fetchme\" -D_PACKAGE_VERSION=\"0.1\" \
+	CFLAGS += $(MODULES) -D_PACKAGE_NAME=\"fetchme\" -D_PACKAGE_VERSION=\"0.1.2\" \
 			  -O1 -std=c99 -flto -march=x86-64 -g3 -m64 -pipe $(WFLAGS) $(WNOFLAGS) $(IVAR)
 	WFLAGS += -fomit-frame-pointer -fstack-clash-protection -D_FORTIFY_SOURCE=2 \
 			  -fcf-protection -fstack-protector-all -fexceptions -fasynchronous-unwind-tables \
@@ -112,11 +112,16 @@ install:
 	mkdir -p ${INSTALLBINDIR}
 	cp -r $(BINDIR)/$(TARGET) ${INSTALLBINDIR}
 	@echo "Executable installed!"
+	mkdir -p /usr/share/man/man1
+	cp docs/fetchme.1.bz2 /usr/share/man/man1/
+	@echo "Man page installed!"
 
 
 uninstall:
 	@$(rm) ${INSTALLBINDIR}/$(TARGET)
 	@echo "Exectuable removed!"
+	rm /usr/share/man/man1/fetchme.1.bz2
+	@echo "Man page uninstalled!"
 
 
 # used only for debug and development

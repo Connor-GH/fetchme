@@ -1,6 +1,9 @@
 #include <stdio.h> // for those two printfs
+#include <string.h> 
 #include "./modules/include/color.h"
 #include "./modules/include/fetchme.h"
+
+#define FETCHME_VERSION "fetchme version 0.1.2"
 /* 
  * the current state:
  *
@@ -12,8 +15,31 @@
  */
 
 int
-main(void)
+main(int argc, char *argv[])
 {
+    if (argc > 1)
+    {
+        if (argv[1][0] == '-')
+        {
+                switch (argv[1][1])
+                {
+                    case 'v':
+                        printf("%s\n", FETCHME_VERSION);
+                        break;
+                    case 'h': /* fall through */
+                    default:
+                        fprintf(stderr, 
+                            "Usage: \n"
+                            "\tfetchme [ -v ]\t\tPrint version info\n"
+                            "\tfetchme [ -h ]\t\tPrint this help message\n"
+                            "\tfetchme [ no options ]\tPrint system info\n"
+                            "\n\tFor more help, please consult the man page.\n");
+                        break;
+                }
+
+        }
+        return 0;
+    }
     // disable line wrapping.
     // yes, I disabled 
     // line wrapping for
