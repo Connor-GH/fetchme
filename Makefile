@@ -122,8 +122,3 @@ uninstall:
 	@echo "Exectuable removed!"
 	rm /usr/share/man/man1/fetchme.1.bz2
 	@echo "Man page uninstalled!"
-
-
-# used only for debug and development
-check:
-	cppcheck -j`nproc` -q --clang --inconclusive --std=c99 --force --enable=warning,style,performance,portability $(SOURCES)

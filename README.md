@@ -27,7 +27,7 @@ reinstall:
 
 # debugging (or for development):
 
-``make CC=gcc-or-clang DEBUG=true -j$(nproc) check fetchme`` (requires cppcheck and clang/gcc)
+``make CC=gcc-or-clang DEBUG=true -j$(nproc) fetchme`` (requires clang/gcc)
 
 
 read the changelog
@@ -42,7 +42,7 @@ read the changelog
 # Optional Dependencies
 
 [Debugging] 
-- cppcheck, valgrind, gdb, etc
+- valgrind, gdb, etc
 
 [Resolution detection]
 - libx11
