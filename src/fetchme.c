@@ -24,7 +24,8 @@ main(int argc, char *argv[])
                 switch (argv[1][1])
                 {
                     case 'v':
-                        printf("%s\n", FETCHME_VERSION);
+                        //printf("%s\n", FETCHME_VERSION);
+                        printf("%s version %s\n", _PACKAGE_NAME, _PACKAGE_VERSION);
                         break;
                     case 'h': /* fall through */
                     default:

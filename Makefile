@@ -4,7 +4,8 @@ PREFIX	 =  /usr
 INSTALLBINDIR=${PREFIX}/bin
 
 include config_backend.mk
-TARGET 	 =  fetchme
+TARGET 	 = fetchme
+VERSION  = 1.3
 
 
 
@@ -22,10 +23,9 @@ WFLAGS = -Wall -Wextra -Wpedantic -Wshadow -Wvla -Wpointer-arith -Wwrite-strings
 
 WNOFLAGS= -Wno-unknown-pragmas -Wno-unused-result
 
-CFLAGS	= $(MODULES) -D_PACKAGE_NAME=\"fetchme\" -D_PACKAGE_VERSION=\"0.1.2\" \
-		  -std=c99 -march=native -O2 -flto -fno-exceptions -fno-asynchronous-unwind-tables -m64 -pipe $(WFLAGS) $(WNOFLAGS) $(IVAR)
+CFLAGS	= -march=native -O2 -fno-exceptions -fno-asynchronous-unwind-tables
 
-LFLAGS  = -Wall $(IVAR) $(M_LFLAGS) -flto -Wl,--strip-all -Wl,-O3
+LFLAGS  = -Wl,--strip-all -Wl,-O3
 
 # detect if the user chose GCC or Clang
 ifeq ($(CC),gcc)
@@ -61,14 +61,17 @@ endif #debug
 endif #compiler
 ifeq ($(DEBUG),true)
 	# generic security/debug flags
-	CFLAGS += $(MODULES) -D_PACKAGE_NAME=\"fetchme\" -D_PACKAGE_VERSION=\"0.1.2\" \
-			  -O1 -std=c99 -flto -march=x86-64 -g3 -m64 -pipe $(WFLAGS) $(WNOFLAGS) $(IVAR)
+	CFLAGS += -O1 -march=x86-64 -g3
 	WFLAGS += -fomit-frame-pointer -fstack-clash-protection -D_FORTIFY_SOURCE=2 \
 			  -fcf-protection -fstack-protector-all -fexceptions -fasynchronous-unwind-tables \
 			  -Werror=format-security -D_DEBUG -fno-builtin-malloc -fno-builtin-calloc -fno-builtin
-	LFLAGS += $(IVAR) $(M_LFLAGS) -flto -fPIE -pie -Wl,-z,relro -Wl,--as-needed -Wl,-z,now \
-			  -Wl,-z,noexecstack
+	LFLAGS += -fPIE -pie -Wl,-z,relro -Wl,--as-needed -Wl,-z,now -Wl,-z,noexecstack
 endif
+
+CFLAGS += -D_PACKAGE_NAME=\"$(TARGET)\" -D_PACKAGE_VERSION=\"$(VERSION)\" \
+		  $(MODULES) \
+		  -std=c99 -pipe -m64 -flto $(WFLAGS) $(WNOFLAGS) $(IVAR)
+LFLAGS += $(IVAR) $(M_LFLAGS) -flto
 
 
 OBJDIR   = 	obj
@@ -79,12 +82,12 @@ OBJECTS :=  $(SOURCES:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
 rm       =  rm -rf
 
 $(TARGET):
-	# rebuild and build with just `make'
+	@# rebuild and build with just `make'
 	$(MAKE) remove
-	# create these directories if needed
+	@# create these directories if needed
 	mkdir -p obj/modules
 	mkdir -p bin/
-	# compile with multiple threads, then link.
+	## compile with multiple threads, then link.
 	$(MAKE) $(OBJECTS)
 	$(MAKE) link
 
@@ -99,11 +102,11 @@ $(OBJECTS): $(OBJDIR)/%.o : $(SRCDIR)/%.c
 
 
 clean:
-	@$(rm) $(OBJECTS)
+	$(rm) $(OBJECTS)
 	@echo "Cleanup complete!"
 
 remove: clean
-	@$(rm) $(BINDIR)/$(TARGET)
+	$(rm) $(BINDIR)/$(TARGET)
 	@echo "Executable removed!"
 
 .PHONY: install
@@ -118,7 +121,7 @@ install:
 
 
 uninstall:
-	@$(rm) ${INSTALLBINDIR}/$(TARGET)
+	$(rm) ${INSTALLBINDIR}/$(TARGET)
 	@echo "Exectuable removed!"
 	rm /usr/share/man/man1/fetchme.1.bz2
 	@echo "Man page uninstalled!"
