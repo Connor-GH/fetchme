@@ -21,22 +21,21 @@ main(int argc, char *argv[])
     {
         if (argv[1][0] == '-')
         {
-                switch (argv[1][1])
-                {
-                    case 'v':
-                        //printf("%s\n", FETCHME_VERSION);
-                        printf("%s version %s\n", _PACKAGE_NAME, _PACKAGE_VERSION);
-                        break;
-                    case 'h': /* fall through */
-                    default:
-                        fprintf(stderr, 
-                            "Usage: \n"
-                            "\tfetchme [ -v ]\t\tPrint version info\n"
-                            "\tfetchme [ -h ]\t\tPrint this help message\n"
-                            "\tfetchme [ no options ]\tPrint system info\n"
-                            "\n\tFor more help, please consult the man page.\n");
-                        break;
-                }
+            switch (argv[1][1])
+            {
+                case 'v':
+                     printf("%s version %s\n", _PACKAGE_NAME, _PACKAGE_VERSION);
+                    break;
+                case 'h': /* fall through */
+                default:
+                    fprintf(stderr, 
+                        "Usage: \n"
+                        "\tfetchme [ -v ]\t\tPrint version info\n"
+                        "\tfetchme [ -h ]\t\tPrint this help message\n"
+                        "\tfetchme [ no options ]\tPrint system info\n"
+                        "\n\tFor more help, please consult the man page.\n");
+                    break;
+            }
 
         }
         return 0;

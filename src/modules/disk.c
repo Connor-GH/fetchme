@@ -6,7 +6,14 @@
 int
 disk()
 {
-    const char *filename = "/";
+    /* 
+     * When multi-drive filesystem
+     * usage is finished, this will be a 
+     * `const char' instead of a `const char const'
+     * to show that the value pointed to can change
+     * (useful in an if-else statement for drives)
+     */
+    const char *const filename = "/";
 
     struct statvfs buf;
     if (!statvfs(filename, &buf)) {
