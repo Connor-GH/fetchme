@@ -53,8 +53,8 @@ ifeq ($(DEBUG),true)
 	# clang-specific security/debug flags
 	WFLAGS += -fsanitize=undefined,signed-integer-overflow,null,alignment,address,leak,cfi \
 			  -fsanitize-undefined-trap-on-error -ftrivial-auto-var-init=pattern \
-			  -fvisibility=hidden -mspeculative-load-hardening -mretpoline 
-	CFLAGS	= -gdwarf-4 -Weverything -mspeculative-load-hardening
+			  -fvisibility=hidden
+	CFLAGS	= -gdwarf-4 -Weverything -mspeculative-load-hardening -mretpoline
 	LFLAGS  = -fsanitize=address
 endif #debug
 

@@ -24,7 +24,7 @@ M_UPTIME=y
 # distros and 
 # portage-based
 # distros.
-# M_PACKAGE=y
+M_PACKAGE=y
 
 M_SHELL=y
 

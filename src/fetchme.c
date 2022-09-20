@@ -3,7 +3,6 @@
 #include "./modules/include/color.h"
 #include "./modules/include/fetchme.h"
 
-#define FETCHME_VERSION "fetchme version 0.1.2"
 /* 
  * the current state:
  *

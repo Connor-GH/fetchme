@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <sys/utsname.h>
 #include <unistd.h>
 #include <sys/types.h>
 #include <pwd.h>
@@ -29,10 +30,18 @@ username_at_hostname()
         host = fopen("/etc/conf.d/hostname", "r");
 
         if (host == NULL) {
-            // if /etc/conf.d/hostname is NULL, end the program
-            perror("/etc/hostname and /etc/conf.d/hostname");
-            exit(EXIT_FAILURE);
-        }
+        // if /etc/conf.d/hostname is NULL, just use utsname
+	        struct utsname buffer;
+	        if (uname(&buffer) < 0) {
+		        perror("uname");
+		        exit(EXIT_FAILURE);
+            }
+            strncpy(hostname_value, buffer.nodename, sizeof (hostname_value)-1);
+            // to prevent an fclose()
+	        flag = '2'; 
+
+	    }
+	
     }
     if (flag == '0') { // using a flag prevents a double free
         fscanf(host, "%99s", hostname_value);
@@ -50,7 +59,9 @@ username_at_hostname()
         }
         sscanf(temp, "hostname=\"%[^\"\n]", hostname_value); // parse string
     }
+    if (flag != '2') {
     fclose(host); // close /etc/hostname or /etc/conf.d/hostname
+    }
 
     if ((pwd = getpwuid(uid = geteuid())) == NULL) {
         perror("getpwuid() error");

@@ -17,6 +17,7 @@ kernel()
     printf("%sKernel:\033[0m %s\n", \
             color_distro(), buffer.release);
 
+
     return EXIT_SUCCESS;
 
 }
