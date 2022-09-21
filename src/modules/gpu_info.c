@@ -28,6 +28,7 @@ gpu_info()
 
         if (((strstr(namebuf, "Graphics")) != NULL) /* Intel or AMD/ATI */
                 || ((strstr(namebuf, "QXL")) != NULL) /* QEMU QXL */
+                || ((strstr(namebuf, "Virtio GPU")) != NULL) /* QEMU Virtio */
                 || ((strstr(namebuf, "VMware SVGA")) != NULL) /* VMware */
                 || ((strstr(namebuf, "VirtualBox Graphics Adapter")) != NULL)
                 || ((strstr(namebuf, "Radeon")) != NULL) /* AMD/ATI */

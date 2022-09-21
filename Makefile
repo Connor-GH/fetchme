@@ -55,7 +55,7 @@ ifeq ($(DEBUG),true)
 			  -fsanitize-undefined-trap-on-error -ftrivial-auto-var-init=pattern \
 			  -fvisibility=hidden
 	CFLAGS	= -gdwarf-4 -Weverything -mspeculative-load-hardening -mretpoline
-	LFLAGS  = -fsanitize=address
+	LFLAGS  = -fsanitize=address 
 endif #debug
 
 endif #compiler
