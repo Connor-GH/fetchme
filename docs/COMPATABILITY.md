@@ -12,11 +12,14 @@
 - OpenSUSE
 - Solus
 
+(no cpu, mem, uptime, or disk info);
+- FreeBSD
+
+
 ## Haven't tested (planned in the future):
 
 (These changes will require some time to adjust
 functions to be more POSIX-compliant alternatives)
 
-- FreeBSD
 - MacOS
 

@@ -13,11 +13,11 @@ compile with:
 
 # [Do you want to compile with gcc?]
 
-``make CC=gcc -j$(nproc)``
+``make CC=gcc -j$(nproc)``, or on FreeBSD, ``gmake CC=gcc -j`` (gcc is more likely to work on FreeBSD versus Clang)
 
 # [Do you want to compile with clang?]
 
-``make CC=clang -j$(nproc)``
+``make CC=clang -j$(nproc)``, or on FreeBSD, ``gmake CC=clang -j``
 
 or to install it to /usr/bin:
 
@@ -39,6 +39,7 @@ read the changelog
 
 # Mandatory Dependencies:
 - clang or gcc
+- gmake
 
 # Optional Dependencies
 
