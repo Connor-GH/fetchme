@@ -9,20 +9,26 @@
 
 
 int
-package_count() 
+package_count()
 {
     size_t PKG_COUNT = 0;
 
 
 #if defined(__linux__)
     glob_t globbuf;
-    if (glob("/var/lib/pacman/local/*", GLOB_NOSORT, NULL, &globbuf) == 0) // arch-based
+    if (glob("/var/lib/pacman/local/*",
+                GLOB_NOSORT,
+                NULL,
+                &globbuf) == 0) { // arch-based
 	PKG_COUNT = globbuf.gl_pathc;
-    
-    else if (glob("/var/db/pkg/*/*", GLOB_NOSORT, NULL, &globbuf) == 0) // portage-based
+
+    } else if (glob("/var/db/pkg/*/*",
+                GLOB_NOSORT,
+                NULL,
+                &globbuf) == 0) { // portage-based
 	PKG_COUNT = globbuf.gl_pathc;
-    
-    else {
+
+    } else {
         fprintf(stderr, "No packages found\n");
         exit(EXIT_FAILURE); // die, no directories work
     }
@@ -31,18 +37,16 @@ package_count()
 #if defined(__FreeBSD__)
     // pkg-based
 	FILE *fp = popen("pkg info", "r");
+	char lookup[128];
     if (fp == NULL) {
         perror("pkg");
         exit(EXIT_FAILURE);
     }
 
-    int i = 0;
-	char lookup[128];
     while (fgets(lookup, sizeof (lookup) - 1, fp) != NULL) {
-	    i++;
+	    PKG_COUNT++;
 	}
 	pclose(fp);
-	PKG_COUNT = i;
 #endif /* FreeBSD */
 
     printf("%sPackages:\033[0m %lu\n", \
@@ -50,5 +54,5 @@ package_count()
 #if defined(__linux__)
     globfree(&globbuf);
 #endif
-    return 0;
+    return EXIT_SUCCESS;
 }

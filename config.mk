@@ -1,9 +1,9 @@
 # fetchme's config.
 # options can be turned on with either
-# `Y' or `y'. to deselect an option, 
+# `Y' or `y'. to deselect an option,
 # comment it out.
 
-# to set a custom color, 
+# to set a custom color,
 # uncomment both CUSTOM_COLOR
 # and CUSTOM_COLOR_VALUE
 # M_CUSTOM_COLOR=y
@@ -25,7 +25,7 @@ M_KERNEL=y
 # Off by default.
 # Currently only works
 # with pacman-based
-# distros and 
+# distros and
 # portage-based
 # distros.
 #
@@ -47,12 +47,12 @@ M_SHELL=y
 # Works with FreeBSD
 M_TERMINAL=y
 
-# any option associated with CPU 
+# any option associated with CPU
 # needs to have CPU=y
 # Does NOT work with FreeBSD
 # M_CPU=y
 # M_CPU_THREADS=y
-# commented out by default since 
+# commented out by default since
 # it's **experimental**
 # M_CPU_TEMP=y
 # M_CPU_FREQUENCY=y

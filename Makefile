@@ -36,7 +36,7 @@ ifeq ($(CC),gcc)
 
 ifeq ($(DEBUG),true)
 	# gcc-specific security/debug flags
-	WGCC   += -fanalyzer 
+	WGCC   += -fanalyzer
 	CFLAGS	= -ggdb $(WGCC)
 	LFLAGS  =
 
@@ -45,7 +45,7 @@ endif #debug
 else ifeq ($(CC),clang) # clang can be marginally slower
 
 	CC  	= clang
-	CFLAGS += -Weverything 
+	CFLAGS += -Weverything
 	LINKER 	= clang
 	WNOFLAGS += -Wno-disabled-macro-expansion
 
@@ -55,7 +55,7 @@ ifeq ($(DEBUG),true)
 			  -fsanitize-undefined-trap-on-error -ftrivial-auto-var-init=pattern \
 			  -fvisibility=hidden
 	CFLAGS	= -gdwarf-4 -Weverything -mspeculative-load-hardening -mretpoline
-	LFLAGS  = -fsanitize=address 
+	LFLAGS  = -fsanitize=address
 endif #debug
 
 endif #compiler
@@ -87,11 +87,11 @@ $(TARGET):
 	@# create these directories if needed
 	mkdir -p obj/modules
 	mkdir -p bin/
-	## compile with multiple threads, then link.
+	@# compile with multiple threads, then link.
 	$(MAKE) $(OBJECTS)
 	$(MAKE) link
 
-link: 
+link:
 	$(LINKER) $(OBJECTS) $(LFLAGS) -o $(BINDIR)/$(TARGET)
 	@echo "Linking complete!"
 

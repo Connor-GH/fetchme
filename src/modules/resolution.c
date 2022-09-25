@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+
 #include <X11/Xlib.h>
 
 #include "./include/color.h"
@@ -13,7 +14,7 @@ resolution()
     int width = 0;
     int height = 0;
 
-    if(!(d = XOpenDisplay(NULL)))
+    if (!(d = XOpenDisplay(NULL)))
         fprintf(stderr, "cannot open display '%s'\n", XDisplayName(0));
 
     width  = DisplayWidth (d, DefaultScreen(d));
@@ -22,15 +23,15 @@ resolution()
     XCloseDisplay(d);
 
     printf("%sResolution:\033[0m %dx%d", \
-            color_distro(), width, height); 
+            color_distro(), width, height);
 #ifdef REFRESH_RATE
-    /* 
-     * Comment or uncomment the define line 
+    /*
+     * Comment or uncomment the define line
      * in config.h for refresh rate
      */
-    printf(" @"); 
+    printf(" @");
 #else
-    printf("\n"); 
+    printf("\n");
 #endif
-    return 0;
+    return EXIT_SUCCESS;
 }

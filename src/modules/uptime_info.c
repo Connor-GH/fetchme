@@ -25,6 +25,6 @@ uptime_info()
 
     printf("%sUptime:\033[0m %d hours, %d mins\n", \
             color_distro(), (int)(uptime_f / 3600), min);
-    return 0;
+    return EXIT_SUCCESS;
 
 }

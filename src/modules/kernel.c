@@ -1,7 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <errno.h>
+
 #include <sys/utsname.h>
+
 #include "./include/fetchme.h"
 #include "./include/color.h"
 
@@ -14,7 +16,7 @@ kernel()
         perror("uname");
         exit(EXIT_FAILURE);
         }
-    printf("%sKernel:\033[0m %s\n", \
+    printf("%sKernel:\033[0m %s\n",
             color_distro(), buffer.release);
 
 

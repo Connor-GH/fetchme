@@ -3,7 +3,7 @@
 Thank you for considering contributing to fetchme.
 
 
-Unsure how to begin contributing? 
+Unsure how to begin contributing?
 Here is how to get started: https://makeapullrequest.com/
 
 Contributing in most cases helps to speed up the development process of the project, as I cannot work on it full time.
@@ -30,16 +30,16 @@ Small contributions such as fixing spelling errors are fine to do in a PR as lon
   - Adding logging messages or debugging output
   - Moving source files from one directory or package to another
 
-[//]:  # "If you find a security vulnerability, do NOT open an issue. Email <this will be added soon> instead."
+# If you find a security vulnerability, do NOT open an issue. Email connor-gh <at> outlook <dot> com instead.
 # For security Vulnerabilities:
 You can open an issue currently, but this will be changed in the future.
 
-Lastly, 
+Lastly,
 ## When filing an issue, make sure to answer these five questions:
 
-   - What version of GCC/Linux are you using (``gcc -v && uname -r``)?
+   - What version of GCC and Linux/BSD are you using (``gcc -v && uname -r``)?
    - What processor architecture are you using?
    - What did you do?
    - What did you expect to see?
-   - What did you see instead? 
+   - What did you see instead?
 ## At this point, you're ready to make your changes!

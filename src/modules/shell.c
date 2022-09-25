@@ -1,6 +1,10 @@
 #include <stdio.h>
+#include <stdlib.h>
+
 #include <unistd.h>
+
 #include <sys/types.h>
+
 #include <pwd.h>
 
 #include "./include/fetchme.h"
@@ -13,9 +17,9 @@ shell()
 
     if ((p = getpwuid(uid = geteuid())) == NULL) {
         perror("getpwuid() error");
-        return 1;
+        exit(EXIT_FAILURE);
     }
         printf("%sShell:\033[0m %s\n", \
                 color_distro(), p->pw_shell);
-        return 0;
+        return EXIT_SUCCESS;
 }

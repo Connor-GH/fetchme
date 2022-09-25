@@ -17,14 +17,16 @@ gpu_info()
     pci_init(pciaccess);
     pci_scan_bus(pciaccess);
 
-    for(dev = pciaccess->devices; dev; dev = dev->next) {
-        pci_fill_info(dev, 
+    for (dev = pciaccess->devices; dev; dev = dev->next) {
+        pci_fill_info(dev,
                 PCI_FILL_IDENT | PCI_FILL_BASES | PCI_FILL_CLASS);
 
-        pci_lookup_name(pciaccess, namebuf, sizeof(namebuf) - 1, 
-                PCI_LOOKUP_DEVICE, dev->vendor_id, dev->device_id);
-
-        /* This is only marginally a better solution. */
+        pci_lookup_name(pciaccess,
+                namebuf,
+                sizeof(namebuf) - 1,
+                PCI_LOOKUP_DEVICE,
+                dev->vendor_id,
+                dev->device_id);
 
         if (((strstr(namebuf, "Graphics")) != NULL) /* Intel or AMD/ATI */
                 || ((strstr(namebuf, "QXL")) != NULL) /* QEMU QXL */
@@ -42,13 +44,12 @@ gpu_info()
 
             for (size_t i = 0; i < strlen(namebuf); i++) {
 
-                if (!(namebuf[i] == '[' || namebuf[i] == ']')) 
+                if (!(namebuf[i] == '[' || namebuf[i] == ']'))
                     putchar(namebuf[i]);
             }
     /* brackets are now removed. print the newline and exit. */
     putchar('\n');
-    
-    
+
         }
     }
     pci_cleanup(pciaccess);

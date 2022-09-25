@@ -1,4 +1,6 @@
 #include <stdio.h>
+#include <stdlib.h>
+
 #include <X11/Xlib.h>
 #include <X11/extensions/Xrandr.h>
 
@@ -11,7 +13,7 @@ refresh_rate()
     Display *display = XOpenDisplay(NULL);
     Window default_root_window = XDefaultRootWindow(display);
 
-    /* 
+    /*
      * XRRGetScreenResourcesCurrent (horrible name)
      * was introduced in XRandr 1.3. (everyone should have this version)
      * It increases refresh rate detection performance by about 23 times
@@ -23,8 +25,8 @@ refresh_rate()
     XRRGetScreenResourcesCurrent(display, default_root_window);
 //  ~~~~~~~~~~~~~~~~~~~~~^^^^^^^
     RRMode active_mode_id = 0;
-    
-    for(int i = 0; i < screen_resources->ncrtc; ++i) {
+
+    for (int i = 0; i < screen_resources->ncrtc; ++i) {
         XRRCrtcInfo *crtc_info = \
         XRRGetCrtcInfo(display, \
             screen_resources, screen_resources->crtcs[i]);
@@ -49,6 +51,6 @@ refresh_rate()
 
     XCloseDisplay(display);
     XRRFreeScreenResources(screen_resources);
-    
-    return 0;
+
+    return EXIT_SUCCESS;
 }

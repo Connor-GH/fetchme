@@ -1,14 +1,17 @@
 #include <stdio.h>
+#include <stdlib.h>
+
 #include <sys/statvfs.h>
+
 #include "./include/fetchme.h"
 #include "./include/color.h"
 
 int
 disk()
 {
-    /* 
+    /*
      * When multi-drive filesystem
-     * usage is finished, this will be a 
+     * usage is finished, this will be a
      * `const char' instead of a `const char const'
      * to show that the value pointed to can change
      * (useful in an if-else statement for drives)
@@ -31,25 +34,27 @@ disk()
 
         if ((used > 1024L*1024*1024) && (used < 1024L*1024*1024*1024)) {
             unit = 'G';
-        }
-        else if ((used > 1024L*1024) && (used < 1024L*1024*1024)) {
+        } else if ((used > 1024L*1024) && (used < 1024L*1024*1024)) {
             unit = 'M';
-        }
-        else {
+        } else {
             unit = 'T';
         }
         printf("%sDisk:\033[0m %ld%c/%ld%c", \
-                color_distro(), (used/1024/1024/1024), \
-                unit, ((used/1024/1024/1024)+free/1024/1024/1024), unit);
+                color_distro(),
+                (used/1024/1024/1024),
+                unit,
+                ((used/1024/1024/1024) + free/1024/1024/1024),
+                unit);
 #ifdef DISK_PERCENT
         printf(" (%.0f%%)", \
-              (((float)(used/1024/1024/1024.)/(float)((used/1024/1024/1024)+free/1024/1024/1024.)) * 100));
-#endif
+              (((double)(used/1024/1024/1024.)
+                / (double)((used/1024/1024/1024.)+free/1024/1024/1024.))
+                * 100));
+#endif /* DISK_PERCENT */
         printf("\n");
-        }
-        else {
+        } else {
             fprintf(stderr, "Couldn't get file system statistics\n");
-            return 1;
+            exit(EXIT_FAILURE);
         }
-    return 0;
+    return EXIT_SUCCESS;
 }

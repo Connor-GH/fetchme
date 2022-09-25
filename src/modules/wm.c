@@ -7,7 +7,7 @@
 #include "./include/color.h"
 
 /*
- * Thank you to Nyctanthous for the 
+ * Thank you to Nyctanthous for the
  * original version of this function
  */
 
@@ -16,10 +16,10 @@ wm()
 {
 
     char lookup[128];
-    static const char *supported_wm[] = {
+    static const char *const supported_wm[] = {
         "fluxbox", "openbox", "blackbox",
         "xfwm4", "metacity", "kwin",
-        "twin", "icewm", "pekwm", 
+        "twin", "icewm", "pekwm",
         "flwm", "flwm_topside", "fvwm",
         "dwm", "awesome", "wmaker",
         "stumpwm", "musca", "xmonad.*",
@@ -33,25 +33,25 @@ wm()
         "2bwm", "echinus", "swm",
         "budgie-wm", "dtwm", "9wm",
         "chromeos-wm", "deepin-wm", "sway",
-        "mwm" 
+        "mwm"
     }; // this system is fragile but works very well
 
         FILE *fp = popen("ps x", "r");
-        if (fp == NULL) { 
+        if (fp == NULL) {
             fprintf(stderr, "Do you not have `ps'?\n");
-            return 1;
+            return EXIT_FAILURE;
         }
 
         while (fgets(lookup, sizeof(lookup) - 1, fp) != NULL) {
 
-            for(int i = 0; i < 49; i++) {
+            for (int i = 0; i < 49; i++) {
 
-                if(strstr(lookup, supported_wm[i]) != NULL) {
+                if (strstr(lookup, supported_wm[i]) != NULL) {
                     pclose(fp);
 
                     printf("%sWM:\033[0m %s\n", \
                             color_distro(), supported_wm[i]);
-                    return 0;
+                    return EXIT_SUCCESS;
                 }
             }
         }
@@ -59,5 +59,5 @@ wm()
     pclose(fp);
 
     fprintf(stderr, "Your WM was not found\n");
-    return 1;
+    return EXIT_FAILURE;
 }

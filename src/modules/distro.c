@@ -7,8 +7,8 @@
 #include "./include/fetchme.h"
 #include "./include/color.h"
 
-int 
-distro() 
+int
+distro()
 {
     struct utsname buffer;
 
@@ -22,7 +22,7 @@ distro()
         exit(EXIT_FAILURE);
     }
 
-    if(os_release == NULL) {
+    if (os_release == NULL) {
         perror("/etc/os-release");
         exit(EXIT_FAILURE);
     }
@@ -35,13 +35,13 @@ distro()
          * os name if needed.
          */
         sscanf(os_name, "%19[^=]=\"%49[^\"]", info_desc, os_name);
-        /* 
+        /*
          * only check the first 11 bytes for
          * PRETTY_NAME.
          */
-        if (strncmp(info_desc, "PRETTY_NAME", 11) == 0) { 
+        if (strncmp(info_desc, "PRETTY_NAME", 11) == 0) {
 
-            fclose(os_release); 
+            fclose(os_release);
             printf("%sOS:\033[0m %s %s\n", \
                 color_distro(), os_name, buffer.machine);
             return EXIT_SUCCESS;

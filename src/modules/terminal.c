@@ -15,14 +15,14 @@ terminal()
     for (size_t i = 0; environ[i] != NULL; i++) {
         char* eq = strchr(environ[i], '=');
 
-        if (eq == NULL) 
+        if (eq == NULL)
             exit(EXIT_FAILURE);
 
         *eq = '\0';
 
-        if (strcmp(environ[i], "TERM") == 0) {
+        if (strcmp(environ[i], "TERM") == 0)
             terminal_emulator = eq + 1;
-        }
+
         *eq = '=';
     }
     if (terminal_emulator == NULL) {
@@ -31,5 +31,5 @@ terminal()
     }
     printf("%sTerminal:\033[0m %s\n", \
             color_distro(), terminal_emulator);
-    return 0;
+    return EXIT_SUCCESS;
 }

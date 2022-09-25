@@ -1,52 +1,48 @@
 #include <stdio.h> // for those two printfs
-#include <string.h> 
+
 #include "./modules/include/color.h"
 #include "./modules/include/fetchme.h"
 
-/* 
+/*
  * the current state:
  *
- * - 1:1 features with the previous 
- *   version (repo private)
+ * - Feature improvements being worked on.
  *
- * - bug patching needed (as always)
- * - code style rework
  */
 
 int
 main(int argc, char *argv[])
 {
-    if (argc > 1)
-    {
-        if (argv[1][0] == '-')
-        {
-            switch (argv[1][1])
-            {
-                case 'v':
-                     printf("%s version %s\n", _PACKAGE_NAME, _PACKAGE_VERSION);
-                    break;
-                case 'h': /* fall through */
-                default:
-                    fprintf(stderr, 
-                        "Usage: \n"
-                        "\tfetchme [ -v ]\t\tPrint version info\n"
-                        "\tfetchme [ -h ]\t\tPrint this help message\n"
-                        "\tfetchme [ no options ]\tPrint system info\n"
-                        "\n\tFor more help, please consult the man page.\n");
-                    break;
+    if (argc > 1) {
+
+        if (argv[1][0] == '-') {
+
+            switch (argv[1][1]) {
+            case 'v':
+                printf("%s version %s\n", _PACKAGE_NAME, _PACKAGE_VERSION);
+                break;
+            case 'h': /* fall through */
+            default:
+                fprintf(stderr,
+                    "Usage: \n"
+                    "\tfetchme [ -v ]\t\tPrint version info\n"
+                    "\tfetchme [ -h ]\t\tPrint this help message\n"
+                    "\tfetchme [ no options ]\tPrint system info\n"
+                    "\n\tFor more help, please consult the man page.\n");
+                break;
             }
 
         }
         return 0;
     }
     // disable line wrapping.
-    // yes, I disabled 
+    // yes, I disabled
     // line wrapping for
     // something this simple.
 
     printf("\033[?7l");
-#ifdef USERNAME_HOSTNAME 
-    username_at_hostname(); 
+#ifdef USERNAME_HOSTNAME
+    username_at_hostname();
 #endif
 
 #ifdef DISTRO
