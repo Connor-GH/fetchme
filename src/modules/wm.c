@@ -14,50 +14,42 @@
 int
 wm()
 {
+	char lookup[128];
+	static const char *const supported_wm[] = {
+		"fluxbox",	"openbox",	   "blackbox",	   "xfwm4",
+		"metacity", "kwin",		   "twin",		   "icewm",
+		"pekwm",	"flwm",		   "flwm_topside", "fvwm",
+		"dwm",		"awesome",	   "wmaker",	   "stumpwm",
+		"musca",	"xmonad.*",	   "i3",		   "ratpoison",
+		"scrotwm",	"spectrwm",	   "wmfs",		   "wmii",
+		"beryl",	"subtle",	   "e16",		   "enlightenment",
+		"sawfish",	"emerald",	   "monsterwm",	   "dminiwm",
+		"compiz",	"Finder",	   "herbstluftwm", "howm",
+		"notion",	"bspwm",	   "cinnamon",	   "2bwm",
+		"echinus",	"swm",		   "budgie-wm",	   "dtwm",
+		"9wm",		"chromeos-wm", "deepin-wm",	   "sway",
+		"mwm"
+	}; // this system is fragile but works very well
 
-    char lookup[128];
-    static const char *const supported_wm[] = {
-        "fluxbox", "openbox", "blackbox",
-        "xfwm4", "metacity", "kwin",
-        "twin", "icewm", "pekwm",
-        "flwm", "flwm_topside", "fvwm",
-        "dwm", "awesome", "wmaker",
-        "stumpwm", "musca", "xmonad.*",
-        "i3", "ratpoison", "scrotwm",
-        "spectrwm", "wmfs", "wmii",
-        "beryl", "subtle", "e16",
-        "enlightenment", "sawfish", "emerald",
-        "monsterwm", "dminiwm", "compiz",
-        "Finder", "herbstluftwm", "howm",
-        "notion", "bspwm", "cinnamon",
-        "2bwm", "echinus", "swm",
-        "budgie-wm", "dtwm", "9wm",
-        "chromeos-wm", "deepin-wm", "sway",
-        "mwm"
-    }; // this system is fragile but works very well
+	FILE *fp = popen("ps x", "r");
+	if (fp == NULL) {
+		fprintf(stderr, "Do you not have `ps'?\n");
+		return EXIT_FAILURE;
+	}
 
-        FILE *fp = popen("ps x", "r");
-        if (fp == NULL) {
-            fprintf(stderr, "Do you not have `ps'?\n");
-            return EXIT_FAILURE;
-        }
+	while (fgets(lookup, sizeof(lookup) - 1, fp) != NULL) {
+		for (int i = 0; i < 49; i++) {
+			if (strstr(lookup, supported_wm[i]) != NULL) {
+				pclose(fp);
 
-        while (fgets(lookup, sizeof(lookup) - 1, fp) != NULL) {
+				printf("%sWM:\033[0m %s\n", color_distro(), supported_wm[i]);
+				return EXIT_SUCCESS;
+			}
+		}
+	}
 
-            for (int i = 0; i < 49; i++) {
+	pclose(fp);
 
-                if (strstr(lookup, supported_wm[i]) != NULL) {
-                    pclose(fp);
-
-                    printf("%sWM:\033[0m %s\n", \
-                            color_distro(), supported_wm[i]);
-                    return EXIT_SUCCESS;
-                }
-            }
-        }
-
-    pclose(fp);
-
-    fprintf(stderr, "Your WM was not found\n");
-    return EXIT_FAILURE;
+	fprintf(stderr, "Your WM was not found\n");
+	return EXIT_FAILURE;
 }

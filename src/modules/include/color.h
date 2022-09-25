@@ -1,6 +1,7 @@
 #ifndef COLOR_H
 #define COLOR_H
-const char *color_distro(void);
+const char *
+color_distro(void);
 #define RED     "\033[1;31m"
 #define GREEN   "\033[1;32m"
 #define YELLOW  "\033[1;33m"

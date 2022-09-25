@@ -1,45 +1,59 @@
 #ifndef FETCHME_H
 #define FETCHME_H
 #ifdef CPU
-int cpu_info(void);
+int
+cpu_info(void);
 #endif
 #ifdef DISK
-int disk(void);
+int
+disk(void);
 #endif
 #ifdef DISTRO
-int distro(void);
+int
+distro(void);
 #endif
 #ifdef GPU
-int gpu_info(void);
+int
+gpu_info(void);
 #endif
 #ifdef KERNEL
-int kernel(void);
+int
+kernel(void);
 #endif
 #ifdef MEMORY
-int memory_info(void);
+int
+memory_info(void);
 #endif
 #ifdef PACKAGE
-int package_count(void);
+int
+package_count(void);
 #endif
 #ifdef REFRESH_RATE
-int refresh_rate(void);
+int
+refresh_rate(void);
 #endif
 #ifdef RESOLUTION
-int resolution(void);
+int
+resolution(void);
 #endif
 #ifdef SHELL
-int shell(void);
+int
+shell(void);
 #endif
 #ifdef TERMINAL
-int terminal(void);
+int
+terminal(void);
 #endif
 #ifdef UPTIME
-int uptime_info(void);
+int
+uptime_info(void);
 #endif
 #ifdef USERNAME_HOSTNAME
-int username_at_hostname(void);
+int
+username_at_hostname(void);
 #endif
 #ifdef WM
-int wm(void);
+int
+wm(void);
 #endif
 #endif /* FETCHME_H */
