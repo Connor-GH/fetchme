@@ -3,53 +3,91 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include <X11/Xatom.h>
+#include <X11/Xlib.h>
+
 #include "./include/fetchme.h"
 #include "./include/color.h"
 
-/*
- * Thank you to Nyctanthous for the
- * original version of this function
- */
+static inline
+Window *list(Display *disp, unsigned long *len)
+{
+
+    Atom prop = XInternAtom(disp, "_NET_SUPPORTING_WM_CHECK", False), type;
+    int form;
+    unsigned long remain;
+    unsigned char *list;
+
+    XGetWindowProperty(disp, XDefaultRootWindow(disp), prop, 0, 1024, False, XA_WINDOW,
+                            &type, &form, len, &remain, &list);
+    return (Window *)list; // this has to be a Window * for when we run `name'
+}
+
+static inline
+char *name(Display *disp, Window window)
+{
+    Atom prop = XInternAtom(disp, "_NET_WM_NAME", False), type;
+    int form;
+    unsigned long remain, len;
+    unsigned char *list;
+
+    XGetWindowProperty(disp, window, prop, 0, 1024, False, AnyPropertyType,
+                            &type, &form, &len, &remain, &list);
+    return (char *)list;
+}
 
 int
 wm()
 {
-	char lookup[128];
-	static const char *const supported_wm[] = {
-		"fluxbox",	"openbox",	   "blackbox",	   "xfwm4",
-		"metacity", "kwin",		   "twin",		   "icewm",
-		"pekwm",	"flwm",		   "flwm_topside", "fvwm",
-		"dwm",		"awesome",	   "wmaker",	   "stumpwm",
-		"musca",	"xmonad.*",	   "i3",		   "ratpoison",
-		"scrotwm",	"spectrwm",	   "wmfs",		   "wmii",
-		"beryl",	"subtle",	   "e16",		   "enlightenment",
-		"sawfish",	"emerald",	   "monsterwm",	   "dminiwm",
-		"compiz",	"Finder",	   "herbstluftwm", "howm",
-		"notion",	"bspwm",	   "cinnamon",	   "2bwm",
-		"echinus",	"swm",		   "budgie-wm",	   "dtwm",
-		"9wm",		"chromeos-wm", "deepin-wm",	   "sway",
-		"mwm"
-	}; // this system is fragile but works very well
+	/*
+     *  Use the traditional method to get
+     *  window managers other than
+     *  ones based on X11
+     */
+	if (getenv("DISPLAY") == NULL) {
+		char lookup[128];
+		const char *const supported_wm[22] = {
+			"xfwm4",	 "metacity", "kwin",	  "twin", "musca",
+			"scrotwm",	 "beryl",	 "subtle",	  "e16",  "emerald",
+			"monsterwm", "dminiwm",	 "Finder",	  "howm", "notion",
+			"2bwm",		 "echinus",	 "budgie-wm", "dtwm", "chromeos-wm",
+			"deepin-wm", "sway",
 
-	FILE *fp = popen("ps x", "r");
-	if (fp == NULL) {
-		fprintf(stderr, "Do you not have `ps'?\n");
-		return EXIT_FAILURE;
-	}
+		}; // this system works as a backup to the X11 detection
 
-	while (fgets(lookup, sizeof(lookup) - 1, fp) != NULL) {
-		for (int i = 0; i < 49; i++) {
-			if (strstr(lookup, supported_wm[i]) != NULL) {
-				pclose(fp);
+		FILE *fp = popen("ps x", "r");
+		if (fp == NULL) {
+			fprintf(stderr, "Do you not have `ps'?\n");
+			return EXIT_FAILURE;
+		}
+		while (fgets(lookup, sizeof(lookup) - 1, fp) != NULL) {
+			for (int i = 0; i < 21; i++) {
+				if (strstr(lookup, supported_wm[i]) != NULL) {
+					pclose(fp);
 
-				printf("%sWM:\033[0m %s\n", color_distro(), supported_wm[i]);
-				return EXIT_SUCCESS;
+					printf("%sWM:\033[0m %s\n", color_distro(),
+						   supported_wm[i]);
+					return EXIT_SUCCESS;
+				}
 			}
 		}
+
+		pclose(fp);
+
+		fprintf(stderr, "Your WM was not found\n");
+		return EXIT_FAILURE;
+	} else {
+        Display *disp = XOpenDisplay(NULL);
+        unsigned long len;
+        Window *wlist = (Window*)list(disp, &len);
+        char *wname = name(disp, wlist[0]);
+
+
+        XFree(wlist);
+        printf("%sWM:\033[0m %s\n", color_distro(), wname);
+        free(wname);
+
+        XCloseDisplay(disp);
+        return EXIT_SUCCESS;
 	}
-
-	pclose(fp);
-
-	fprintf(stderr, "Your WM was not found\n");
-	return EXIT_FAILURE;
 }

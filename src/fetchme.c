@@ -1,4 +1,4 @@
-#include <stdio.h> // for those two printfs
+#include <stdio.h> // for those three printfs and one fprintf
 
 #include "./modules/include/color.h"
 #include "./modules/include/fetchme.h"

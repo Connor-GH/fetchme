@@ -8,14 +8,19 @@ int
 memory_info()
 {
 #define VALUE(x) (fscanf(fp, "%*99s %99s %*99s\n", x))
-	char total[100];
+#define ITER(x)                 \
+	for (int i = 0; i < x; i++) \
+		while ((c = fgetc(fp)) != '\n' && c != EOF)
+	/*	char total[100];
 	char freemem[100];
 	char buffers[100];
 	char cache[100];
 	char shared[100];
-	char reclaimable[100];
+	char reclaimable[100];*/
+	char total[100], freemem[100], buffers[100], cache[100], shared[100],
+		reclaimable[100];
 
-	float USED_RAM = 0.0;
+	double USED_RAM = 0.0;
 	int TOTAL_RAM = 0;
 	char MorG = 0;
 	int t, f, b, ca, s, r, c = 0;
@@ -36,15 +41,10 @@ memory_info()
 	VALUE(buffers);
 	VALUE(cache);
 
-	for (int i = 0; i < 15; i++)
-		while ((c = fgetc(fp)) != '\n' && c != EOF)
-			;
+	ITER(15);
 
 	VALUE(shared);
-
-	for (int i = 0; i < 2; i++)
-		while ((c = fgetc(fp)) != '\n' && c != EOF)
-			;
+	ITER(2);
 
 	VALUE(reclaimable);
 
@@ -62,28 +62,20 @@ memory_info()
 
 	sscanf(reclaimable, "%d", &r); //reclaimable
 
-	USED_RAM = (float)((t + s - f - b - ca - r) / 1000. / 1000.);
+	USED_RAM = ((t + s - f - b - ca - r) / 1000. / 1000.);
 
 	TOTAL_RAM = (t / 1000 / 1000);
 
 	if (USED_RAM < 1) {
 		MorG = 'M';
-		USED_RAM = (USED_RAM * 1000);
+		USED_RAM *= 1000.;
 	} else {
 		MorG = 'G';
 	}
 	printf("%s", color_distro());
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdouble-promotion"
-	/*
-     * explanation for pragma:
-     * we explicitly want to
-     * convert to double here.
-     * */
 	printf("Memory:\033[0m %.1f%c/%dG", USED_RAM, MorG, TOTAL_RAM);
 #ifdef MEMORY_PERCENT
-	printf(" (%.0f%%)", ((float)(t + s - f - b - ca - r) / (float)t) * 100);
-#pragma clang diagnostic pop
+	printf(" (%.0f%%)", ((double)(t + s - f - b - ca - r) / (double)t) * 100);
 #endif
 	printf("\n");
 

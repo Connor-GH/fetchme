@@ -26,25 +26,27 @@ color_distro()
 	sscanf(os_name, "\"%[^\"]", os_name); // get everything that isn't quotes
 	/* if statement for distro name */
 #ifndef CUSTOM_COLOR
-	if (strstr(os_name, "Gentoo") != NULL) {
+	if (strcmp(os_name, "Gentoo") == 0) {
 		return PURPLE;
-	} else if (strstr(os_name, "Debian") != NULL) {
+	} else if (strncmp(os_name, "Debian", 6) == 0) {
 		return RED;
-	} else if (strstr(os_name, "Void") != NULL) {
+	} else if (strncmp(os_name, "Void", 4) == 0) {
 		return "\033[1;38;5;34m";
-	} else if (strstr(os_name, "Ubuntu") != NULL) {
+	} else if (strncmp(os_name, "Ubuntu", 6) == 0) {
 		return "\033[1;38;5;202m";
-	} else if (strstr(os_name, "Solus") != NULL) {
+	} else if (strncmp(os_name, "Solus", 5) == 0) {
 		return BLUE;
-	} else if ((strstr(os_name, "Pop!_OS")) || (strstr(os_name, "popos")) ||
-			   (strstr(os_name, "pop_os")) != NULL) {
+	} else if ((strncmp(os_name, "Pop!_OS", 7)) ||
+            (strncmp(os_name, "popos", 5)) ||
+            (strncmp(os_name, "pop_os", 6)) == 0) {
 		return "\033[1;38;5;29m";
-	} else if ((strstr(os_name, "Mint")) || (strstr(os_name, "OpenSUSE")) ||
-			   (strstr(os_name, "openSUSE")) ||
-			   (strstr(os_name, "Manjaro")) != NULL) {
+	} else if ((strncmp(os_name, "Mint", 4)) ||
+            (strncmp(os_name, "OpenSUSE", 8)) ||
+            (strncmp(os_name, "openSUSE", 8)) ||
+            (strncmp(os_name, "Manjaro", 7)) == 0) {
 		return GREEN;
-	} else if ((strstr(os_name, "Arch")) ||
-			   (strstr(os_name, "Artix")) != NULL) {
+	} else if ((strncmp(os_name, "Arch", 4)) ||
+			   (strncmp(os_name, "Artix", 5)) == 0) {
 		return CYAN;
 	} else {
 		fprintf(stderr, "Exception: distro color not found.");

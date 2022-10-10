@@ -27,7 +27,7 @@ distro()
 		exit(EXIT_FAILURE);
 	}
 
-	while (fgets(os_name, sizeof os_name, os_release) != NULL) {
+	while (fgets(os_name, sizeof(os_name), os_release) != NULL) {
 		/*
          * get info of description, as well as
          * remove quotation marks from

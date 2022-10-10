@@ -1,8 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include <unistd.h>
-
 #include <sys/types.h>
 
 #include <pwd.h>
@@ -12,6 +10,8 @@
 int
 shell()
 {
+    extern uid_t getuid(void);
+    extern uid_t geteuid(void);
 	struct passwd *p;
 	uid_t uid;
 

@@ -9,7 +9,7 @@ cpu_info()
 {
 	// this long line is used to skip lines.
 #define ITER(x) \
-	(for (int i = 0; i < x; i++) while ((c = fgetc(cpu)) != '\n' && c != EOF))
+	for (int i = 0; i < x; i++) while ((c = fgetc(cpu)) != '\n' && c != EOF)
 
 	char brand[10]; // cpu brand
 	char lineup[10]; // lineup (Ryzen, Core, Xeon, Epyc, etc)

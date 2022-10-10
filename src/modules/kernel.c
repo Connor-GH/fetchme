@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <errno.h>
 
 #include <sys/utsname.h>
 
@@ -11,7 +10,6 @@ int
 kernel()
 {
 	struct utsname buffer;
-	errno = 0;
 	if (uname(&buffer) < 0) {
 		perror("uname");
 		exit(EXIT_FAILURE);

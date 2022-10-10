@@ -27,8 +27,8 @@ gpu_info()
 			|| ((strstr(namebuf, "QXL")) != NULL) /* QEMU QXL */
 			|| ((strstr(namebuf, "Virtio GPU")) != NULL) /* QEMU Virtio */
 			|| ((strstr(namebuf, "VMware SVGA")) != NULL) /* VMware */
-			|| ((strstr(namebuf, "VirtualBox Graphics Adapter")) != NULL) ||
-			((strstr(namebuf, "Radeon")) != NULL) /* AMD/ATI */
+			|| ((strstr(namebuf, "VirtualBox Graphics Adapter")) != NULL)
+            || ((strstr(namebuf, "Radeon")) != NULL) /* AMD/ATI */
 			|| ((strstr(namebuf, "Tesla")) != NULL) /* NVIDIA */
 			|| ((strstr(namebuf, "Quadro")) != NULL) /* NVIDIA */
 			|| ((strstr(namebuf, "GeForce")) != NULL)) { /* NVIDIA */
