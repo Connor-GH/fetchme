@@ -7,9 +7,9 @@ SOURCES = $(SRCDIR)/fetchme.c $(SRCDIR)/modules/color.c
 
 # comment modules out to not build or include them
 
-# if you want to define a custom color instead 
+# if you want to define a custom color instead
 # of a distro-chosen one, you do it here.
-# uncomment both lines and choose your color 
+# uncomment both lines and choose your color
 # on the second one.
 # your options are below.
 RED   	=\"\\033[1\;31m\"
@@ -77,16 +77,16 @@ ifneq (,$(filter $(M_SHELL),Y y))
 	SOURCES += $(SRCDIR)/modules/shell.c
 endif
 
-# resolution the screen is using. detected from libx11. 
+# resolution the screen is using. detected from libx11.
 # resolution does not work on TTY.
 ifneq (,$(filter $(M_RESOLUTION),Y y))
 	MODULES += -DRESOLUTION
 	SOURCES += $(SRCDIR)/modules/resolution.c
 	M_LFLAGS += -lX11
 # refresh rate the screen is using. detected from libxrandr.
-# refresh rate is dependant on the resolution module, so 
+# refresh rate is dependant on the resolution module, so
 # you will need both if you want refresh rate.
-# the resolution module is not dependant on refresh rate though, 
+# the resolution module is not dependant on refresh rate though,
 # so you can use it by itself. refresh rate does not work on TTY.
 ifneq (,$(filter $(M_REFRESH_RATE),Y y))
 	MODULES += -DREFRESH_RATE
@@ -95,11 +95,12 @@ ifneq (,$(filter $(M_REFRESH_RATE),Y y))
 endif
 endif # RESOLUTION
 
-# window manager detection. detects the window manager of 
+# window manager detection. detects the window manager of
 ## KDE, for example, as KWin.
 ifneq (,$(filter $(M_WM),Y y))
 	MODULES += -DWM
 	SOURCES += $(SRCDIR)/modules/wm.c
+	M_LFLAGS += -lX11
 endif
 
 # what terminal emulator is in $TERM.
