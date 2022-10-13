@@ -5,7 +5,7 @@ INSTALLBINDIR=${PREFIX}/bin
 
 include config_backend.mk
 TARGET 	 = fetchme
-VERSION  = 1.3
+VERSION  = 1.4
 
 
 
