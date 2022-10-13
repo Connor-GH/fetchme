@@ -1,16 +1,19 @@
 #define _POSIX_C_SOURCE 2
 #include <stdio.h>
 #include <stdlib.h>
+#ifdef WAYLAND
 #include <string.h>
-
+#else
 #include <X11/Xatom.h>
 #include <X11/Xlib.h>
+#endif
 
 #include "./include/fetchme.h"
 #include "./include/color.h"
+#ifndef WAYLAND
 
-static inline
-Window *list(Display *disp, unsigned long *len)
+static inline Window *
+list(Display *disp, unsigned long *len)
 {
 
     Atom prop = XInternAtom(disp, "_NET_SUPPORTING_WM_CHECK", False), type;
@@ -23,8 +26,8 @@ Window *list(Display *disp, unsigned long *len)
     return (Window *)list; // this has to be a Window * for when we run `name'
 }
 
-static inline
-char *name(Display *disp, Window window)
+static inline char *
+name(Display *disp, Window window)
 {
     Atom prop = XInternAtom(disp, "_NET_WM_NAME", False), type;
     int form;
@@ -36,6 +39,9 @@ char *name(Display *disp, Window window)
     return (char *)list;
 }
 
+#endif /* ifndef WAYLAND */
+
+
 int
 wm()
 {
@@ -44,14 +50,14 @@ wm()
      *  window managers other than
      *  ones based on X11
      */
-	if (getenv("DISPLAY") == NULL) {
+#ifdef WAYLAND
 		char lookup[128];
 		const char *const supported_wm[22] = {
 			"xfwm4",	 "metacity", "kwin",	  "twin", "musca",
 			"scrotwm",	 "beryl",	 "subtle",	  "e16",  "emerald",
 			"monsterwm", "dminiwm",	 "Finder",	  "howm", "notion",
 			"2bwm",		 "echinus",	 "budgie-wm", "dtwm", "chromeos-wm",
-			"deepin-wm", "sway",
+			"deepin-wm", "sway"
 
 		}; // this system works as a backup to the X11 detection
 
@@ -76,7 +82,9 @@ wm()
 
 		fprintf(stderr, "Your WM was not found\n");
 		return EXIT_FAILURE;
-	} else {
+#endif /* ifdef WAYLAND */
+
+#ifndef WAYLAND
         Display *disp = XOpenDisplay(NULL);
         unsigned long len;
         Window *wlist = (Window*)list(disp, &len);
@@ -89,5 +97,5 @@ wm()
 
         XCloseDisplay(disp);
         return EXIT_SUCCESS;
-	}
+#endif /* ifndef WAYLAND */
 }

@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include "./include/fetchme.h"
 #include "./include/color.h"
@@ -34,7 +35,11 @@ cpu_info()
 		exit(EXIT_FAILURE);
 	}
 	ITER(4);
-
+    /*
+     * TODO: this code will eventually
+     * be changed to filter out and remove
+     * words like `CPU' and `Processor'
+     */
 	fscanf(cpu, "%*9s %*9s \t: %9s %9s %9s %9s", brand, lineup, sublineup,
 		   model_num);
 #if defined(CPU_FREQUENCY) || defined(CPU_THREADS) || defined(CPU_TEMP)
@@ -61,9 +66,17 @@ cpu_info()
 		TEMP = (x2 / 1000.);
 	}
 #endif /* CPU_TEMP */
-
-	printf("%sCPU:\033[0m %s %s %s %s", color_distro(), brand, lineup,
+    if (strcmp(sublineup, "CPU") == 0)
+	    printf("%sCPU:\033[0m %s %s %s", color_distro(), brand,
+                lineup, model_num);
+    else if (strcmp(model_num, "CPU") == 0)
+	    printf("%sCPU:\033[0m %s %s %s", color_distro(), brand, lineup,
+		   sublineup);
+    else
+	    printf("%sCPU:\033[0m %s %s %s %s", color_distro(), brand, lineup,
 		   sublineup, model_num);
+
+
 
 #ifdef CPU_THREADS
 	printf(" (%s)", threads);

@@ -43,6 +43,7 @@ M_REFRESH_RATE=y
 
 # Might work with FreeBSD
 M_WM=y
+# M_WM_WAYLAND=y
 
 # Works with FreeBSD
 M_TERMINAL=y

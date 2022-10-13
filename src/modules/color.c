@@ -36,6 +36,8 @@ color_distro()
 		return "\033[1;38;5;202m";
 	} else if (strncmp(os_name, "Solus", 5) == 0) {
 		return BLUE;
+	} else if (strncmp(os_name, "Alpine", 6) == 0) {
+		return PURPLE;
 	} else if ((strncmp(os_name, "Pop!_OS", 7)) ||
             (strncmp(os_name, "popos", 5)) ||
             (strncmp(os_name, "pop_os", 6)) == 0) {

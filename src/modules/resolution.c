@@ -25,7 +25,7 @@ resolution()
 #ifdef REFRESH_RATE
 	/*
      * Comment or uncomment the define line
-     * in config.h for refresh rate
+     * in config.mk for refresh rate
      */
 	printf(" @");
 #else

@@ -100,7 +100,11 @@ endif # RESOLUTION
 ifneq (,$(filter $(M_WM),Y y))
 	MODULES += -DWM
 	SOURCES += $(SRCDIR)/modules/wm.c
+ifeq (,$(filter $(M_WM_WAYLAND), Y y))
 	M_LFLAGS += -lX11
+else
+	MODULES += -DWAYLAND
+endif
 endif
 
 # what terminal emulator is in $TERM.

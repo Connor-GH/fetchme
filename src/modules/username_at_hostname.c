@@ -40,7 +40,7 @@ username_at_hostname()
 
 	/* if this is true, we know that
      * username is a sane size */
-	if (!(strlen(pwd->pw_name) >= 100)) {
+	if (strlen(pwd->pw_name) < 100) {
 		const char *const color = color_distro();
 		printf("%s%s\033[0m@%s%s\033[0m\n",
                 color, pwd->pw_name, color, hostname_value);

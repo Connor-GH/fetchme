@@ -11,19 +11,14 @@ memory_info()
 #define ITER(x)                 \
 	for (int i = 0; i < x; i++) \
 		while ((c = fgetc(fp)) != '\n' && c != EOF)
-	/*	char total[100];
-	char freemem[100];
-	char buffers[100];
-	char cache[100];
-	char shared[100];
-	char reclaimable[100];*/
 	char total[100], freemem[100], buffers[100], cache[100], shared[100],
 		reclaimable[100];
 
 	double USED_RAM = 0.0;
 	int TOTAL_RAM = 0;
 	char MorG = 0;
-	int t, f, b, ca, s, r, c = 0;
+	int t = 0, f = 0, b = 0,
+        ca = 0, s = 0, r = 0, c;
 
 	FILE *fp = fopen("/proc/meminfo", "r");
 	if (fp == NULL) {
