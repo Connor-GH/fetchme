@@ -19,10 +19,11 @@ list(Display *disp, unsigned long *len)
     Atom prop = XInternAtom(disp, "_NET_SUPPORTING_WM_CHECK", False), type;
     int form;
     unsigned long remain;
-    unsigned char *list;
+    //unsigned char *list;
+    unsigned long *list;
 
     XGetWindowProperty(disp, XDefaultRootWindow(disp), prop, 0, 1024, False, XA_WINDOW,
-                            &type, &form, len, &remain, &list);
+                            &type, &form, len, &remain, (unsigned char **)&list);
     return (Window *)list; // this has to be a Window * for when we run `name'
 }
 

@@ -14,11 +14,13 @@ shell()
     extern uid_t geteuid(void);
 	struct passwd *p;
 	uid_t uid;
+    char shell[20];
 
 	if ((p = getpwuid(uid = geteuid())) == NULL) {
 		perror("getpwuid() error");
 		exit(EXIT_FAILURE);
 	}
-	printf("%sShell:\033[0m %s\n", color_distro(), p->pw_shell);
+    sscanf(p->pw_shell, "/bin/%19s", shell);
+	printf("%sShell:\033[0m %s\n", color_distro(), shell);
 	return EXIT_SUCCESS;
 }
