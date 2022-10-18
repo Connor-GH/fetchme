@@ -35,18 +35,6 @@ main(int argc, char *argv[])
 	// yes, I disabled
 	// line wrapping for
 	// something this simple.
-#include <time.h>
-#define FE \
-        end = clock();\
-        cpu_time_used = ((double) (end - start)) / CLOCKS_PER_SEC; \
-        printf("New implementation took: %.4f\n", cpu_time_used);
-#define FS \
-        start = clock();\
-        for (int i = 0; i < 300; i++)
-
-    clock_t start, end;
-    double cpu_time_used;
-
 	printf("\033[?7l");
 
 

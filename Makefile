@@ -1,5 +1,5 @@
 TOPDIR 	:=  ./src
-IVAR 	:=  -I. -I $(TOPDIR)/include/
+IVAR 	:=  -I. -I$(TOPDIR)/include/
 PREFIX	 =  /usr
 INSTALLBINDIR=${PREFIX}/bin
 
@@ -23,23 +23,27 @@ WFLAGS = -Wall -Wextra -Wpedantic -Wshadow -Wvla -Wpointer-arith -Wwrite-strings
 
 WNOFLAGS= -Wno-unknown-pragmas -Wno-unused-result
 
-CFLAGS	= -march=native -O2 -fno-exceptions -fno-asynchronous-unwind-tables
+CFLAGS	= -march=native -O2
 
-LFLAGS  = -Wl,--strip-all -Wl, -O3
+LFLAGS  = -Wl,--strip-all -Wl,-O3
 
 # detect if the user chose GCC or Clang
+ifeq ($(CC),cc)
+	CC		= gcc
+	CFLAGS += $(WGCC)
+	LINKER 	= gcc
+endif # CC
+
 ifeq ($(CC),gcc)
 
 	CC  	= gcc
 	CFLAGS += $(WGCC)
 	LINKER 	= gcc
-
 ifeq ($(DEBUG),true)
 	# gcc-specific security/debug flags
 	WGCC   += -fanalyzer
 	CFLAGS	= -ggdb $(WGCC)
 	LFLAGS  =
-
 endif #debug
 
 else ifeq ($(CC),clang) # clang can be marginally slower
@@ -57,7 +61,6 @@ ifeq ($(DEBUG),true)
 	CFLAGS	= -gdwarf-4 -Weverything -mspeculative-load-hardening -mretpoline
 	LFLAGS  = -fsanitize=address
 endif #debug
-
 endif #compiler
 ifeq ($(DEBUG),true)
 	# generic security/debug flags
@@ -71,7 +74,7 @@ endif
 CFLAGS += -D_PACKAGE_NAME=\"$(TARGET)\" -D_PACKAGE_VERSION=\"$(VERSION)\" \
 		  $(MODULES) \
 		  -std=c99 -pipe -m64 -flto -fopenmp -falign-functions=16 $(WFLAGS) $(WNOFLAGS) $(IVAR)
-LFLAGS += $(IVAR) $(M_LFLAGS) -flto
+LFLAGS += $(IVAR) $(M_LFLAGS) -flto -L/usr/local/lib -Wl,-rpath /usr/local/lib
 
 
 OBJDIR   = 	obj
