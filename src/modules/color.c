@@ -1,14 +1,35 @@
+#ifndef CUSTOM_COLOR
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#endif
 
 #include "include/color.h"
 
 const char *
 color_distro()
 {
+#ifndef CUSTOM_COLOR
 	char os_name[50];
 	FILE *os_release = fopen("/etc/os-release", "r");
+
+    const char *const supported_distros[15] = {
+        "Gentoo", "Debian", "Void", "Ubuntu", "Solus",
+        "Alpine", "Mint", "Arch", "Artix", "OpenSUSE",
+        "openSUSE", "Manjaro", "popos", "pop_os", "Pop!_OS"
+    };
+
+    const char *const distro_colors[15] = {
+        PURPLE, RED, "\033[1;38;5;34m", "\033[1;38;5;202m",BLUE,
+        PURPLE, GREEN, CYAN, CYAN, GREEN,
+        GREEN, GREEN, "\033[1;38;5;29m", "\033[1;38;5;29m", "\033[1;38;5;29m"
+    };
+
+    const unsigned long distro_length[15] = {
+        6, 6, 4, 6, 5,
+        6, 4, 4, 5, 8,
+        8, 7, 5, 6, 7
+    };
 
 	if (os_release == NULL) {
 		perror("/etc/os-release");
@@ -23,37 +44,15 @@ color_distro()
      * remove quotation marks from
      * os name if needed.
      */
-	sscanf(os_name, "\"%[^\"]", os_name); // get everything that isn't quotes
-	/* if statement for distro name */
-#ifndef CUSTOM_COLOR
-	if (strcmp(os_name, "Gentoo") == 0) {
-		return PURPLE;
-	} else if (strncmp(os_name, "Debian", 6) == 0) {
-		return RED;
-	} else if (strncmp(os_name, "Void", 4) == 0) {
-		return "\033[1;38;5;34m";
-	} else if (strncmp(os_name, "Ubuntu", 6) == 0) {
-		return "\033[1;38;5;202m";
-	} else if (strncmp(os_name, "Solus", 5) == 0) {
-		return BLUE;
-	} else if (strncmp(os_name, "Alpine", 6) == 0) {
-		return PURPLE;
-	} else if ((strncmp(os_name, "Pop!_OS", 7)) ||
-            (strncmp(os_name, "popos", 5)) ||
-            (strncmp(os_name, "pop_os", 6)) == 0) {
-		return "\033[1;38;5;29m";
-	} else if ((strncmp(os_name, "Mint", 4)) ||
-            (strncmp(os_name, "OpenSUSE", 8)) ||
-            (strncmp(os_name, "openSUSE", 8)) ||
-            (strncmp(os_name, "Manjaro", 7)) == 0) {
-		return GREEN;
-	} else if ((strncmp(os_name, "Arch", 4)) ||
-			   (strncmp(os_name, "Artix", 5)) == 0) {
-		return CYAN;
-	} else {
-		fprintf(stderr, "Exception: distro color not found.");
-		exit(EXIT_FAILURE);
-	}
+	sscanf(os_name, "\"%[^\"]", os_name);
+	/* Iterate arrays of distro info. If one is right, return it. */
+
+    for (int i = 0; i < 14; i++) {
+        if (strncmp(os_name, supported_distros[i], distro_length[i]) == 0)
+            return distro_colors[i];
+    }
+	fprintf(stderr, "Exception: distro color not found.");
+	exit(EXIT_FAILURE);
 #endif
 #ifdef CUSTOM_COLOR
 	return CUSTOM_COLOR_VALUE;

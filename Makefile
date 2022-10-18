@@ -25,7 +25,7 @@ WNOFLAGS= -Wno-unknown-pragmas -Wno-unused-result
 
 CFLAGS	= -march=native -O2 -fno-exceptions -fno-asynchronous-unwind-tables
 
-LFLAGS  = -Wl,--strip-all -Wl,-O3
+LFLAGS  = -Wl,--strip-all -Wl, -O3
 
 # detect if the user chose GCC or Clang
 ifeq ($(CC),gcc)
@@ -65,7 +65,7 @@ ifeq ($(DEBUG),true)
 	WFLAGS += -fomit-frame-pointer -fstack-clash-protection -D_FORTIFY_SOURCE=2 \
 			  -fcf-protection -fstack-protector-all -fexceptions -fasynchronous-unwind-tables \
 			  -Werror=format-security -D_DEBUG -fno-builtin-malloc -fno-builtin-calloc -fno-builtin
-	LFLAGS += -fPIE -pie -Wl,-z,relro -Wl,--as-needed -Wl,-z,now -Wl,-z,noexecstack
+	LFLAGS += -fPIE -Wl,-z,relro -Wl,--as-needed -Wl,-z,now -Wl,-z,noexecstack
 endif
 
 CFLAGS += -D_PACKAGE_NAME=\"$(TARGET)\" -D_PACKAGE_VERSION=\"$(VERSION)\" \
@@ -88,6 +88,9 @@ $(TARGET):
 	mkdir -p obj/modules
 	mkdir -p bin/
 	@# compile with multiple threads, then link.
+	@echo -e "\n\n\nCC =\t$(CC)"
+	@echo -e "LD =\t$(LINKER)"
+	@echo -e "CFLAGS =\t$(CFLAGS)\n\n\n"
 	$(MAKE) $(OBJECTS)
 	$(MAKE) link
 

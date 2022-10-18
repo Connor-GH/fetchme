@@ -19,45 +19,50 @@ gpu_info()
 	pciaccess = pci_alloc();
 	pci_init(pciaccess);
 	pci_scan_bus(pciaccess);
+    pciaccess->id_lookup_mode = PCI_LOOKUP_CLASS;
 
 	for (dev = pciaccess->devices; dev; dev = dev->next) {
-		pci_fill_info(dev, PCI_FILL_IDENT);
 
-		pci_lookup_name(pciaccess, namebuf, sizeof(namebuf) - 1,
-						PCI_LOOKUP_DEVICE, dev->vendor_id, dev->device_id);
+        pci_fill_info(dev, PCI_FILL_CLASS);
 
-		if (((strstr(namebuf, "Graphics")) != NULL) /* Intel or AMD/ATI */
-			|| ((strstr(namebuf, "QXL")) != NULL) /* QEMU QXL */
-			|| ((strstr(namebuf, "Virtio GPU")) != NULL) /* QEMU Virtio */
-			|| ((strstr(namebuf, "VMware SVGA")) != NULL) /* VMware */
-			|| ((strstr(namebuf, "VirtualBox Graphics Adapter")) != NULL)
-            || ((strstr(namebuf, "Radeon")) != NULL) /* AMD/ATI */
-			|| ((strstr(namebuf, "Tesla")) != NULL) /* NVIDIA */
-			|| ((strstr(namebuf, "Quadro")) != NULL) /* NVIDIA */
-			|| ((strstr(namebuf, "GeForce")) != NULL)) { /* NVIDIA */
+        /*
+         * We can use a shortcut here. if dev->device_class is
+         * 768, we know that a result of pci_lookup_name will be
+         * VGA Compatable Controller; therefore, we can save a
+         * call to pci_lookup_name. The same logic can be applied
+         * for vendor_id and device_id, bit it would require a
+         * large lookup table for the numbers. At that point, it
+         * is easier just to call the function.
+         */
+        if (dev->device_class != 768)
+            continue;
 
-			printf("%sGPU:\033[0m ", color_distro());
+        /* only fill in the info that we need to */
+        pci_fill_info(dev, PCI_FILL_IDENT);
+        pciaccess->id_lookup_mode = PCI_LOOKUP_CACHE;
 
-			/* the following lines are simply to remove brackets, */
-            src = dest = namebuf;
-            while (*src != '\0') {
-                if (*src != '[') {
-                    *dest = *src;  // copy the char at source to destination
-                    dest++;
-                }
-                src++;             // increment source pointer
-                if (*src != ']') {
-                    *dest = *src;
-                    dest++;
-                }
-                src++;
+        pci_lookup_name(pciaccess, namebuf, sizeof(namebuf),
+			 PCI_LOOKUP_DEVICE,
+			 dev->vendor_id, dev->device_id);
+
+		/* the following lines remove brackets */
+        src = dest = namebuf;
+        while (*src != '\0') {
+            if (!(*src == '[' || *src == ']')) {
+                *dest = *src;  /* copy the char at src to dest */
+                dest++;
             }
-            *dest = '\0';          // terminate string with null terminator
+            src++;             /* increment source pointer */
+        }
+        *dest = '\0';          /* terminate string with NUL */
 
+		printf("%sGPU:\033[0m %s\n", /* print the final result */
+                color_distro(), namebuf);
 
-            printf("%s\n", namebuf);
-		}
+	    pci_cleanup(pciaccess);
+	    return EXIT_SUCCESS;
 	}
-	pci_cleanup(pciaccess);
-	return EXIT_SUCCESS;
+    pci_cleanup(pciaccess);
+    fprintf(stderr, "Unable to find GPU\n");
+    exit(EXIT_FAILURE);
 }
