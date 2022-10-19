@@ -1,6 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
+#if defined(__linux__) && !defined(__FreeBSD__)
 #include <string.h>
+#else
+#include <sys/sysctl.h>
+#endif /* string.h or sysctl.h */
 
 #include "./include/fetchme.h"
 #include "./include/color.h"
@@ -8,9 +12,11 @@
 int
 cpu_info()
 {
+#if defined(__linux__) && !defined(__FreeBSD__)
 	// this long line is used to skip lines.
-#define ITER(x) \
-	for (int i = 0; i < x; i++) while ((c = fgetc(cpu)) != '\n' && c != EOF)
+#define ITER(x)                 \
+	for (int i = 0; i < x; i++) \
+		while ((c = fgetc(cpu)) != '\n' && c != EOF)
 
 	char brand[10]; // cpu brand
 	char lineup[10]; // lineup (Ryzen, Core, Xeon, Epyc, etc)
@@ -35,7 +41,7 @@ cpu_info()
 		exit(EXIT_FAILURE);
 	}
 	ITER(4);
-    /*
+	/*
      * TODO: this code will eventually
      * be changed to filter out and remove
      * words like `CPU' and `Processor'
@@ -66,17 +72,15 @@ cpu_info()
 		TEMP = (x2 / 1000.);
 	}
 #endif /* CPU_TEMP */
-    if (strcmp(sublineup, "CPU") == 0)
-	    printf("%sCPU:\033[0m %s %s %s", color_distro(), brand,
-                lineup, model_num);
-    else if (strcmp(model_num, "CPU") == 0)
-	    printf("%sCPU:\033[0m %s %s %s", color_distro(), brand, lineup,
-		   sublineup);
-    else
-	    printf("%sCPU:\033[0m %s %s %s %s", color_distro(), brand, lineup,
-		   sublineup, model_num);
-
-
+	if (strcmp(sublineup, "CPU") == 0)
+		printf("%sCPU:\033[0m %s %s %s", color_distro(), brand, lineup,
+			   model_num);
+	else if (strcmp(model_num, "CPU") == 0)
+		printf("%sCPU:\033[0m %s %s %s", color_distro(), brand, lineup,
+			   sublineup);
+	else
+		printf("%sCPU:\033[0m %s %s %s %s", color_distro(), brand, lineup,
+			   sublineup, model_num);
 
 #ifdef CPU_THREADS
 	printf(" (%s)", threads);
@@ -88,5 +92,20 @@ cpu_info()
 	printf(" (%.1f°C)", TEMP);
 #endif /* CPU_TEMP */
 	printf("\n");
+#else /* linux */
+    int mib[2];
+    char *cpu_name;
+    size_t len;
+    mib[0] = CTL_HW;
+    mib[1] = HW_MODEL;
+    sysctl(mib, 2, NULL, &len, NULL, 0);
+    cpus = malloc(len);
+    if (sysctl(mib, 2, cpus, &len, NULL, 0) != 0) {
+        perror("sysctl");
+        exit(EXIT_FAILURE);
+    }
+    printf("%sCPU: \033[0m%s\n", color_distro(), cpu_name);
+    free(cpu_name);
+#endif /* FreeBSD */
 	return EXIT_SUCCESS;
 }

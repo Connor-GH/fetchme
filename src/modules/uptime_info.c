@@ -25,16 +25,16 @@ uptime_info()
 
 	sscanf(uptime, "%f", &uptime_f);
 
-    min = ((int)(uptime_f) / 60) % 60;
+	min = ((int)(uptime_f) / 60) % 60;
 	printf("%sUptime:\033[0m %d hours, %d mins\n", color_distro(),
 		   (int)(uptime_f / 3600), min);
 #endif
 #if defined(__FreeBSD__) && !defined(__linux__)
-    struct timespec time_spec;
-    if (clock_gettime(CLOCK_UPTIME_PRECISE, &time_spec) != 0)
-        return EXIT_SUCCESS;
+	struct timespec time_spec;
+	if (clock_gettime(CLOCK_UPTIME_PRECISE, &time_spec) != 0)
+		return EXIT_SUCCESS;
 
-    unsigned long uptime = time_spec.tv_sec;
+	unsigned long uptime = time_spec.tv_sec;
 	printf("%sUptime:\033[0m %d hours, %d mins\n", color_distro(),
 		   uptime / 3600, (uptime / 60) % 60);
 #endif

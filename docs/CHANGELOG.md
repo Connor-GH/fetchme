@@ -1,10 +1,11 @@
 ## Changelog
-- Added automatic man page installation/uninstallation
-- updated documentation to get rid of mentions of cppcheck (clang does most of what it does)
 
+- Improved GPU detection - ALL gpus are now detected.
+- Improved shell detection - shell is now detected from the environment variable instead of using ``unistd.h``
 
 # older changes
 
+Added automatic man page installation/uninstallation
 
 Improved memory usage detection to be more accurate (now there is a ~1% delta between ``free -h --si`` and this program)
 
@@ -20,21 +21,12 @@ added automatic color detection based on distro
 
 added ``CUSTOM_COLOR`` and ``CUSTOM_COLOR_VALUE`` macros to replace the ``COLOR`` macro
 
-removed some (harmless) compiler warnings about formatting with types that were ``size_t``
-
 removed every Variable Length Array (hooray!)
-
-fixed a (rather useless) format specifier "bug" in package_count.c 
 
 upgraded default build optimization to ``-O2`` with ``-flto``
 
 moved some debugging features to DEBUG=true instead of being default in the build.
 
-
-codebase moved to c99 instead of gnu99
-
-Dependencies to X have been added back (but are not needed if you disable the modules in the config and edit the makefile).
-These dependencies were for the display size and refresh rate modules. (You will still need the libpci dependency to get GPU detection.)
 
 
 The project's code style guidelines will be posted if requested.

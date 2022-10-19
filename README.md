@@ -7,17 +7,17 @@ download with:
 
 ``git clone https://github.com/Connor-GH/fetchme``
 
-compile with:
-
 ``cd fetchme``
 
-# [Do you want to compile with gcc?]
+compile with:
 
-``make CC=gcc -j$(nproc)``, or on FreeBSD, ``gmake CC=gcc -j`` (gcc is more likely to work on FreeBSD versus Clang)
+# [gcc]
 
-# [Do you want to compile with clang?]
+``make CC=gcc -j$(nproc)``, or on FreeBSD, ``gmake CC=gcc -j``
 
-``make CC=clang -j$(nproc)``, or on FreeBSD, ``gmake CC=clang -j``
+# [clang]
+
+``make CC=clang -j$(nproc)``, or on FreeBSD, ``gmake CC=clang LINKER=clang -j``
 
 or to install it to /usr/bin:
 
@@ -42,8 +42,10 @@ read the changelog
 - gmake
 
 # Optional Dependencies
+[access to ``make format``]
+- clang-format
 
-[Debugging] 
+[Debugging]
 - valgrind, gdb, etc
 
 [Resolution detection]

@@ -15,9 +15,9 @@ package_count()
 #if defined(__linux__)
 	glob_t globbuf;
 	if ((glob("/var/lib/pacman/local/*", GLOB_NOSORT, NULL,
-			 &globbuf) == 0)            // arch-based
-    || (glob("/var/db/pkg/*/*", GLOB_NOSORT, NULL,
-					&globbuf) == 0)) {  // portage-based
+			  &globbuf) == 0) // arch-based
+		|| (glob("/var/db/pkg/*/*", GLOB_NOSORT, NULL,
+				 &globbuf) == 0)) { // portage-based
 		PKG_COUNT = globbuf.gl_pathc;
 
 	} else {

@@ -131,3 +131,6 @@ uninstall:
 	@echo "Exectuable removed!"
 	rm /usr/share/man/man1/fetchme.1.bz2
 	@echo "Man page uninstalled!"
+
+format:
+	@find . -iname *.h -o -iname *.c | xargs clang-format -style=file:.clang-format -i

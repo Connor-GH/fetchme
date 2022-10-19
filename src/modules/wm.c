@@ -15,33 +15,32 @@
 static inline Window *
 list(Display *disp, unsigned long *len)
 {
+	Atom prop = XInternAtom(disp, "_NET_SUPPORTING_WM_CHECK", False), type;
+	int form;
+	unsigned long remain;
+	//unsigned char *list;
+	unsigned long *list;
 
-    Atom prop = XInternAtom(disp, "_NET_SUPPORTING_WM_CHECK", False), type;
-    int form;
-    unsigned long remain;
-    //unsigned char *list;
-    unsigned long *list;
-
-    XGetWindowProperty(disp, XDefaultRootWindow(disp), prop, 0, 1024, False, XA_WINDOW,
-                            &type, &form, len, &remain, (unsigned char **)&list);
-    return (Window *)list; // this has to be a Window * for when we run `name'
+	XGetWindowProperty(disp, XDefaultRootWindow(disp), prop, 0, 1024, False,
+					   XA_WINDOW, &type, &form, len, &remain,
+					   (unsigned char **)&list);
+	return (Window *)list; // this has to be a Window * for when we run `name'
 }
 
 static inline char *
 name(Display *disp, Window window)
 {
-    Atom prop = XInternAtom(disp, "_NET_WM_NAME", False), type;
-    int form;
-    unsigned long remain, len;
-    unsigned char *list;
+	Atom prop = XInternAtom(disp, "_NET_WM_NAME", False), type;
+	int form;
+	unsigned long remain, len;
+	unsigned char *list;
 
-    XGetWindowProperty(disp, window, prop, 0, 1024, False, AnyPropertyType,
-                            &type, &form, &len, &remain, &list);
-    return (char *)list;
+	XGetWindowProperty(disp, window, prop, 0, 1024, False, AnyPropertyType,
+					   &type, &form, &len, &remain, &list);
+	return (char *)list;
 }
 
 #endif /* ifndef WAYLAND */
-
 
 int
 wm()
@@ -52,51 +51,49 @@ wm()
      *  ones based on X11
      */
 #ifdef WAYLAND
-		char lookup[128];
-		const char *const supported_wm[22] = {
-			"xfwm4",	 "metacity", "kwin",	  "twin", "musca",
-			"scrotwm",	 "beryl",	 "subtle",	  "e16",  "emerald",
-			"monsterwm", "dminiwm",	 "Finder",	  "howm", "notion",
-			"2bwm",		 "echinus",	 "budgie-wm", "dtwm", "chromeos-wm",
-			"deepin-wm", "sway"
+	char lookup[128];
+	const char *const supported_wm[22] = {
+		"xfwm4",	 "metacity", "kwin",	  "twin", "musca",
+		"scrotwm",	 "beryl",	 "subtle",	  "e16",  "emerald",
+		"monsterwm", "dminiwm",	 "Finder",	  "howm", "notion",
+		"2bwm",		 "echinus",	 "budgie-wm", "dtwm", "chromeos-wm",
+		"deepin-wm", "sway"
 
-		}; // this system works as a backup to the X11 detection
+	}; // this system works as a backup to the X11 detection
 
-		FILE *fp = popen("ps x", "r");
-		if (fp == NULL) {
-			fprintf(stderr, "Do you not have `ps'?\n");
-			return EXIT_FAILURE;
-		}
-		while (fgets(lookup, sizeof(lookup) - 1, fp) != NULL) {
-			for (int i = 0; i < 21; i++) {
-				if (strstr(lookup, supported_wm[i]) != NULL) {
-					pclose(fp);
+	FILE *fp = popen("ps x", "r");
+	if (fp == NULL) {
+		fprintf(stderr, "Do you not have `ps'?\n");
+		return EXIT_FAILURE;
+	}
+	while (fgets(lookup, sizeof(lookup) - 1, fp) != NULL) {
+		for (int i = 0; i < 21; i++) {
+			if (strstr(lookup, supported_wm[i]) != NULL) {
+				pclose(fp);
 
-					printf("%sWM:\033[0m %s\n", color_distro(),
-						   supported_wm[i]);
-					return EXIT_SUCCESS;
-				}
+				printf("%sWM:\033[0m %s\n", color_distro(), supported_wm[i]);
+				return EXIT_SUCCESS;
 			}
 		}
+	}
 
-		pclose(fp);
+	pclose(fp);
 
-		fprintf(stderr, "Your WM was not found\n");
-		return EXIT_FAILURE;
+	fprintf(stderr, "Your WM was not found\n");
+	return EXIT_FAILURE;
 #endif /* ifdef WAYLAND */
 
 #ifndef WAYLAND
-        Display *disp = XOpenDisplay(NULL);
-        unsigned long len;
-        Window *wlist = (Window*)list(disp, &len);
-        char *wname = name(disp, wlist[0]);
+	Display *disp = XOpenDisplay(NULL);
+	unsigned long len;
+	Window *wlist = (Window *)list(disp, &len);
+	char *wname = name(disp, wlist[0]);
 
+	XFree(wlist);
+	printf("%sWM:\033[0m %s\n", color_distro(), wname);
+	free(wname);
 
-        XFree(wlist);
-        printf("%sWM:\033[0m %s\n", color_distro(), wname);
-        free(wname);
-
-        XCloseDisplay(disp);
-        return EXIT_SUCCESS;
+	XCloseDisplay(disp);
+	return EXIT_SUCCESS;
 #endif /* ifndef WAYLAND */
 }

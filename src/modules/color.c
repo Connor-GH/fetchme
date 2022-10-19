@@ -13,23 +13,30 @@ color_distro()
 	char os_name[50];
 	FILE *os_release = fopen("/etc/os-release", "r");
 
-    const char *const supported_distros[15] = {
-        "Gentoo", "Debian", "Void", "Ubuntu", "Solus",
-        "Alpine", "Mint", "Arch", "Artix", "OpenSUSE",
-        "openSUSE", "Manjaro", "popos", "pop_os", "Pop!_OS"
-    };
+	const char *const supported_distros[15] = {
+		"Gentoo",	"Debian",  "Void",	"Ubuntu", "Solus",
+		"Alpine",	"Mint",	   "Arch",	"Artix",  "OpenSUSE",
+		"openSUSE", "Manjaro", "popos", "pop_os", "Pop!_OS"
+	};
 
-    const char *const distro_colors[15] = {
-        PURPLE, RED, "\033[1;38;5;34m", "\033[1;38;5;202m",BLUE,
-        PURPLE, GREEN, CYAN, CYAN, GREEN,
-        GREEN, GREEN, "\033[1;38;5;29m", "\033[1;38;5;29m", "\033[1;38;5;29m"
-    };
+	const char *const distro_colors[15] = { PURPLE,
+											RED,
+											"\033[1;38;5;34m",
+											"\033[1;38;5;202m",
+											BLUE,
+											PURPLE,
+											GREEN,
+											CYAN,
+											CYAN,
+											GREEN,
+											GREEN,
+											GREEN,
+											"\033[1;38;5;29m",
+											"\033[1;38;5;29m",
+											"\033[1;38;5;29m" };
 
-    const unsigned long distro_length[15] = {
-        6, 6, 4, 6, 5,
-        6, 4, 4, 5, 8,
-        8, 7, 5, 6, 7
-    };
+	const unsigned long distro_length[15] = { 6, 6, 4, 6, 5, 6, 4, 4,
+											  5, 8, 8, 7, 5, 6, 7 };
 
 	if (os_release == NULL) {
 		perror("/etc/os-release");
@@ -47,10 +54,10 @@ color_distro()
 	sscanf(os_name, "\"%[^\"]", os_name);
 	/* Iterate arrays of distro info. If one is right, return it. */
 
-    for (int i = 0; i < 14; i++) {
-        if (strncmp(os_name, supported_distros[i], distro_length[i]) == 0)
-            return distro_colors[i];
-    }
+	for (int i = 0; i < 14; i++) {
+		if (strncmp(os_name, supported_distros[i], distro_length[i]) == 0)
+			return distro_colors[i];
+	}
 	fprintf(stderr, "Exception: distro color not found.");
 	exit(EXIT_FAILURE);
 #endif

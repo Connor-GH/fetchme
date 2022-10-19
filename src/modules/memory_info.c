@@ -7,6 +7,10 @@
 int
 memory_info()
 {
+    /*
+     * TODO: add sysctl CTL_VM VM_TOTAL for FreeBSD support
+     * possibly look into vm.kmem_map_* ?
+     */
 #define VALUE(x) (fscanf(fp, "%*99s %99s %*99s\n", x))
 #define ITER(x)                 \
 	for (int i = 0; i < x; i++) \
@@ -17,8 +21,7 @@ memory_info()
 	double USED_RAM = 0.0;
 	int TOTAL_RAM = 0;
 	char MorG = 0;
-	int t = 0, f = 0, b = 0,
-        ca = 0, s = 0, r = 0, c;
+	int t = 0, f = 0, b = 0, ca = 0, s = 0, r = 0, c;
 
 	FILE *fp = fopen("/proc/meminfo", "r");
 	if (fp == NULL) {

@@ -1,7 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
-
+#if defined(__linux__) && !defined(__FreeeBSD__)
 #include <sys/statvfs.h>
+#else
+#include <sys/param.h>
+#include <sys/mount.h>
+#endif
+
 
 #include "./include/fetchme.h"
 #include "./include/color.h"
@@ -17,9 +22,16 @@ disk()
      * (useful in an if-else statement for drives)
      */
 	const char *const filename = "/";
-
+#if defined(__linux__) && !defined(__FreeBSD__)
 	struct statvfs buf;
+#else
+    struct statfs buf;
+#endif /* struct statvfs vs struct statfs */
+#if defined(__linux__) && !defined(__FreeBSD__)
 	if (!statvfs(filename, &buf)) {
+#else
+	if (!statfs(filename, &buf)) {
+#endif /* statvfs vs statfs */
 		unsigned long blksize, blocks, freeblks, disk_size, used, free;
 		char unit = 0;
 

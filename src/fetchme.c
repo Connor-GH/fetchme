@@ -37,8 +37,6 @@ main(int argc, char *argv[])
 	// something this simple.
 	printf("\033[?7l");
 
-
-
 #ifdef USERNAME_HOSTNAME
 	username_at_hostname();
 #endif

@@ -13,8 +13,8 @@
 int
 username_at_hostname()
 {
-    extern uid_t getuid(void);
-    extern uid_t geteuid(void);
+	extern uid_t getuid(void);
+	extern uid_t geteuid(void);
 	char hostname_value[100];
 	uid_t uid;
 	struct passwd *pwd;
@@ -42,8 +42,8 @@ username_at_hostname()
      * username is a sane size */
 	if (strlen(pwd->pw_name) < 100) {
 		const char *const color = color_distro();
-		printf("%s%s\033[0m@%s%s\033[0m\n",
-                color, pwd->pw_name, color, hostname_value);
+		printf("%s%s\033[0m@%s%s\033[0m\n", color, pwd->pw_name, color,
+			   hostname_value);
 
 		for (unsigned long i = 0;
 			 i < (strlen(pwd->pw_name) + strlen(hostname_value) + 1); i++)
