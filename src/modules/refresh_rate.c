@@ -33,7 +33,6 @@ refresh_rate()
 		if (crtc_info->mode != None) {
 			active_mode_id = crtc_info->mode;
 		}
-		// i hate X11 C library for being overall awful
 		XRRFreeCrtcInfo(crtc_info);
 	}
 

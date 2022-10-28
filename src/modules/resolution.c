@@ -13,8 +13,10 @@ resolution()
 	int width = 0;
 	int height = 0;
 
-	if (!(d = XOpenDisplay(NULL)))
+	if (!(d = XOpenDisplay(NULL))) {
 		fprintf(stderr, "cannot open display '%s'\n", XDisplayName(0));
+        exit(EXIT_FAILURE);
+    }
 
 	width = DisplayWidth(d, DefaultScreen(d));
 	height = DisplayHeight(d, DefaultScreen(d));

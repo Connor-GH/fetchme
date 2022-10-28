@@ -19,8 +19,10 @@ terminal()
 
 		*eq = '\0';
 
-		if (strcmp(environ[i], "TERM") == 0)
+		if (strcmp(environ[i], "TERM") == 0) {
 			terminal_emulator = eq + 1;
+            break;
+        }
 
 		*eq = '=';
 	}

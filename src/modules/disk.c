@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#if defined(__linux__) && !defined(__FreeeBSD__)
+#if defined(__linux__) && !defined(__FreeBSD__)
 #include <sys/statvfs.h>
 #else
 #include <sys/param.h>
@@ -33,7 +33,7 @@ disk()
 	if (!statfs(filename, &buf)) {
 #endif /* statvfs vs statfs */
 		unsigned long blksize, blocks, freeblks, disk_size, used, free;
-		char unit = 0;
+		char unit;
 
 		blksize = buf.f_bsize;
 		blocks = buf.f_blocks;

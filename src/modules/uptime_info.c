@@ -10,7 +10,7 @@
 int
 uptime_info()
 {
-#if defined(__linux__) && !defined(__FreeBSD)
+#if defined(__linux__) && !defined(__FreeBSD__)
 	char uptime[100];
 	int min = 0;
 	float uptime_f = 0;

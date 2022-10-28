@@ -30,16 +30,26 @@ M_UPTIME=y
 # distros.
 #
 # Works with FreeBSD
-M_PACKAGE=y
+#M_PACKAGE=y
 
 # Works with FreeBSD
 M_SHELL=y
 
 # Might work with FreeBSD
+# XCB might be faster than Xlib
+# both modules must be uncommented
+# and set to 'y' to use xcb. otherwise,
+# Xlib is used.
 M_RESOLUTION=y
+# M_RESOLUTION_XCB=y
 
 # Might work with FreeBSD
+# XCB might be faster than Xlib
+# both modules must be uncommented
+# and set to 'y' to use xcb. otherwise,
+# Xlib is used.
 M_REFRESH_RATE=y
+# M_REFRESH_RATE_XCB=y
 
 # Might work with FreeBSD
 M_WM=y
