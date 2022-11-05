@@ -73,7 +73,7 @@ endif
 
 CFLAGS += -D_PACKAGE_NAME=\"$(TARGET)\" -D_PACKAGE_VERSION=\"$(VERSION)\" \
 		  $(MODULES) \
-		  -std=c99 -pipe -m64 -flto -fopenmp -falign-functions=16 $(WFLAGS) $(WNOFLAGS) $(IVAR)
+		  -std=c99 -pipe -m64 -flto -falign-functions=16 $(WFLAGS) $(WNOFLAGS) $(IVAR)
 LFLAGS += $(IVAR) $(M_LFLAGS) -flto -L/usr/local/lib -Wl,-rpath /usr/local/lib
 
 

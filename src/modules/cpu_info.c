@@ -29,8 +29,8 @@ cpu_info()
 	char threads[10]; // cpu threads
 #endif /* CPU_THREADS */
 #ifdef CPU_TEMP
-	float TEMP;
-	FILE *cpu3 = fopen("/sys/class/hwmon/hwmon1/temp3_input", "r");
+	double TEMP;
+	FILE *cpu3 = fopen("/sys/class/hwmon/hwmon1/temp1_input", "r");
 #endif /* CPU_TEMP */
 
 	int c;
@@ -62,6 +62,10 @@ cpu_info()
 #ifdef CPU_TEMP
 
 	if (cpu3 == NULL) {
+		cpu3 = fopen("/sys/class/hwmon/hwmon1/temp2_input", "r");
+	}
+	if (cpu3 == NULL) { /* cpu3 is still NULL after entering temp3_input */
+		cpu3 = fopen("/sys/class/hwmon/hwmon1/temp3_input", "r");
 		TEMP = 0.;
 	} else {
 		char line1_value[100];
@@ -93,19 +97,19 @@ cpu_info()
 #endif /* CPU_TEMP */
 	printf("\n");
 #else /* linux */
-    int mib[2];
-    char *cpu_name;
-    size_t len;
-    mib[0] = CTL_HW;
-    mib[1] = HW_MODEL;
-    sysctl(mib, 2, NULL, &len, NULL, 0);
-    cpus = malloc(len);
-    if (sysctl(mib, 2, cpus, &len, NULL, 0) != 0) {
-        perror("sysctl");
-        exit(EXIT_FAILURE);
-    }
-    printf("%sCPU: \033[0m%s\n", color_distro(), cpu_name);
-    free(cpu_name);
+	int mib[2];
+	char *cpu_name;
+	size_t len;
+	mib[0] = CTL_HW;
+	mib[1] = HW_MODEL;
+	sysctl(mib, 2, NULL, &len, NULL, 0);
+	cpus = malloc(len);
+	if (sysctl(mib, 2, cpus, &len, NULL, 0) != 0) {
+		perror("sysctl");
+		exit(EXIT_FAILURE);
+	}
+	printf("%sCPU: \033[0m%s\n", color_distro(), cpu_name);
+	free(cpu_name);
 #endif /* FreeBSD */
 	return EXIT_SUCCESS;
 }

@@ -18,10 +18,10 @@ gpu_info()
 	pciaccess = pci_alloc();
 	pci_init(pciaccess);
 	pci_scan_bus(pciaccess);
-	pciaccess->id_lookup_mode = PCI_LOOKUP_CLASS;
+	pciaccess->id_lookup_mode = PCI_LOOKUP_CACHE;
 
 	for (dev = pciaccess->devices; dev; dev = dev->next) {
-		pci_fill_info(dev, PCI_FILL_CLASS);
+		dev->device_class = pci_read_word(dev, PCI_CLASS_DEVICE);
 
 		/*
          * We can use a shortcut here. if dev->device_class is
@@ -36,8 +36,8 @@ gpu_info()
 			continue;
 
 		/* only fill in the info that we need to */
+		pciaccess->id_lookup_mode = PCI_LOOKUP_DEVICE;
 		pci_fill_info(dev, PCI_FILL_IDENT);
-		pciaccess->id_lookup_mode = PCI_LOOKUP_CACHE;
 
 		pci_lookup_name(pciaccess, namebuf, sizeof(namebuf), PCI_LOOKUP_DEVICE,
 						dev->vendor_id, dev->device_id);

@@ -7,7 +7,6 @@
 #include <sys/mount.h>
 #endif
 
-
 #include "./include/fetchme.h"
 #include "./include/color.h"
 
@@ -25,7 +24,7 @@ disk()
 #if defined(__linux__) && !defined(__FreeBSD__)
 	struct statvfs buf;
 #else
-    struct statfs buf;
+	struct statfs buf;
 #endif /* struct statvfs vs struct statfs */
 #if defined(__linux__) && !defined(__FreeBSD__)
 	if (!statvfs(filename, &buf)) {

@@ -30,10 +30,10 @@ M_UPTIME=y
 # distros.
 #
 # Works with FreeBSD
-#M_PACKAGE=y
+M_PACKAGE=y
 
 # Works with FreeBSD
-M_SHELL=y
+# M_SHELL=y
 
 # Might work with FreeBSD
 # XCB might be faster than Xlib

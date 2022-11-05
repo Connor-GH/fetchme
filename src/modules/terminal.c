@@ -21,8 +21,8 @@ terminal()
 
 		if (strcmp(environ[i], "TERM") == 0) {
 			terminal_emulator = eq + 1;
-            break;
-        }
+			break;
+		}
 
 		*eq = '=';
 	}

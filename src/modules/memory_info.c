@@ -7,7 +7,7 @@
 int
 memory_info()
 {
-    /*
+	/*
      * TODO: add sysctl CTL_VM VM_TOTAL for FreeBSD support
      * possibly look into vm.kmem_map_* ?
      */
@@ -15,13 +15,12 @@ memory_info()
 #define ITER(x)                 \
 	for (int i = 0; i < x; i++) \
 		while ((c = fgetc(fp)) != '\n' && c != EOF)
-	char total[100], freemem[100], buffers[100], cache[100], shared[100],
-		reclaimable[100];
+	char total[100], freemem[100], buffers[100], cache[100], reclaimable[100];
 
 	double USED_RAM = 0.0;
 	int TOTAL_RAM = 0;
 	char MorG = 0;
-	int t = 0, f = 0, b = 0, ca = 0, s = 0, r = 0, c;
+	int t = 0, f = 0, b = 0, ca = 0, r = 0, c;
 
 	FILE *fp = fopen("/proc/meminfo", "r");
 	if (fp == NULL) {
@@ -39,10 +38,7 @@ memory_info()
 	VALUE(buffers);
 	VALUE(cache);
 
-	ITER(15);
-
-	VALUE(shared);
-	ITER(2);
+	ITER(18);
 
 	VALUE(reclaimable);
 
@@ -56,11 +52,9 @@ memory_info()
 
 	sscanf(cache, "%d", &ca); // cache
 
-	sscanf(shared, "%d", &s); // shmem
-
 	sscanf(reclaimable, "%d", &r); //reclaimable
 
-	USED_RAM = ((t + s - f - b - ca - r) / 1000. / 1000.);
+	USED_RAM = ((t - f - b - ca - r) / 1000. / 1000.);
 
 	TOTAL_RAM = (t / 1000 / 1000);
 
@@ -73,7 +67,7 @@ memory_info()
 	printf("%s", color_distro());
 	printf("Memory:\033[0m %.1f%c/%dG", USED_RAM, MorG, TOTAL_RAM);
 #ifdef MEMORY_PERCENT
-	printf(" (%.0f%%)", ((double)(t + s - f - b - ca - r) / (double)t) * 100);
+	printf(" (%.0f%%)", ((double)(t - f - b - ca - r) / (double)t) * 100);
 #endif
 	printf("\n");
 
