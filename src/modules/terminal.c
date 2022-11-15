@@ -6,7 +6,7 @@
 #include "./include/color.h"
 
 int
-terminal()
+terminal(void)
 {
 	extern char **environ;
 	char *terminal_emulator = NULL;

@@ -5,7 +5,7 @@
 #include "./include/color.h"
 
 int
-memory_info()
+memory_info(void)
 {
 	/*
      * TODO: add sysctl CTL_VM VM_TOTAL for FreeBSD support

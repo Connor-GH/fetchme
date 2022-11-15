@@ -8,7 +8,7 @@
 #include "./include/color.h"
 
 int
-uptime_info()
+uptime_info(void)
 {
 #if defined(__linux__) && !defined(__FreeBSD__)
 	char uptime[100];

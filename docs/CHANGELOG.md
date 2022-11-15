@@ -1,9 +1,11 @@
 ## Changelog
-
-- Improved GPU detection - ALL gpus are now detected.
-- Improved shell detection - shell is now detected from the environment variable instead of using ``unistd.h``
+- improved GPU detection - the speed of GPU detection has increased.
 
 # older changes
+
+Improved GPU detection - ALL gpus are now detected.
+
+Improved shell detection - shell is now detected from the environment variable instead of using ``unistd.h``
 
 Added automatic man page installation/uninstallation
 

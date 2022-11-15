@@ -26,6 +26,5 @@
 
 - ascii logo
 - package count working on more distros (need testers)
-- cpu temperature working on more cpus (need testers)
 - disk usage working on more than just the root partition
 - resolution and refresh rate support for more than one display

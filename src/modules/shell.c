@@ -5,7 +5,7 @@
 #include "./include/fetchme.h"
 #include "./include/color.h"
 int
-shell()
+shell(void)
 {
 	extern char **environ;
 	char *shell = NULL;

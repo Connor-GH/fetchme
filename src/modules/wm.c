@@ -18,7 +18,6 @@ list(Display *disp, unsigned long *len)
 	Atom prop = XInternAtom(disp, "_NET_SUPPORTING_WM_CHECK", False), type;
 	int form;
 	unsigned long remain;
-	//unsigned char *list;
 	unsigned long *list;
 
 	XGetWindowProperty(disp, XDefaultRootWindow(disp), prop, 0, 1024, False,
@@ -43,7 +42,7 @@ name(Display *disp, Window window)
 #endif /* ifndef WAYLAND */
 
 int
-wm()
+wm(void)
 {
 	/*
      *  Use the traditional method to get

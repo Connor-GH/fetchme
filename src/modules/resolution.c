@@ -7,7 +7,7 @@
 #include "./include/fetchme.h"
 
 int
-resolution()
+resolution(void)
 {
 	Display *d;
 	int width = 0;

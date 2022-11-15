@@ -24,7 +24,7 @@ screen_of_display(xcb_connection_t *c, int screen)
 }
 
 int
-refresh_rate()
+refresh_rate(void)
 {
 	xcb_connection_t *connection;
 	xcb_randr_get_screen_info_cookie_t screen_info;

@@ -7,7 +7,7 @@
 #include "./include/color.h"
 
 int
-kernel()
+kernel(void)
 {
 	struct utsname buffer;
 	if (uname(&buffer) < 0) {

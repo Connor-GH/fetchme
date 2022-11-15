@@ -1,6 +1,6 @@
 # This doc gives information as to what distros work best, work okay, and what isn't mentioned should be assumed to not work at all.
 
-## Fully-working distros: 
+## Fully-working distros:
 - any Pacman-based distributions (Arch, Artix tested)
 - any Portage-based distributions (Gentoo tested)
 
@@ -11,8 +11,9 @@
 - Void
 - OpenSUSE
 - Solus
+- Alpine
 
-(no cpu, mem, uptime, or disk info);
+(no mem or disk info);
 - FreeBSD
 
 

@@ -31,6 +31,13 @@ reinstall:
 ``make CC=gcc-or-clang DEBUG=true -j$(nproc) fetchme`` (requires clang/gcc)
 
 
+# PGO (Profile Guided Optimization) building
+- requires clang
+``make CC=clang pgo && make CC=clang pgo``
+
+(It has to be run twice due to how PGO works. The testing is automated in the Makefile.)
+
+
 read the changelog
 <a href="docs/CHANGELOG.md">here</a>
 
@@ -49,10 +56,10 @@ read the changelog
 - valgrind, gdb, etc
 
 [Resolution detection]
-- libx11
+- libx11 (or libxcb)
 
 [Refresh Rate detection]
-- libxrandr
+- libxrandr (or libxcb)
 
 [GPU detection]
 - libpci

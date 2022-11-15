@@ -11,7 +11,7 @@
 #include "./include/color.h"
 
 int
-username_at_hostname()
+username_at_hostname(void)
 {
 	extern uid_t getuid(void);
 	extern uid_t geteuid(void);

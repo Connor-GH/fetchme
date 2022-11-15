@@ -11,7 +11,7 @@
 #include "./include/color.h"
 
 int
-disk()
+disk(void)
 {
 	/*
      * When multi-drive filesystem

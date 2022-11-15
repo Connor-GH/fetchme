@@ -8,7 +8,7 @@
 #include "./include/color.h"
 
 int
-package_count()
+package_count(void)
 {
 	size_t PKG_COUNT = 0;
 

@@ -52,6 +52,9 @@ M_REFRESH_RATE=y
 # M_REFRESH_RATE_XCB=y
 
 # Might work with FreeBSD
+# M_WM only works with XWayland and X11.
+# M_WM_WAYLAND only works with Wayland (but is slower)
+# (but it is slow).
 M_WM=y
 # M_WM_WAYLAND=y
 

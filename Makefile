@@ -8,7 +8,6 @@ TARGET 	 = fetchme
 VERSION  = 1.4
 
 
-
 WGCC   = -Wlogical-op -Wcast-align=strict
 WGCC  += -Wsuggest-attribute=format -Wsuggest-attribute=malloc
 WGCC  += -Wsuggest-attribute=pure -Wsuggest-attribute=const
@@ -32,6 +31,7 @@ ifeq ($(CC),cc)
 	CC		= gcc
 	CFLAGS += $(WGCC)
 	LINKER 	= gcc
+	LTO 	= -flto -fno-fat-lto-objects
 endif # CC
 
 ifeq ($(CC),gcc)
@@ -39,6 +39,7 @@ ifeq ($(CC),gcc)
 	CC  	= gcc
 	CFLAGS += $(WGCC)
 	LINKER 	= gcc
+	LTO 	= -flto -fno-fat-lto-objects
 ifeq ($(DEBUG),true)
 	# gcc-specific security/debug flags
 	WGCC   += -fanalyzer
@@ -52,6 +53,7 @@ else ifeq ($(CC),clang) # clang can be marginally slower
 	CFLAGS += -Weverything
 	LINKER 	= clang
 	WNOFLAGS += -Wno-disabled-macro-expansion
+	LTO 	= -flto=thin
 
 ifeq ($(DEBUG),true)
 	# clang-specific security/debug flags
@@ -62,6 +64,7 @@ ifeq ($(DEBUG),true)
 	LFLAGS  = -fsanitize=address
 endif #debug
 endif #compiler
+
 ifeq ($(DEBUG),true)
 	# generic security/debug flags
 	CFLAGS += -O1 -march=x86-64 -g3
@@ -73,8 +76,9 @@ endif
 
 CFLAGS += -D_PACKAGE_NAME=\"$(TARGET)\" -D_PACKAGE_VERSION=\"$(VERSION)\" \
 		  $(MODULES) \
-		  -std=c99 -pipe -m64 -flto -falign-functions=16 $(WFLAGS) $(WNOFLAGS) $(IVAR)
-LFLAGS += $(IVAR) $(M_LFLAGS) -flto -L/usr/local/lib -Wl,-rpath /usr/local/lib
+		  -std=c99 -pipe $(LTO) $(WFLAGS) $(WNOFLAGS) $(IVAR)
+LFLAGS += $(IVAR) $(M_LFLAGS) $(LTO) -L/usr/local/lib -Wl,-rpath=/usr/local/lib
+
 
 
 OBJDIR   = 	obj
@@ -83,6 +87,15 @@ BINDIR   = 	bin
 INCLUDES:=  $(wildcard $(SRCDIR)/modules/include/*.h)
 OBJECTS :=  $(SOURCES:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
 rm       =  rm -rf
+
+ifeq ($(PGO),gen)
+	CFLAGS += -fprofile-instr-generate -gline-tables-only -fcoverage-mapping
+	LFLAGS += -fprofile-instr-generate
+else ifeq ($(PGO),use)
+	CFLAGS += -fprofile-instr-use=fetchme.profdata -gline-tables-only
+	LFLAGS += -fprofile-instr-use=fetchme.profdata
+endif
+
 
 $(TARGET):
 	@# rebuild and build with just `make'
@@ -134,3 +147,16 @@ uninstall:
 
 format:
 	@find . -iname *.h -o -iname *.c | xargs clang-format -style=file:.clang-format -i
+
+
+pgo:
+	@# only clang is supported for this PGO
+	if [[ -f fetchme.profdata ]]; then \
+		make CC=clang PGO=use && $(rm) fetchme.prof*; \
+	else \
+		make CC=clang PGO=gen && \
+	for x in {0..100}; do \
+		LLVM_PROFILE_FILE=fetchme.profraw ./bin/fetchme > /dev/null; \
+	done; \
+	llvm-profdata merge -output=fetchme.profdata fetchme.profraw; \
+	fi

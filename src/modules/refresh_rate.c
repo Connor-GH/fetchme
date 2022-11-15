@@ -7,23 +7,20 @@
 #include "./include/fetchme.h"
 
 int
-refresh_rate()
+refresh_rate(void)
 {
 	double active_rate = 0;
 	Display *display = XOpenDisplay(NULL);
 	Window default_root_window = XDefaultRootWindow(display);
 
 	/*
-     * XRRGetScreenResourcesCurrent (horrible name)
-     * was introduced in XRandr 1.3. (everyone should have this version)
+     * XRRGetScreenResourcesCurrent was introduced in XRandr 1.3.
      * It increases refresh rate detection performance by about 23 times
-     * versus XRRGetScreenResources. This single change alone more than halved
-     * execution time for me. My execution time is now 0.033 seconds
-     * with all modules.
+     * versus XRRGetScreenResources.
      */
 	XRRScreenResources *screen_resources =
 		XRRGetScreenResourcesCurrent(display, default_root_window);
-	//  ~~~~~~~~~~~~~~~~~~~~~^^^^^^^
+
 	RRMode active_mode_id = 0;
 
 	for (int i = 0; i < screen_resources->ncrtc; ++i) {

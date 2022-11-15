@@ -8,7 +8,7 @@
 #include "./include/color.h"
 
 int
-distro()
+distro(void)
 {
 	struct utsname buffer;
 

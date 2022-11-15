@@ -19,7 +19,7 @@ screen_of_display(xcb_connection_t *c, int screen)
 }
 
 int
-resolution()
+resolution(void)
 {
 	xcb_connection_t *c;
 	xcb_screen_t *screen;

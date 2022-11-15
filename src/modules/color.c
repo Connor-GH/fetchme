@@ -7,7 +7,7 @@
 #include "include/color.h"
 
 const char *
-color_distro()
+color_distro(void)
 {
 #ifndef CUSTOM_COLOR
 	char os_name[50];

@@ -10,7 +10,7 @@
 #include "./include/color.h"
 
 int
-cpu_info()
+cpu_info(void)
 {
 #if defined(__linux__) && !defined(__FreeBSD__)
 	// this long line is used to skip lines.
@@ -63,10 +63,12 @@ cpu_info()
 
 	if (cpu3 == NULL) {
 		cpu3 = fopen("/sys/class/hwmon/hwmon1/temp2_input", "r");
-	}
-	if (cpu3 == NULL) { /* cpu3 is still NULL after entering temp3_input */
-		cpu3 = fopen("/sys/class/hwmon/hwmon1/temp3_input", "r");
-		TEMP = 0.;
+		if (cpu3 == NULL) { /* cpu3 is still NULL after entering temp2_input */
+			cpu3 = fopen("/sys/class/hwmon/hwmon1/temp3_input", "r");
+			if (cpu3 == NULL) {
+				TEMP = 0.; /* Ryzen CPU temperature file not found */
+			}
+		}
 	} else {
 		char line1_value[100];
 		int x2 = 0;
@@ -103,8 +105,8 @@ cpu_info()
 	mib[0] = CTL_HW;
 	mib[1] = HW_MODEL;
 	sysctl(mib, 2, NULL, &len, NULL, 0);
-	cpus = malloc(len);
-	if (sysctl(mib, 2, cpus, &len, NULL, 0) != 0) {
+	cpu_name = malloc(len);
+	if (sysctl(mib, 2, cpu_name, &len, NULL, 0) != 0) {
 		perror("sysctl");
 		exit(EXIT_FAILURE);
 	}

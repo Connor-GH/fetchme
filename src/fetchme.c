@@ -37,6 +37,10 @@ main(int argc, char *argv[])
 	// something this simple.
 	printf("\033[?7l");
 
+	/*for (int i = 0; i < 3000000; i++) {
+    __asm__ __volatile__("nop");
+}*/
+
 #ifdef USERNAME_HOSTNAME
 	username_at_hostname();
 #endif
