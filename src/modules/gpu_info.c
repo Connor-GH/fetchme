@@ -9,6 +9,12 @@
 int
 gpu_info(void)
 {
+    /*
+     * TODO investigate
+     * /sys/class/drm/card0/device/device
+     * and
+     * /sys/class/drm/card0/device/vendor
+     */
 	struct pci_dev *dev;
 	struct pci_access *pciaccess;
 	char namebuf[128];
@@ -29,6 +35,7 @@ gpu_info(void)
          * is easier just to call the function.
          */
 #if __has_builtin(__builtin_expect)
+        /* tell the compiler that the device is most likely not 768 */
 		if (__builtin_expect((pci_read_word(dev, PCI_CLASS_DEVICE) != 768), 1))
 #else
 
@@ -36,10 +43,13 @@ gpu_info(void)
 #endif
 			continue;
 
-		/* only fill in the info that we need to */
+        /* `pci_lookup_name' is the the bottleneck of the entire program. */
+
+        /* only fill in the info that we need to */
 		pci_lookup_name(pciaccess, namebuf, sizeof(namebuf), PCI_LOOKUP_DEVICE,
 						pci_read_word(dev, PCI_VENDOR_ID),
 						pci_read_word(dev, PCI_DEVICE_ID));
+
 
 		/* the following lines remove brackets */
 		src = dest = namebuf;
