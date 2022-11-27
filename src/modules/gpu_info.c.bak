@@ -11,14 +11,9 @@ gpu_info(void)
 {
 	struct pci_dev *dev;
 	struct pci_access *pciaccess;
-	char *pci_ids_value = malloc(sizeof(char) * 100);
-	char *dev_string;
-	int device;
-	size_t len;
-	int c = 0;
+	char namebuf[128];
 	char *src = NULL;
 	char *dest = NULL;
-	FILE *pci_ids;
 
 	pciaccess = pci_alloc();
 	pci_init(pciaccess);
@@ -42,50 +37,18 @@ gpu_info(void)
 #endif
 			continue;
 
-		device = pci_read_word(dev, PCI_DEVICE_ID);
-		len = (size_t)snprintf(NULL, 0, "%x", device);
-		pci_ids = fopen("/usr/share/hwdata/pci.ids", "r");
+		/* `pci_lookup_name' is the the bottleneck of the entire program. */
 
-		dev_string = malloc(sizeof(char) * (len + 1));
-		snprintf(dev_string, len + 1, "%x", device);
+		/* only fill in the info that we need to */
+		pci_lookup_name(pciaccess, namebuf, sizeof(namebuf), PCI_LOOKUP_DEVICE,
+						pci_read_word(dev, PCI_VENDOR_ID),
+						pci_read_word(dev, PCI_DEVICE_ID));
 
-		if (pci_ids == NULL) {
-			pci_ids = fopen("/usr/share/pci.ids", "r");
-			if (pci_ids == NULL)
-				pci_ids = fopen("/usr/share/misc/pci.ids", "r"); // Debian
-			if (pci_ids == NULL)
-				pci_ids = fopen("/var/lib/pciutils/pci.ids", "r");
-#if defined(__FreeBSD__) && !defined(__linux__)
-			if (pci_ids == NULL)
-				pci_ids =
-					fopen("/usr/local/share/pciids/pci.ids", "r"); // FreeBSD
-			if (pci_ids == NULL)
-				pci_ids = fopen("/var/share/misc/pci_vendors", "r");
-#endif
-			if (pci_ids == NULL) {
-				perror("pci.ids");
-				exit(EXIT_FAILURE);
-			}
-		}
-
-		while (c != EOF) {
-			fscanf(pci_ids, "%99s", pci_ids_value); /* get the line */
-			if (strcmp(dev_string, pci_ids_value) == 0)
-				break; /* we have our value */
-
-			fscanf(pci_ids, "%99s", pci_ids_value); /* keep searching */
-			c = fscanf(pci_ids, "%*[^\n]\n"); /* move to another line */
-		}
-		free(dev_string);
-		/*
-         * we have the proper ID.
-         * Get the whole line (GPU name).
-         */
-		fscanf(pci_ids, "\t%99[^\n]", pci_ids_value);
-		fclose(pci_ids);
+        printf("%x\n", pci_read_word(dev, PCI_VENDOR_ID));
+        printf("%x\n", pci_read_word(dev, PCI_DEVICE_ID));
 
 		/* the following lines remove brackets */
-		src = dest = pci_ids_value;
+		src = dest = namebuf;
 		while (*src != '\0') {
 			if (!(*src == '[' || *src == ']')) {
 				*dest = *src; /* copy the char at src to dest */
@@ -96,8 +59,7 @@ gpu_info(void)
 		*dest = '\0'; /* terminate string with NUL */
 
 		printf("%sGPU:\033[0m %s\n", /* print the final result */
-			   color_distro(), pci_ids_value);
-		free(pci_ids_value);
+			   color_distro(), namebuf);
 
 		pci_cleanup(pciaccess);
 		return EXIT_SUCCESS;
