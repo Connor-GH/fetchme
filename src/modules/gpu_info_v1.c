@@ -7,7 +7,7 @@
 #include "./include/color.h"
 
 int
-gpu_info(void)
+gpu_info_v1(void)
 {
 	struct pci_dev *dev;
 	struct pci_access *pciaccess;

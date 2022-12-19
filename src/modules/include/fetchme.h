@@ -15,6 +15,13 @@ distro(void);
 #ifdef GPU
 int
 gpu_info(void);
+#if GPU_INFO == 2
+int
+gpu_info_v2(void);
+#else
+int
+gpu_info_v1(void);
+#endif
 #endif
 #ifdef KERNEL
 int

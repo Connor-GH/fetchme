@@ -144,8 +144,15 @@ endif # CPU
 # requires libpci. if you do not want GPU detection, comment
 # out both lines.
 ifneq (,$(filter $(M_GPU),Y y))
-	MODULES += -DGPU
+ifneq (,$(filter $(M_GPU_VERSION), 2))
+	SOURCES += $(SRCDIR)/modules/gpu_info_v2.c
+	MODULES += -DGPU_INFO=2
+else
+	SOURCES += $(SRCDIR)/modules/gpu_info_v1.c
+	MODULES += -DGPU_INFO=1
+endif
 	SOURCES += $(SRCDIR)/modules/gpu_info.c
+	MODULES += -DGPU
 	M_LFLAGS += -lpci
 endif
 

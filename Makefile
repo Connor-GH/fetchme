@@ -1,6 +1,6 @@
 TOPDIR 	:=  ./src
 IVAR 	:=  -I. -I$(TOPDIR)/include/
-PREFIX	 =  /usr
+PREFIX	?=  /usr
 INSTALLBINDIR=${PREFIX}/bin
 OBJDIR   = 	obj
 BINDIR   = 	bin
@@ -33,7 +33,7 @@ link:
 	@echo "$(TARGET)-$(VERSION) built!"
 
 $(OBJECTS): $(OBJDIR)/%.o : $(SRCDIR)/%.c
-	$(CC) $(CFLAGS) -c $< -o $@
+	$(CC) $(F_CFLAGS) -c $< -o $@
 	@echo "Compiled "$<" successfully!"
 .PHONY: clean
 

@@ -2,7 +2,9 @@
 Rewrite of fetchme-bash in C99. Similiar to neofetch, but in C, so it should be able to do more.
 <img src="https://user-images.githubusercontent.com/72793802/177895040-738fffa7-4ce1-4a70-b3e1-e6413702f2b6.png" align="right">
 
-<img src="freebsd_fetchme.png" align="left">
+<img src="screenshots/freebsd.png" align="left">
+<img src="screenshots/gentoo.png">
+<img src="screenshots/pinephone.png">
 download with:
 
 ``git clone https://github.com/Connor-GH/fetchme``

@@ -71,7 +71,11 @@ M_CPU_THREADS=y
 M_CPU_FREQUENCY=y
 
 # Works with FreeBSD
+# v2 is the newer, faster method.
+# v1 is older and slower, but tested more.
+# If M_GPU_VERSION is not set, it is defaulted to v1.
 M_GPU=y
+M_GPU_VERSION=2
 
 # any option associated with MEMORY
 # needs to have MEMORY=y
