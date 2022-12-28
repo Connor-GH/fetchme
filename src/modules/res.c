@@ -21,6 +21,7 @@ screen_of_display(xcb_connection_t *c, int screen)
 int
 resolution(void)
 {
+#if UNIX_SUPPORT
 	xcb_connection_t *c;
 	xcb_screen_t *screen;
 	int screen_nbr = 0;
@@ -48,5 +49,6 @@ resolution(void)
 	printf("\n");
 #endif
 
+#endif
 	return EXIT_SUCCESS;
 }

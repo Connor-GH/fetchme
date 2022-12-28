@@ -8,6 +8,7 @@
 int
 terminal(void)
 {
+#if UNIX_SUPPORT
 	extern char **environ;
 	char *terminal_emulator = NULL;
 
@@ -31,5 +32,6 @@ terminal(void)
 		exit(EXIT_FAILURE);
 	}
 	printf("%sTerminal:\033[0m %s\n", color_distro(), terminal_emulator);
+#endif
 	return EXIT_SUCCESS;
 }

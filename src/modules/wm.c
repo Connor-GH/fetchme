@@ -44,6 +44,7 @@ name(Display *disp, Window window)
 int
 wm(void)
 {
+#if UNIX_SUPPORT
 	/*
      *  Use the traditional method to get
      *  window managers other than
@@ -95,4 +96,7 @@ wm(void)
 	XCloseDisplay(disp);
 	return EXIT_SUCCESS;
 #endif /* ifndef WAYLAND */
+#else
+	return EXIT_SUCCESS;
+#endif
 }

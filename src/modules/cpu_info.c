@@ -1,18 +1,18 @@
 #include <stdio.h>
 #include <stdlib.h>
-#if defined(__linux__) && !defined(__FreeBSD__)
-#include <string.h>
-#else
-#include <sys/sysctl.h>
-#endif /* string.h or sysctl.h */
 
 #include "./include/fetchme.h"
 #include "./include/color.h"
 
+#if LINUX_SUPPORT_ONLY
+#include <string.h>
+#elif BSD_SUPPORT_ONLY
+#include <sys/sysctl.h>
+#endif /* string.h or sysctl.h */
 int
 cpu_info(void)
 {
-#if defined(__linux__) && !defined(__FreeBSD__)
+#if LINUX_SUPPORT_ONLY
 	// this long line is used to skip lines.
 #define ITER(x)                 \
 	for (int i = 0; i < x; i++) \
@@ -22,6 +22,8 @@ cpu_info(void)
 	char lineup[10]; // lineup (Ryzen, Core, Xeon, Epyc, etc)
 	char sublineup[10]; // sublineup (5, 7, 9 or i5 i7 i9 etc)
 	char model_num[10]; // model number (3600, 9900k, 3900X, etc)
+	char model_name[16];
+	int file = 0;
 #ifdef CPU_FREQUENCY
 	char freq[10]; // cpu frequency
 #endif /* CPU_FREQUENCY */
@@ -40,14 +42,22 @@ cpu_info(void)
 		perror("/proc/cpuinfo");
 		exit(EXIT_FAILURE);
 	}
-	ITER(4);
 	/*
      * TODO: this code will eventually
      * be changed to filter out and remove
      * words like `CPU' and `Processor'
      */
-	fscanf(cpu, "%*9s %*9s \t: %9s %9s %9s %9s", brand, lineup, sublineup,
-		   model_num);
+	fscanf(cpu, "%15[^\t]\t:", model_name);
+
+	while ((file != EOF) && (strncmp(model_name, "model name", 10) != 0)) {
+		ITER(1);
+		file = fscanf(cpu, "%15[^\t]\t:", model_name);
+	}
+
+	if (file == EOF)
+		exit(EXIT_FAILURE);
+
+	fscanf(cpu, "%9s %9s %9s %9s", brand, lineup, sublineup, model_num);
 #if defined(CPU_FREQUENCY) || defined(CPU_THREADS) || defined(CPU_TEMP)
 	ITER(3);
 #ifdef CPU_FREQUENCY
@@ -98,7 +108,7 @@ cpu_info(void)
 	printf(" (%.1f°C)", TEMP);
 #endif /* CPU_TEMP */
 	printf("\n");
-#else /* linux */
+#elif BSD_SUPPORT_ONLY /* linux */
 	int mib[2];
 	char *cpu_name;
 	size_t len;

@@ -32,7 +32,7 @@ endif #debug
 F_CFLAGS += $(WGCC)
 else ifeq ($(CC),clang)
 
-	LINKER 	= clang -fuse-ld=lld
+	LINKER 	= clang
 	LTO 	= -flto=thin
 
 ifeq ($(DEBUG),true)

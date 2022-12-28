@@ -12,9 +12,8 @@
 int
 main(int argc, char *argv[])
 {
-
 	if (argc > 1) {
-        if (argv[1][0] == '-') {
+		if (argv[1][0] == '-') {
 			switch (argv[1][1]) {
 			case 'v':
 				printf("%s version %s\n", _PACKAGE_NAME, _PACKAGE_VERSION);
@@ -38,7 +37,6 @@ main(int argc, char *argv[])
 	// line wrapping for
 	// something this simple.
 	printf("\033[?7l");
-
 
 #ifdef USERNAME_HOSTNAME
 	username_at_hostname();
@@ -97,7 +95,6 @@ main(int argc, char *argv[])
 #endif
 	// enable line wrapping
 	printf("\033[?7h");
-
 
 	return 0;
 }

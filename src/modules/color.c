@@ -5,10 +5,11 @@
 #endif
 
 #include "include/color.h"
-
+#include "include/fetchme.h"
 const char *
 color_distro(void)
 {
+#if UNIX_SUPPORT
 #ifndef CUSTOM_COLOR
 	char os_name[50];
 	FILE *os_release = fopen("/etc/os-release", "r");
@@ -63,5 +64,8 @@ color_distro(void)
 #endif
 #ifdef CUSTOM_COLOR
 	return CUSTOM_COLOR_VALUE;
+#endif
+#else
+	return WHITE;
 #endif
 }

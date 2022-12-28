@@ -9,6 +9,7 @@
 int
 kernel(void)
 {
+#if UNIX_SUPPORT
 	struct utsname buffer;
 	if (uname(&buffer) < 0) {
 		perror("uname");
@@ -16,5 +17,6 @@ kernel(void)
 	}
 	printf("%sKernel:\033[0m %s\n", color_distro(), buffer.release);
 
+#endif
 	return EXIT_SUCCESS;
 }

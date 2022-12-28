@@ -1,18 +1,19 @@
 #define _POSIX_C_SOURCE 2
 #include <stdlib.h>
-#if defined(__linux__)
-#include <glob.h>
-#endif
 #include <stdio.h>
 #include "./include/fetchme.h"
 #include "./include/color.h"
+
+#if LINUX_SUPPORT_ONLY
+#include <glob.h>
+#endif
 
 int
 package_count(void)
 {
 	size_t PKG_COUNT = 0;
 
-#if defined(__linux__)
+#if LINUX_SUPPORT_ONLY
 	glob_t globbuf;
 	if ((glob("/var/lib/pacman/local/*", GLOB_NOSORT, NULL,
 			  &globbuf) == 0) // arch-based
@@ -26,7 +27,7 @@ package_count(void)
 	}
 #endif /* Linux */
 
-#if defined(__FreeBSD__)
+#if BSD_SUPPORT_ONLY
 	// pkg-based
 	FILE *fp = popen("pkg info", "r");
 	char lookup[128];
@@ -42,7 +43,7 @@ package_count(void)
 #endif /* FreeBSD */
 
 	printf("%sPackages:\033[0m %lu\n", color_distro(), PKG_COUNT);
-#if defined(__linux__)
+#if LINUX_SUPPORT_ONLY
 	globfree(&globbuf);
 #endif
 	return EXIT_SUCCESS;

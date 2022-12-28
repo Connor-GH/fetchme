@@ -13,6 +13,7 @@
 int
 username_at_hostname(void)
 {
+#if UNIX_SUPPORT
 	extern uid_t getuid(void);
 	extern uid_t geteuid(void);
 	char hostname_value[100];
@@ -59,5 +60,6 @@ username_at_hostname(void)
 				strlen(pwd->pw_name));
 		exit(EXIT_FAILURE);
 	}
+#endif
 	return EXIT_SUCCESS;
 }

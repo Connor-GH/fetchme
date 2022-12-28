@@ -1,15 +1,15 @@
 #include <stdio.h>
 #include <stdlib.h>
-#if defined(__linux__) && !defined(__FreeBSD__)
-#include <sys/statvfs.h>
-#else
-#include <sys/param.h>
-#include <sys/mount.h>
-#endif
 
 #include "./include/fetchme.h"
 #include "./include/color.h"
 
+#if LINUX_SUPPORT_ONLY
+#include <sys/statvfs.h>
+#elif BSD_SUPPORT_ONLY
+#include <sys/param.h>
+#include <sys/mount.h>
+#endif
 int
 disk(void)
 {
@@ -21,12 +21,12 @@ disk(void)
      * (useful in an if-else statement for drives)
      */
 	const char *const filename = "/";
-#if defined(__linux__) && !defined(__FreeBSD__)
+#if LINUX_SUPPORT_ONLY
 	struct statvfs buf;
 #else
 	struct statfs buf;
 #endif /* struct statvfs vs struct statfs */
-#if defined(__linux__) && !defined(__FreeBSD__)
+#if LINUX_SUPPORT_ONLY
 	if (!statvfs(filename, &buf)) {
 #else
 	if (!statfs(filename, &buf)) {

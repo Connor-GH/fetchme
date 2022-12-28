@@ -9,6 +9,7 @@
 int
 refresh_rate(void)
 {
+#if UNIX_SUPPORT
 	double active_rate = 0;
 	Display *display = XOpenDisplay(NULL);
 	Window default_root_window = XDefaultRootWindow(display);
@@ -46,5 +47,6 @@ refresh_rate(void)
 	XCloseDisplay(display);
 	XRRFreeScreenResources(screen_resources);
 
+#endif
 	return EXIT_SUCCESS;
 }

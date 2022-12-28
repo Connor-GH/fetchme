@@ -1,7 +1,20 @@
 ## Changelog
-- improved GPU detection - the speed of GPU detection has increased.
+
+- OpenBSD now is as supported as FreeBSD.
+
+- new preprocessor macro definitions were made for the following:
+  - linux support - ``LINUX_SUPPORT_ONLY``
+  - *BSD support - ``BSD_SUPPORT_ONLY``
+  - Apple/MacOS support - ``APPLE_SUPPORT_ONLY``
+  - *NIX support - ``UNIX_SUPPORT``
+
+This results in the compiler "automagically" detecting which modules work on your system.
+
+No more relying on users to read ``config.mk``! (though it is still highly recommended)
 
 # older changes
+
+improved GPU detection - the speed of GPU detection has increased.
 
 Improved GPU detection - ALL gpus are now detected.
 

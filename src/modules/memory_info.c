@@ -7,6 +7,7 @@
 int
 memory_info(void)
 {
+#if LINUX_SUPPORT_ONLY
 	/*
      * TODO: add sysctl CTL_VM VM_TOTAL for FreeBSD support
      * possibly look into vm.kmem_map_* ?
@@ -71,5 +72,6 @@ memory_info(void)
 #endif
 	printf("\n");
 
+#endif
 	return EXIT_SUCCESS;
 }

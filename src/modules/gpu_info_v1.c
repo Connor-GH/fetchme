@@ -9,6 +9,7 @@
 int
 gpu_info_v1(void)
 {
+#if UNIX_SUPPORT
 	struct pci_dev *dev;
 	struct pci_access *pciaccess;
 	char namebuf[128];
@@ -44,8 +45,8 @@ gpu_info_v1(void)
 						pci_read_word(dev, PCI_VENDOR_ID),
 						pci_read_word(dev, PCI_DEVICE_ID));
 
-        printf("%x\n", pci_read_word(dev, PCI_VENDOR_ID));
-        printf("%x\n", pci_read_word(dev, PCI_DEVICE_ID));
+		printf("%x\n", pci_read_word(dev, PCI_VENDOR_ID));
+		printf("%x\n", pci_read_word(dev, PCI_DEVICE_ID));
 
 		/* the following lines remove brackets */
 		src = dest = namebuf;
@@ -67,4 +68,7 @@ gpu_info_v1(void)
 	pci_cleanup(pciaccess);
 	fprintf(stderr, "Unable to find GPU\n");
 	exit(EXIT_FAILURE);
+#else
+	return EXIT_SUCCESS;
+#endif
 }

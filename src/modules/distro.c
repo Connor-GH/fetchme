@@ -10,6 +10,7 @@
 int
 distro(void)
 {
+#if UNIX_SUPPORT
 	struct utsname buffer;
 
 	char os_name[50];
@@ -48,5 +49,8 @@ distro(void)
 	fclose(os_release);
 	fprintf(stderr, "Distro name not found.\n");
 
-	return EXIT_FAILURE;
+	exit(EXIT_FAILURE);
+#else
+	return EXIT_SUCCESS;
+#endif
 }

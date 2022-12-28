@@ -26,6 +26,7 @@ screen_of_display(xcb_connection_t *c, int screen)
 int
 refresh_rate(void)
 {
+#if UNIX_SUPPORT
 	xcb_connection_t *connection;
 	xcb_randr_get_screen_info_cookie_t screen_info;
 	xcb_randr_get_screen_info_reply_t *reply; /* we need to fill reply->rate */
@@ -52,5 +53,6 @@ refresh_rate(void)
 
 	printf(" %dHz\n", reply->rate);
 
+#endif
 	return EXIT_SUCCESS;
 }

@@ -9,6 +9,7 @@
 int
 gpu_info_v2(void)
 {
+#if UNIX_SUPPORT
 	struct pci_dev *dev;
 	struct pci_access *pciaccess;
 	char *pci_ids_value = malloc(sizeof(char) * 100);
@@ -55,7 +56,7 @@ gpu_info_v2(void)
 				pci_ids = fopen("/usr/share/misc/pci.ids", "r"); // Debian
 			if (pci_ids == NULL)
 				pci_ids = fopen("/var/lib/pciutils/pci.ids", "r");
-#if defined(__FreeBSD__) && !defined(__linux__)
+#if BSD_SUPPORT_ONLY
 			if (pci_ids == NULL)
 				pci_ids =
 					fopen("/usr/local/share/pciids/pci.ids", "r"); // FreeBSD
@@ -105,4 +106,7 @@ gpu_info_v2(void)
 	pci_cleanup(pciaccess);
 	fprintf(stderr, "Unable to find GPU\n");
 	exit(EXIT_FAILURE);
+#else
+	return EXIT_SUCCESS;
+#endif
 }

@@ -7,6 +7,7 @@
 int
 shell(void)
 {
+#if UNIX_SUPPORT
 	extern char **environ;
 	char *shell = NULL;
 
@@ -28,5 +29,6 @@ shell(void)
 	}
 	sscanf(shell, "/bin/%s", shell);
 	printf("%sShell:\033[0m %s\n", color_distro(), shell);
+#endif
 	return EXIT_SUCCESS;
 }

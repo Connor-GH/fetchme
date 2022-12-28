@@ -9,6 +9,7 @@
 int
 resolution(void)
 {
+#if UNIX_SUPPORT
 	Display *d;
 	int width = 0;
 	int height = 0;
@@ -32,6 +33,7 @@ resolution(void)
 	printf(" @");
 #else
 	printf("\n");
+#endif
 #endif
 	return EXIT_SUCCESS;
 }
