@@ -55,9 +55,9 @@ memory_info(void)
 
 	sscanf(reclaimable, "%d", &r); //reclaimable
 
-	USED_RAM = ((t - f - b - ca - r) / 1000. / 1000.);
+	USED_RAM = ((t - f - b - ca - r) / 1000000.);
 
-	TOTAL_RAM = (t / 1000 / 1000);
+	TOTAL_RAM = (t / 1000000);
 
 	if (USED_RAM < 1) {
 		MorG = 'M';

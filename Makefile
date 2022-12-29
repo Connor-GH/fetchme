@@ -8,7 +8,7 @@ rm       =  rm -rf
 
 # Target and Version
 TARGET 	 = fetchme
-VERSION  = 1.4.1
+VERSION  = 1.4.4
 include config_backend.mk
 # These variables depend on values from config_backend.mk
 INCLUDES:=  $(wildcard $(SRCDIR)/modules/include/*.h)
@@ -30,7 +30,10 @@ $(TARGET):
 
 link:
 	$(LINKER) $(OBJECTS) $(LFLAGS) -o $(BINDIR)/$(TARGET)
-	@echo "$(TARGET)-$(VERSION) built!"
+	@if [[ -n "$(STRIP)" ]]; then \
+	$(STRIP) $(BINDIR)/$(TARGET); \
+	fi
+	@echo "$(TARGET)-$(VERSION) linked!"
 
 $(OBJECTS): $(OBJDIR)/%.o : $(SRCDIR)/%.c
 	$(CC) $(F_CFLAGS) -c $< -o $@
@@ -53,14 +56,14 @@ install:
 	cp -r $(BINDIR)/$(TARGET) ${INSTALLBINDIR}
 	@echo "Executable installed!"
 	mkdir -p /usr/share/man/man1
-	cp docs/fetchme.1.bz2 /usr/share/man/man1/
+	cp docs/fetchme.1 /usr/share/man/man1/
 	@echo "Man page installed!"
 
 
 uninstall:
 	$(rm) ${INSTALLBINDIR}/$(TARGET)
 	@echo "Exectuable removed!"
-	rm /usr/share/man/man1/fetchme.1.bz2
+	rm /usr/share/man/man1/fetchme.1
 	@echo "Man page uninstalled!"
 
 format:

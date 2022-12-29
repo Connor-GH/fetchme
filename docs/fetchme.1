@@ -1,0 +1,43 @@
+.TH FETCHME 1 fetchme-v1.4.1
+.SH "NAME"
+.PP
+fetchme - Fast System Information Tool.
+.SH "SYNOPSIS"
+.PP
+\fBfetchme\fP \fB-h \fR|\fB -v\fP
+.SH "DESCRIPTION"
+.PP
+Fetchme is a system information fetching utility written in C with the
+purpose of being fast, POSIX-compliant, and conformative to C99.
+The project gives enough information in the stock config for something
+like a bug report for another project, or simply to show someone your
+computer specifications.
+
+.TP
+There are Dependencies on Xlib/xcb, XRandr/xcb-randr, and libpci if you use the
+Resolution, Refresh Rate, or GPU detection modules respectfully.
+.SH "OPTIONS"
+.TP
+.BR \-h
+Displays help information for \fBfetchme.\fR
+.TP
+.BR \-v
+Displays the version number of \fBfetchme\fR.
+.PP
+.SH "CONFIGURATION"
+.PP
+Fetchme is customized by creating editing the included config.mk
+and (re)compiling the source. This allows modules to only be
+compiled and linked in only when they are selected in the configuration,
+eliminating dead code.
+.SH "ISSUES"
+.PP
+Resolution, Refresh Rate, and GPU detection are all dependant on
+libraries that some users may not have, making these modules useless
+for users that don't have X11, or don't have libpci.
+.SH "SEE ALSO"
+.PP
+\fBXrandr\fP(1) \fBpcilib\fP(1) \fBuname\fP(1)
+.SH "BUGS"
+.PP
+\fIhttps://github.com/Connor-GH/fetchme\fP

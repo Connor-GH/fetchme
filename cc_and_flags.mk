@@ -15,45 +15,53 @@ ifeq ($(RELEASE),true)
 else
 	F_CFLAGS = -march=native -O2
 endif
-LFLAGS  = -Wl,-O2,--strip-all
+LFLAGS  =
 
 # detect if the user chose GCC or Clang
+
 ifneq (,$(filter $(CC),gcc cc))
 
 	CC  	= gcc
 	LINKER 	?= gcc
 	LTO 	= -flto
+	STRIP	?= strip
 ifeq ($(DEBUG),true)
 	# gcc-specific security/debug flags
 	WGCC   += -fanalyzer
 	F_CFLAGS += -ggdb
-	LFLAGS  =
 endif #debug
 F_CFLAGS += $(WGCC)
 else ifeq ($(CC),clang)
 
 	LINKER 	= clang
 	LTO 	= -flto=thin
+	AR		= llvm-ar
+	NM		= llvm-nm
+	OBJCOPY = llvm-objcopy
+	STRIP 	?= llvm-strip
 
 ifeq ($(DEBUG),true)
 	# clang-specific security/debug flags
-	WFLAGS += -fsanitize=undefined,signed-integer-overflow,null,alignment,address,leak,cfi \
-			  -fsanitize-undefined-trap-on-error -ftrivial-auto-var-init=pattern
-	F_CFLAGS += -gdwarf-4 -mspeculative-load-hardening -mretpoline
+	F_CFLAGS += -fsanitize=undefined,signed-integer-overflow,null,alignment,address,leak,cfi \
+			  -fsanitize-undefined-trap-on-error -ftrivial-auto-var-init=pattern \
+			  -mspeculative-load-hardening -mretpoline
 	LFLAGS  = -fsanitize=address
 endif #debug
 F_CFLAGS += -Weverything
 WNOFLAGS += -Wno-disabled-macro-expansion
 endif #compiler
 
+
 ifeq ($(DEBUG),true)
 	# generic security/debug flags
-	F_CFLAGS += -Og
-	WFLAGS += -fomit-frame-pointer -fstack-clash-protection -D_FORTIFY_SOURCE \
-			  -fcf-protection -fstack-protector-all -fexceptions -fasynchronous-unwind-tables \
-			  -Werror=format-security -D_DEBUG -fno-builtin
-	LFLAGS += -fPIE -fPIC -Wl,-z,relro,-z,noexecstack
+	F_CFLAGS += -Og -D_DEBUG -fno-builtin
+	LFLAGS += -Wl,-z,relro,-z,noexecstack
 endif # DEBUG
+ifeq ($(RELEASE),true)
+	F_CFLAGS += -fstack-clash-protection -D_FORTIFY_SOURCE=2 -fcf-protection \
+			  -Werror=format-security
+	LFLAGS += -fPIE -fPIC
+endif
 
 # Are we doing PGO?
 ifeq ($(PGO),gen)
@@ -64,6 +72,7 @@ else ifeq ($(PGO),use)
 	LFLAGS += -fprofile-instr-use=fetchme.profdata
 endif
 # build generic release
+
 
 # Flags every compile will need
 F_CFLAGS += -D_PACKAGE_NAME=\"$(TARGET)\" -D_PACKAGE_VERSION=\"$(VERSION)\" \

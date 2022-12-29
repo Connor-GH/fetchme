@@ -15,11 +15,11 @@ compile with:
 
 # [gcc]
 
-``make CC=gcc -j$(nproc)``, or on FreeBSD, ``gmake CC=gcc -j``
+``make CC=gcc -j$(nproc)``, or on BSD, ``gmake CC=gcc -j``
 
 # [clang]
 
-``make CC=clang -j$(nproc)``, or on FreeBSD, ``gmake CC=clang LINKER=clang -j``
+``make CC=clang -j$(nproc)``, or on BSD, ``gmake CC=clang LINKER=clang -j``
 
 or to install it to /usr/bin:
 

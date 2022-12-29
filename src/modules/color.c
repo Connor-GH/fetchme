@@ -12,15 +12,14 @@ color_distro(void)
 #if UNIX_SUPPORT
 #ifndef CUSTOM_COLOR
 	char os_name[50];
-    int c;
-    int file = 0;
+	int c;
+	int file = 0;
 	FILE *os_release = fopen("/etc/os-release", "r");
 
 	const char *const supported_distros[17] = {
-		"Gentoo",	"Debian",  "Void",	"Ubuntu", "Solus",
-		"Alpine",	"Mint",	   "Arch",	"Artix",  "OpenSUSE",
-		"openSUSE", "Manjaro", "FreeBSD", "OpenBSD",
-        "popos", "pop_os", "Pop!_OS"
+		"Gentoo",  "Debian",  "Void",  "Ubuntu",   "Solus",	   "Alpine",
+		"Mint",	   "Arch",	  "Artix", "OpenSUSE", "openSUSE", "Manjaro",
+		"FreeBSD", "OpenBSD", "popos", "pop_os",   "Pop!_OS"
 	};
 
 	const char *const distro_colors[17] = { PURPLE,
@@ -35,32 +34,31 @@ color_distro(void)
 											GREEN,
 											GREEN,
 											GREEN,
-                                            RED,
-                                            YELLOW,
+											RED,
+											YELLOW,
 											"\033[1;38;5;29m",
 											"\033[1;38;5;29m",
 											"\033[1;38;5;29m" };
 
-	const unsigned long distro_length[17] = { 6, 6, 4, 6, 5, 6, 4, 4,
-											  5, 8, 8, 7, 7, 7, 5, 6, 7 };
+	const unsigned long distro_length[17] = { 6, 6, 4, 6, 5, 6, 4, 4, 5,
+											  8, 8, 7, 7, 7, 5, 6, 7 };
 
 	if (os_release == NULL) {
 		perror("/etc/os-release");
 		exit(EXIT_FAILURE);
 	}
-    fscanf(os_release, "%49[^=]=", os_name);
+	fscanf(os_release, "%49[^=]=", os_name);
 
+	while ((file != EOF) && (strncmp(os_name, "NAME", 11) != 0)) {
+		while ((c = fgetc(os_release)) != '\n' && c != EOF)
+			;
+		file = fscanf(os_release, "%49[^=]=", os_name);
+	}
 
+	if (file == EOF)
+		exit(EXIT_FAILURE);
 
-    while ((file != EOF) && (strncmp(os_name, "NAME", 11) != 0)) {
-        while ((c = fgetc(os_release)) != '\n' && c != EOF);
-        file = fscanf(os_release, "%49[^=]=", os_name);
-    }
-
-    if (file == EOF)
-        exit(EXIT_FAILURE);
-
-	fscanf(os_release, "%49[^\n]+", os_name);       /* get everything
+	fscanf(os_release, "%49[^\n]+", os_name); /* get everything
                                                      * that isn't a
                                                      * newline */
 	fclose(os_release);
