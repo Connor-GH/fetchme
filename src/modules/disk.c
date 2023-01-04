@@ -4,7 +4,7 @@
 #include "./include/fetchme.h"
 
 #if LINUX_SUPPORT_ONLY
-#include <sys/statvfs.h>
+#include <sys/vfs.h>
 #elif BSD_SUPPORT_ONLY
 #include <sys/param.h>
 #include <sys/mount.h>
@@ -20,16 +20,8 @@ disk(const char *color_distro)
      * (useful in an if-else statement for drives)
      */
 	const char *const filename = "/";
-#if LINUX_SUPPORT_ONLY
-	struct statvfs buf;
-#else
 	struct statfs buf;
-#endif /* struct statvfs vs struct statfs */
-#if LINUX_SUPPORT_ONLY
-	if (!statvfs(filename, &buf)) {
-#else
 	if (!statfs(filename, &buf)) {
-#endif /* statvfs vs statfs */
 		unsigned long blksize, blocks, freeblks, disk_size, used, free;
 		char unit;
 

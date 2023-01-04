@@ -13,7 +13,7 @@
 - OpenSUSE
 - Solus
 
-(no mem or disk info);
+(no mem info);
 - FreeBSD
 - OpenBSD
 
