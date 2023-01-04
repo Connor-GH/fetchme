@@ -45,19 +45,10 @@ memory_info(const char *color_distro)
 	fclose(fp);
 
     t = atoi(total);
-    //sscanf(total, "%d", &t); // total
-
     f = atoi(freemem);
-	//sscanf(freemem, "%d", &f); // free
-
     b = atoi(buffers);
-	//sscanf(buffers, "%d", &b); // buffers
-
     ca = atoi(cache);
-	//sscanf(cache, "%d", &ca); // cache
-
     r = atoi(reclaimable);
-	//sscanf(reclaimable, "%d", &r); //reclaimable
 
 	USED_RAM = ((t - f - b - ca - r) / 1000000.);
 
