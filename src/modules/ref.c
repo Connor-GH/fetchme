@@ -4,7 +4,6 @@
 #include <stdlib.h>
 
 #include "include/fetchme.h"
-#include "include/color.h"
 
 /*
  * screen_of_display was taken from xcb's translation page:
@@ -24,7 +23,7 @@ screen_of_display(xcb_connection_t *c, int screen)
 }
 
 int
-refresh_rate(void)
+refresh_rate(const char *color_distro)
 {
 #if UNIX_SUPPORT
 	xcb_connection_t *connection;
@@ -51,7 +50,11 @@ refresh_rate(void)
 	screen_info = xcb_randr_get_screen_info_unchecked(connection, screen->root);
 	reply = xcb_randr_get_screen_info_reply(connection, screen_info, NULL);
 
+#ifdef RESOLUTION
 	printf(" %dHz\n", reply->rate);
+#else
+    printf("%sRefresh Rate: %dHz\n", color_distro, reply->rate);
+#endif
 
 #endif
 	return EXIT_SUCCESS;

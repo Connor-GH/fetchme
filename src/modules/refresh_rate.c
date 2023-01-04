@@ -7,7 +7,7 @@
 #include "./include/fetchme.h"
 
 int
-refresh_rate(void)
+refresh_rate(const char *color_distro)
 {
 #if UNIX_SUPPORT
 	double active_rate = 0;
@@ -42,7 +42,11 @@ refresh_rate(void)
 		}
 	}
 
+#ifdef RESOLUTION
 	printf(" %.2fHz\n", active_rate);
+#else
+    printf("%sRefresh Rate: \033[0m%.2fHz\n", color_distro, active_rate);
+#endif
 
 	XCloseDisplay(display);
 	XRRFreeScreenResources(screen_resources);

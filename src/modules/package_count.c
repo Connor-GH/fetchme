@@ -2,14 +2,13 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "./include/fetchme.h"
-#include "./include/color.h"
 
 #if LINUX_SUPPORT_ONLY
 #include <glob.h>
 #endif
 
 int
-package_count(void)
+package_count(const char *color_distro)
 {
 	size_t PKG_COUNT = 0;
 
@@ -42,7 +41,7 @@ package_count(void)
 	pclose(fp);
 #endif /* FreeBSD */
 
-	printf("%sPackages:\033[0m %lu\n", color_distro(), PKG_COUNT);
+	printf("%sPackages:\033[0m %lu\n", color_distro, PKG_COUNT);
 #if LINUX_SUPPORT_ONLY
 	globfree(&globbuf);
 #endif

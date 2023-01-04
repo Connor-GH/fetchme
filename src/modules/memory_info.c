@@ -2,21 +2,20 @@
 #include <stdlib.h>
 
 #include "./include/fetchme.h"
-#include "./include/color.h"
 
 int
-memory_info(void)
+memory_info(const char *color_distro)
 {
 #if LINUX_SUPPORT_ONLY
 	/*
      * TODO: add sysctl CTL_VM VM_TOTAL for FreeBSD support
      * possibly look into vm.kmem_map_* ?
      */
-#define VALUE(x) (fscanf(fp, "%*99s %99s %*99s\n", x))
+#define VALUE(x) (fscanf(fp, "%*63s %63s %*63s\n", x))
 #define ITER(x)                 \
 	for (int i = 0; i < x; i++) \
 		while ((c = fgetc(fp)) != '\n' && c != EOF)
-	char total[100], freemem[100], buffers[100], cache[100], reclaimable[100];
+	char total[64], freemem[64], buffers[64], cache[64], reclaimable[64];
 
 	double USED_RAM = 0.0;
 	int TOTAL_RAM = 0;
@@ -45,15 +44,20 @@ memory_info(void)
 
 	fclose(fp);
 
-	sscanf(total, "%d", &t); // total
+    t = atoi(total);
+    //sscanf(total, "%d", &t); // total
 
-	sscanf(freemem, "%d", &f); // free
+    f = atoi(freemem);
+	//sscanf(freemem, "%d", &f); // free
 
-	sscanf(buffers, "%d", &b); // buffers
+    b = atoi(buffers);
+	//sscanf(buffers, "%d", &b); // buffers
 
-	sscanf(cache, "%d", &ca); // cache
+    ca = atoi(cache);
+	//sscanf(cache, "%d", &ca); // cache
 
-	sscanf(reclaimable, "%d", &r); //reclaimable
+    r = atoi(reclaimable);
+	//sscanf(reclaimable, "%d", &r); //reclaimable
 
 	USED_RAM = ((t - f - b - ca - r) / 1000000.);
 
@@ -65,8 +69,7 @@ memory_info(void)
 	} else {
 		MorG = 'G';
 	}
-	printf("%s", color_distro());
-	printf("Memory:\033[0m %.1f%c/%dG", USED_RAM, MorG, TOTAL_RAM);
+	printf("%sMemory:\033[0m %.1f%c/%dG", color_distro, USED_RAM, MorG, TOTAL_RAM);
 #ifdef MEMORY_PERCENT
 	printf(" (%.0f%%)", ((double)(t - f - b - ca - r) / (double)t) * 100);
 #endif

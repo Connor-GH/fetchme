@@ -3,11 +3,10 @@
 
 #include <X11/Xlib.h>
 
-#include "./include/color.h"
 #include "./include/fetchme.h"
 
 int
-resolution(void)
+resolution(const char *color_distro)
 {
 #if UNIX_SUPPORT
 	Display *d;
@@ -24,7 +23,7 @@ resolution(void)
 
 	XCloseDisplay(d);
 
-	printf("%sResolution:\033[0m %dx%d", color_distro(), width, height);
+	printf("%sResolution:\033[0m %dx%d", color_distro, width, height);
 #ifdef REFRESH_RATE
 	/*
      * Comment or uncomment the define line

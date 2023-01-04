@@ -5,16 +5,15 @@
 #include <sys/utsname.h>
 
 #include "./include/fetchme.h"
-#include "./include/color.h"
 
 int
-distro(void)
+distro(const char *color_distro)
 {
 #if UNIX_SUPPORT
 	struct utsname buffer;
 
-	char os_name[50];
-	char info_desc[20];
+	char os_name[64];
+	char info_desc[32];
 
 	FILE *os_release = fopen("/etc/os-release", "r");
 
@@ -34,14 +33,14 @@ distro(void)
          * remove quotation marks from
          * os name if needed.
          */
-		sscanf(os_name, "%19[^=]=\"%49[^\"]", info_desc, os_name);
+		sscanf(os_name, "%31[^=]=\"%63[^\"]", info_desc, os_name);
 		/*
          * only check the first 11 bytes for
          * PRETTY_NAME.
          */
 		if (strncmp(info_desc, "PRETTY_NAME", 11) == 0) {
 			fclose(os_release);
-			printf("%sOS:\033[0m %s %s\n", color_distro(), os_name,
+			printf("%sOS:\033[0m %s %s\n", color_distro, os_name,
 				   buffer.machine);
 			return EXIT_SUCCESS;
 		}

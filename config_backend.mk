@@ -21,23 +21,23 @@ CYAN	=\"\\033[1\;36m\"
 WHITE	=\"\\033[1\;37m\"
 ifneq (,$(filter $(M_CUSTOM_COLOR),Y y))
 	MODULES += -DCUSTOM_COLOR
-ifneq ($(M_CUSTOM_COLOR_VALUE), RED)
+  ifneq ($(M_CUSTOM_COLOR_VALUE), RED)
 	MODULES += -DCUSTOM_COLOR_VALUE=$(RED)
-else ifeq ($(M_CUSTOM_COLOR_VALUE), GREEN)
+  else ifeq ($(M_CUSTOM_COLOR_VALUE), GREEN)
 	MODULES += -DCUSTOM_COLOR_VALUE=$(GREEN)
-else ifeq ($(M_CUSTOM_COLOR_VALUE), YELLOW)
+  else ifeq ($(M_CUSTOM_COLOR_VALUE), YELLOW)
 	MODULES += -DCUSTOM_COLOR_VALUE=$(YELLOW)
-else ifeq ($(M_CUSTOM_COLOR_VALUE), BLUE)
+  else ifeq ($(M_CUSTOM_COLOR_VALUE), BLUE)
 	MODULES += -DCUSTOM_COLOR_VALUE=$(BLUE)
-else ifeq ($(M_CUSTOM_COLOR_VALUE), PURPLE)
+  else ifeq ($(M_CUSTOM_COLOR_VALUE), PURPLE)
 	MODULES += -DCUSTOM_COLOR_VALUE=$(PURPLE)
-else ifeq ($(M_CUSTOM_COLOR_VALUE), CYAN)
+  else ifeq ($(M_CUSTOM_COLOR_VALUE), CYAN)
 	MODULES += -DCUSTOM_COLOR_VALUE=$(CYAN)
-else ifeq ($(M_CUSTOM_COLOR_VALUE), WHITE)
+  else ifeq ($(M_CUSTOM_COLOR_VALUE), WHITE)
 	MODULES += -DCUSTOM_COLOR_VALUE=$(WHITE)
-else
+  else
 	MODULES += -DCUSTOM_COLOR_VALUE=\"\\033[0m\"
-endif
+  endif
 endif # CUSTOM_COLOR
 
 # username@hostname
@@ -88,22 +88,19 @@ else
 	M_LFLAGS += -lX11
 endif
 	MODULES += -DRESOLUTION
+endif # RESOLUTION
 # refresh rate the screen is using. detected from libxrandr.
-# refresh rate is dependant on the resolution module, so
-# you will need both if you want refresh rate.
-# the resolution module is not dependant on refresh rate though,
-# so you can use it by itself. refresh rate does not work on TTY.
+# refresh rate does not work on TTY.
 ifneq (,$(filter $(M_REFRESH_RATE),Y y))
 ifneq (,$(filter $(M_REFRESH_RATE_XCB),Y y)) # XCB method
 	SOURCES += $(SRCDIR)/modules/ref.c
-	M_LFLAGS += -lxcb-randr
+	M_LFLAGS += -lxcb -lxcb-randr
 else
 	SOURCES += $(SRCDIR)/modules/refresh_rate.c
-	M_LFLAGS += -lXrandr
+	M_LFLAGS += -lX11 -lXrandr
 endif
 	MODULES += -DREFRESH_RATE
 endif
-endif # RESOLUTION
 
 # window manager detection. detects the window manager of
 ## KDE, for example, as KWin.

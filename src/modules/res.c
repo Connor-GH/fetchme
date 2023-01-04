@@ -3,7 +3,6 @@
 #include <stdlib.h>
 
 #include "include/fetchme.h"
-#include "include/color.h"
 
 xcb_screen_t *
 screen_of_display(xcb_connection_t *c, int screen)
@@ -19,7 +18,7 @@ screen_of_display(xcb_connection_t *c, int screen)
 }
 
 int
-resolution(void)
+resolution(const char *color_distro)
 {
 #if UNIX_SUPPORT
 	xcb_connection_t *c;
@@ -38,7 +37,7 @@ resolution(void)
 		fprintf(stderr, "Screen not found.\n");
 		exit(EXIT_FAILURE);
 	}
-	printf("%sResolution:\033[0m %dx%d", color_distro(), width, height);
+	printf("%sResolution:\033[0m %dx%d", color_distro, width, height);
 #ifdef REFRESH_RATE
 	/*
      * Comment or uncomment the define line

@@ -3,9 +3,8 @@
 #include <string.h>
 
 #include "./include/fetchme.h"
-#include "./include/color.h"
 int
-shell(void)
+shell(const char *color_distro)
 {
 #if UNIX_SUPPORT
 	extern char **environ;
@@ -28,7 +27,7 @@ shell(void)
 		exit(EXIT_FAILURE);
 	}
 	sscanf(shell, "/bin/%s", shell);
-	printf("%sShell:\033[0m %s\n", color_distro(), shell);
+	printf("%sShell:\033[0m %s\n", color_distro, shell);
 #endif
 	return EXIT_SUCCESS;
 }

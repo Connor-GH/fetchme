@@ -2,7 +2,6 @@
 #include <stdlib.h>
 
 #include "./include/fetchme.h"
-#include "./include/color.h"
 
 #if LINUX_SUPPORT_ONLY
 #include <sys/statvfs.h>
@@ -11,7 +10,7 @@
 #include <sys/mount.h>
 #endif
 int
-disk(void)
+disk(const char *color_distro)
 {
 	/*
      * When multi-drive filesystem
@@ -50,7 +49,7 @@ disk(void)
 		} else {
 			unit = 'T';
 		}
-		printf("%sDisk:\033[0m %ld%c/%ld%c", color_distro(),
+		printf("%sDisk:\033[0m %ld%c/%ld%c", color_distro,
 			   (used / 1024 / 1024 / 1024), unit,
 			   ((used / 1024 / 1024 / 1024) + free / 1024 / 1024 / 1024), unit);
 #ifdef DISK_PERCENT

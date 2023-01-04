@@ -11,7 +11,7 @@ color_distro(void)
 {
 #if UNIX_SUPPORT
 #ifndef CUSTOM_COLOR
-	char os_name[50];
+	char os_name[64];
 	int c;
 	int file = 0;
 	FILE *os_release = fopen("/etc/os-release", "r");
@@ -47,18 +47,18 @@ color_distro(void)
 		perror("/etc/os-release");
 		exit(EXIT_FAILURE);
 	}
-	fscanf(os_release, "%49[^=]=", os_name);
+	fscanf(os_release, "%63[^=]=", os_name);
 
 	while ((file != EOF) && (strncmp(os_name, "NAME", 11) != 0)) {
 		while ((c = fgetc(os_release)) != '\n' && c != EOF)
 			;
-		file = fscanf(os_release, "%49[^=]=", os_name);
+		file = fscanf(os_release, "%63[^=]=", os_name);
 	}
 
 	if (file == EOF)
 		exit(EXIT_FAILURE);
 
-	fscanf(os_release, "%49[^\n]+", os_name); /* get everything
+	fscanf(os_release, "%63[^\n]+", os_name); /* get everything
                                                      * that isn't a
                                                      * newline */
 	fclose(os_release);

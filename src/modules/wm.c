@@ -9,7 +9,6 @@
 #endif
 
 #include "./include/fetchme.h"
-#include "./include/color.h"
 #ifndef WAYLAND
 
 static inline Window *
@@ -42,7 +41,7 @@ name(Display *disp, Window window)
 #endif /* ifndef WAYLAND */
 
 int
-wm(void)
+wm(const char *color_distro)
 {
 #if UNIX_SUPPORT
 	/*
@@ -71,7 +70,7 @@ wm(void)
 			if (strstr(lookup, supported_wm[i]) != NULL) {
 				pclose(fp);
 
-				printf("%sWM:\033[0m %s\n", color_distro(), supported_wm[i]);
+				printf("%sWM:\033[0m %s\n", color_distro, supported_wm[i]);
 				return EXIT_SUCCESS;
 			}
 		}
@@ -90,7 +89,7 @@ wm(void)
 	char *wname = name(disp, wlist[0]);
 
 	XFree(wlist);
-	printf("%sWM:\033[0m %s\n", color_distro(), wname);
+	printf("%sWM:\033[0m %s\n", color_distro, wname);
 	free(wname);
 
 	XCloseDisplay(disp);

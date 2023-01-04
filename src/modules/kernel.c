@@ -4,10 +4,9 @@
 #include <sys/utsname.h>
 
 #include "./include/fetchme.h"
-#include "./include/color.h"
 
 int
-kernel(void)
+kernel(const char *color_distro)
 {
 #if UNIX_SUPPORT
 	struct utsname buffer;
@@ -15,7 +14,7 @@ kernel(void)
 		perror("uname");
 		exit(EXIT_FAILURE);
 	}
-	printf("%sKernel:\033[0m %s\n", color_distro(), buffer.release);
+	printf("%sKernel:\033[0m %s\n", color_distro, buffer.release);
 
 #endif
 	return EXIT_SUCCESS;

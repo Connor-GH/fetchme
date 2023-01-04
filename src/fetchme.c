@@ -12,6 +12,8 @@
 int
 main(int argc, char *argv[])
 {
+    const char *colordistro = color_distro();
+
 	if (argc > 1) {
 		if (argv[1][0] == '-') {
 			switch (argv[1][1]) {
@@ -32,6 +34,7 @@ main(int argc, char *argv[])
 		return 0;
 	}
 
+
 	// disable line wrapping.
 	// yes, I disabled
 	// line wrapping for
@@ -39,59 +42,59 @@ main(int argc, char *argv[])
 	printf("\033[?7l");
 
 #ifdef USERNAME_HOSTNAME
-	username_at_hostname();
+	username_at_hostname(colordistro);
 #endif
 
 #ifdef DISTRO
-	distro();
+	distro(colordistro);
 #endif
 
 #ifdef KERNEL
-	kernel();
+	kernel(colordistro);
 #endif
 
 #ifdef UPTIME
-	uptime_info();
+	uptime_info(colordistro);
 #endif
 
 #ifdef PACKAGE
-	package_count();
+	package_count(colordistro);
 #endif
 
 #ifdef SHELL
-	shell();
+	shell(colordistro);
 #endif
 
 #ifdef RESOLUTION
-	resolution();
+	resolution(colordistro);
 #endif
 
 #ifdef REFRESH_RATE
-	refresh_rate();
+	refresh_rate(colordistro);
 #endif
 
 #ifdef WM
-	wm();
+	wm(colordistro);
 #endif
 
 #ifdef TERMINAL
-	terminal();
+	terminal(colordistro);
 #endif
 
 #ifdef CPU
-	cpu_info();
+	cpu_info(colordistro);
 #endif
 
 #ifdef GPU
-	gpu_info();
+	gpu_info(colordistro);
 #endif
 
 #ifdef MEMORY
-	memory_info();
+	memory_info(colordistro);
 #endif
 
 #ifdef DISK
-	disk();
+	disk(colordistro);
 #endif
 	// enable line wrapping
 	printf("\033[?7h");

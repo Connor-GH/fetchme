@@ -3,10 +3,9 @@
 #include <string.h>
 
 #include "./include/fetchme.h"
-#include "./include/color.h"
 
 int
-terminal(void)
+terminal(const char *color_distro)
 {
 #if UNIX_SUPPORT
 	extern char **environ;
@@ -31,7 +30,7 @@ terminal(void)
 		fprintf(stderr, "wrong ENV var directory\n");
 		exit(EXIT_FAILURE);
 	}
-	printf("%sTerminal:\033[0m %s\n", color_distro(), terminal_emulator);
+	printf("%sTerminal:\033[0m %s\n", color_distro, terminal_emulator);
 #endif
 	return EXIT_SUCCESS;
 }

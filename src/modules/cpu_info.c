@@ -2,7 +2,6 @@
 #include <stdlib.h>
 
 #include "./include/fetchme.h"
-#include "./include/color.h"
 
 #if LINUX_SUPPORT_ONLY
 #include <string.h>
@@ -10,7 +9,7 @@
 #include <sys/sysctl.h>
 #endif /* string.h or sysctl.h */
 int
-cpu_info(void)
+cpu_info(const char *color_distro)
 {
 #if LINUX_SUPPORT_ONLY
 	// this long line is used to skip lines.
@@ -18,17 +17,17 @@ cpu_info(void)
 	for (int i = 0; i < x; i++) \
 		while ((c = fgetc(cpu)) != '\n' && c != EOF)
 
-	char brand[10]; // cpu brand
-	char lineup[10]; // lineup (Ryzen, Core, Xeon, Epyc, etc)
-	char sublineup[10]; // sublineup (5, 7, 9 or i5 i7 i9 etc)
-	char model_num[10]; // model number (3600, 9900k, 3900X, etc)
+	char brand[16]; // cpu brand
+	char lineup[16]; // lineup (Ryzen, Core, Xeon, Epyc, etc)
+	char sublineup[16]; // sublineup (5, 7, 9 or i5 i7 i9 etc)
+	char model_num[16]; // model number (3600, 9900k, 3900X, etc)
 	char model_name[16];
 	int file = 0;
 #ifdef CPU_FREQUENCY
-	char freq[10]; // cpu frequency
+	char freq[16]; // cpu frequency
 #endif /* CPU_FREQUENCY */
 #ifdef CPU_THREADS
-	char threads[10]; // cpu threads
+	char threads[16]; // cpu threads
 #endif /* CPU_THREADS */
 #ifdef CPU_TEMP
 	double TEMP;
@@ -57,15 +56,15 @@ cpu_info(void)
 	if (file == EOF)
 		exit(EXIT_FAILURE);
 
-	fscanf(cpu, "%9s %9s %9s %9s", brand, lineup, sublineup, model_num);
+	fscanf(cpu, "%15s %15s %15s %15s", brand, lineup, sublineup, model_num);
 #if defined(CPU_FREQUENCY) || defined(CPU_THREADS) || defined(CPU_TEMP)
 	ITER(3);
 #ifdef CPU_FREQUENCY
-	fscanf(cpu, "%*9s %*9s \t: %9s", freq);
+	fscanf(cpu, "%*15s %*15s \t: %15s", freq);
 #endif /* CPU_FREQUENCY */
 	ITER(3);
 #ifdef CPU_THREADS
-	fscanf(cpu, "%*9s \t: %9s", threads);
+	fscanf(cpu, "%*15s \t: %15s", threads);
 #endif /* CPU_THREADS */
 #endif /* CPU_FREQUENCY || CPU_THREADS || CPU_TEMP */
 	fclose(cpu);
@@ -80,22 +79,22 @@ cpu_info(void)
 			}
 		}
 	} else {
-		char line1_value[100];
+		char line1_value[128];
 		int x2 = 0;
-		fscanf(cpu3, "%99s", line1_value);
+		fscanf(cpu3, "%127s", line1_value);
 		fclose(cpu3);
 		sscanf(line1_value, "%d", &x2);
 		TEMP = (x2 / 1000.);
 	}
 #endif /* CPU_TEMP */
 	if (strcmp(sublineup, "CPU") == 0)
-		printf("%sCPU:\033[0m %s %s %s", color_distro(), brand, lineup,
+		printf("%sCPU:\033[0m %s %s %s", color_distro, brand, lineup,
 			   model_num);
 	else if (strcmp(model_num, "CPU") == 0)
-		printf("%sCPU:\033[0m %s %s %s", color_distro(), brand, lineup,
+		printf("%sCPU:\033[0m %s %s %s", color_distro, brand, lineup,
 			   sublineup);
 	else
-		printf("%sCPU:\033[0m %s %s %s %s", color_distro(), brand, lineup,
+		printf("%sCPU:\033[0m %s %s %s %s", color_distro, brand, lineup,
 			   sublineup, model_num);
 
 #ifdef CPU_THREADS
@@ -120,7 +119,7 @@ cpu_info(void)
 		perror("sysctl");
 		exit(EXIT_FAILURE);
 	}
-	printf("%sCPU: \033[0m%s\n", color_distro(), cpu_name);
+	printf("%sCPU: \033[0m%s\n", color_distro, cpu_name);
 	free(cpu_name);
 #endif /* FreeBSD */
 	return EXIT_SUCCESS;
