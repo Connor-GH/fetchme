@@ -26,31 +26,18 @@ INCLUDES:=  $(wildcard $(SRCDIR)/modules/include/*.h)
 OBJECTS :=  $(SOURCES:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
 include cc_and_flags.mk
 
-# rebuild with `make'
-$(TARGET):
-	$(MAKE) remove
-	@# create these directories if needed
-	mkdir -p obj/modules
-	mkdir -p bin/
-	@# compile with multiple threads, then link.
-	@echo -e "CC =\t$(CC)"
-	@echo -e "LD =\t$(LINKER)"
-	@echo -e "Building $(TARGET)-$(VERSION)"
-	$(MAKE) $(OBJECTS)
-	$(MAKE) link
+all: remove $(TARGET)
 
-link:
-	$(LINKER) $(OBJECTS) $(LFLAGS) -o $(OUTDIR)/$(TARGET)
-	@if [[ -n "$(STRIP)" ]]; then \
-	$(STRIP) $(OUTDIR)/$(TARGET); \
-	fi
-	@echo "$(TARGET)-$(VERSION) linked!"
+$(TARGET): $(OBJECTS) | $(OUTDIR)
+	$(CC) -o $(OUTDIR)/$@ $(F_CFLAGS) $(LFLAGS) $(INCLUDE) $^
 
-$(OBJECTS): $(OBJDIR)/%.o : $(SRCDIR)/%.c
-	$(CC) $(F_CFLAGS) -c $< -o $@
-	@echo "Compiled "$<" successfully!"
+$(OBJDIR)/%.o : $(SRCDIR)/%.c | $(OBJDIR)/modules
+	$(CC) -o $@ $(F_CFLAGS) $^ -c
+
+$(PROFDIR) $(OUTDIR) $(OBJDIR)/modules:
+	mkdir -p $@
+
 .PHONY: clean
-
 
 clean:
 	$(rm) $(OBJECTS)
@@ -70,6 +57,8 @@ install: | $(TARGET)
 	$(INSTALL_DATA) docs/fetchme.1 $(DESTDIR)$(MAN1DIR)
 	@echo "Man page installed!"
 
+install-strip:
+	$(MAKE) INSTALL_PROGRAM="install -s" install
 
 uninstall:
 	$(rm) $(DESTDIR)$(BINDIR)/$(TARGET)
