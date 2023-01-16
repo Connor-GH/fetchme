@@ -42,7 +42,7 @@ M_PACKAGE=y
 # and set to 'y' to use xcb. otherwise,
 # Xlib is used.
 M_RESOLUTION=y
-#M_RESOLUTION_XCB=y
+# M_RESOLUTION_XCB=y
 
 # Might work with BSD
 # XCB might be faster than Xlib
@@ -50,7 +50,7 @@ M_RESOLUTION=y
 # and set to 'y' to use xcb. otherwise,
 # Xlib is used.
 M_REFRESH_RATE=y
-#M_REFRESH_RATE_XCB=y
+# M_REFRESH_RATE_XCB=y
 
 # Might work with BSD
 # M_WM only works with XWayland and X11.

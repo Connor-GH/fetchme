@@ -9,7 +9,7 @@
  * screen_of_display was taken from xcb's translation page:
  * https://xcb.freedesktop.org/xlibtoxcbtranslationguide/
  */
-static inline xcb_screen_t *
+static xcb_screen_t *
 screen_of_display(xcb_connection_t *c, int screen)
 {
 	xcb_screen_iterator_t iter;

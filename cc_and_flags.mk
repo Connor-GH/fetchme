@@ -19,11 +19,10 @@ LFLAGS  =
 
 # detect if the user chose GCC or Clang
 
-ifneq (,$(filter $(CC),gcc cc))
+ifeq ($(shell $(CC) -v 2>&1 | grep -c "gcc version"), 1)
 
-	CC  	= gcc
-	LINKER 	?= gcc
-	LTO 	= -flto
+	LINKER 	= $(CC)
+	LTO 	= -flto -fno-fat-lto-objects
 	STRIP	?= strip
 ifeq ($(DEBUG),true)
 	# gcc-specific security/debug flags
@@ -31,9 +30,9 @@ ifeq ($(DEBUG),true)
 	F_CFLAGS += -ggdb
 endif #debug
 F_CFLAGS += $(WGCC)
-else ifeq ($(CC),clang)
+else ifeq ($(shell $(CC) -v 2>&1 | grep -c "clang version"), 1)
 
-	LINKER 	= clang
+	LINKER 	= $(CC)
 	LTO 	= -flto=thin
 	AR		= llvm-ar
 	NM		= llvm-nm
