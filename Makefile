@@ -1,10 +1,21 @@
 TOPDIR 	:=  ./src
 IVAR 	:=  -I. -I$(TOPDIR)/include/
-PREFIX	?=  /usr
-INSTALLBINDIR=${PREFIX}/bin
-OBJDIR   = 	obj
-BINDIR   = 	bin
-rm       =  rm -rf
+
+DESTDIR	=
+PREFIX	= /usr
+BINDIR	= $(PREFIX)/bin
+DATADIR	= $(PREFIX)/share
+MANDIR	= $(DATADIR)/man
+MAN1DIR	= $(MANDIR)/man1
+
+INSTALL	= install
+INSTALL_DIR	= install -d
+INSTALL_DATA	= install -m644
+INSTALL_PROGRAM	= install
+rm	= rm -rf
+
+OBJDIR   = obj
+OUTDIR   = bin
 
 # Target and Version
 TARGET 	 = fetchme
@@ -29,9 +40,9 @@ $(TARGET):
 	$(MAKE) link
 
 link:
-	$(LINKER) $(OBJECTS) $(LFLAGS) -o $(BINDIR)/$(TARGET)
+	$(LINKER) $(OBJECTS) $(LFLAGS) -o $(OUTDIR)/$(TARGET)
 	@if [[ -n "$(STRIP)" ]]; then \
-	$(STRIP) $(BINDIR)/$(TARGET); \
+	$(STRIP) $(OUTDIR)/$(TARGET); \
 	fi
 	@echo "$(TARGET)-$(VERSION) linked!"
 
@@ -46,24 +57,24 @@ clean:
 	@echo "Cleanup complete!"
 
 remove: clean
-	$(rm) $(BINDIR)/$(TARGET)
+	$(rm) $(OUTDIR)/$(TARGET)
 	@echo "Executable removed!"
 
 .PHONY: install
 
-install:
-	mkdir -p ${INSTALLBINDIR}
-	cp -r $(BINDIR)/$(TARGET) ${INSTALLBINDIR}
+install: | $(TARGET)
+	$(INSTALL_DIR) $(DESTDIR)$(BINDIR)
+	$(INSTALL_PROGRAM) $(OUTDIR)/$(TARGET) $(DESTDIR)$(BINDIR)
 	@echo "Executable installed!"
-	mkdir -p /usr/share/man/man1
-	cp docs/fetchme.1 /usr/share/man/man1/
+	$(INSTALL_DIR) $(DESTDIR)$(MAN1DIR)
+	$(INSTALL_DATA) docs/fetchme.1 $(DESTDIR)$(MAN1DIR)
 	@echo "Man page installed!"
 
 
 uninstall:
-	$(rm) ${INSTALLBINDIR}/$(TARGET)
+	$(rm) $(DESTDIR)$(BINDIR)/$(TARGET)
 	@echo "Exectuable removed!"
-	rm /usr/share/man/man1/fetchme.1
+	$(rm) $(DESTDIR)$(MAN1DIR)/fetchme.1
 	@echo "Man page uninstalled!"
 
 format:
