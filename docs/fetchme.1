@@ -1,7 +1,7 @@
-.TH FETCHME 1 fetchme-v1.4.1
+.TH FETCHME 1 fetchme-v1.4.6
 .SH "NAME"
 .PP
-fetchme - Fast System Information Tool.
+fetchme - Fast System Information Tool Written in C.
 .SH "SYNOPSIS"
 .PP
 \fBfetchme\fP \fB-h \fR|\fB -v\fP
@@ -15,7 +15,7 @@ computer specifications.
 
 .TP
 There are Dependencies on Xlib/xcb, XRandr/xcb-randr, and libpci if you use the
-Resolution, Refresh Rate, or GPU detection modules respectfully.
+Resolution, Refresh Rate, Window Manager, or GPU detection modules respectfully.
 .SH "OPTIONS"
 .TP
 .BR \-h
@@ -32,9 +32,9 @@ compiled and linked in only when they are selected in the configuration,
 eliminating dead code.
 .SH "ISSUES"
 .PP
-Resolution, Refresh Rate, and GPU detection are all dependant on
+Resolution, Refresh Rate, Window Manager, and GPU detection are all dependant on
 libraries that some users may not have, making these modules useless
-for users that don't have X11, or don't have libpci.
+for users that don't have libX11, libXrandr, libxcb, or libpci.
 .SH "SEE ALSO"
 .PP
 \fBXrandr\fP(1) \fBpcilib\fP(1) \fBuname\fP(1)
