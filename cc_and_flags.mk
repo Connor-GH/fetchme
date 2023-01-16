@@ -77,4 +77,4 @@ endif
 # Flags every compile will need
 F_CFLAGS += -D_PACKAGE_NAME=\"$(TARGET)\" -D_PACKAGE_VERSION=\"$(VERSION)\" \
 		  $(MODULES) -std=c99 -pipe $(LTO) $(WNOFLAGS) $(IVAR) $(VISIBILITY) $(CFLAGS)
-LFLAGS += $(IVAR) $(LTO) $(M_LFLAGS) -L/usr/local/lib -Wl,-rpath=/usr/local/lib $(LDFLAGS)
+LFLAGS += $(IVAR) $(LTO) $(M_LFLAGS) -L/usr/local/lib $(LDFLAGS)
