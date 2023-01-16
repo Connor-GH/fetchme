@@ -26,6 +26,8 @@ INCLUDES:=  $(wildcard $(SRCDIR)/modules/include/*.h)
 OBJECTS :=  $(SOURCES:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
 include cc_and_flags.mk
 
+.PHONY: all clean remove install install-strip uninstall format pgo
+
 all: remove $(TARGET)
 
 $(TARGET): $(OBJECTS) | $(OUTDIR)
@@ -37,8 +39,6 @@ $(OBJDIR)/%.o : $(SRCDIR)/%.c | $(OBJDIR)/modules
 $(PROFDIR) $(OUTDIR) $(OBJDIR)/modules:
 	mkdir -p $@
 
-.PHONY: clean
-
 clean:
 	$(rm) $(OBJECTS)
 	@echo "Cleanup complete!"
@@ -46,8 +46,6 @@ clean:
 remove: clean
 	$(rm) $(OUTDIR)/$(TARGET)
 	@echo "Executable removed!"
-
-.PHONY: install
 
 install: | $(TARGET)
 	$(INSTALL_DIR) $(DESTDIR)$(BINDIR)
@@ -68,7 +66,6 @@ uninstall:
 
 format:
 	@find . -iname *.h -o -iname *.c | xargs clang-format -style=file:.clang-format -i
-
 
 pgo:
 	@# only clang is supported for this PGO
