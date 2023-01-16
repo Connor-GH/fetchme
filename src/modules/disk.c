@@ -25,7 +25,7 @@ disk(const char *color_distro)
 		unsigned long blksize, blocks, freeblks, disk_size, used, free;
 		char unit;
 
-		blksize = buf.f_bsize;
+		blksize = (unsigned long)buf.f_bsize;
 		blocks = buf.f_blocks;
 		freeblks = buf.f_bfree;
 
