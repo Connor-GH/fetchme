@@ -41,6 +41,9 @@ main(int argc, char *argv[])
 	// something this simple.
 	printf("\033[?7l");
 
+#ifdef PGO_LOOP
+    for (int i = 0; i < 100; i++) {
+#endif
 #ifdef USERNAME_HOSTNAME
 	username_at_hostname(colordistro);
 #endif
@@ -95,6 +98,10 @@ main(int argc, char *argv[])
 
 #ifdef DISK
 	disk(colordistro);
+#endif
+
+#ifdef PGO_LOOP
+    }
 #endif
 	// enable line wrapping
 	printf("\033[?7h");

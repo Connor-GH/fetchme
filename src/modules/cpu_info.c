@@ -30,11 +30,12 @@ cpu_info(const char *color_distro)
 	char threads[16]; // cpu threads
 #endif /* CPU_THREADS */
 #ifdef CPU_TEMP
-	double TEMP;
+	double TEMP = 0.0;
 	FILE *cpu3 = fopen("/sys/class/hwmon/hwmon1/temp1_input", "r");
 #endif /* CPU_TEMP */
 
 	int c;
+
 
 	FILE *cpu = fopen("/proc/cpuinfo", "r");
 	if (cpu == NULL) {
@@ -74,16 +75,12 @@ cpu_info(const char *color_distro)
 		cpu3 = fopen("/sys/class/hwmon/hwmon1/temp2_input", "r");
 		if (cpu3 == NULL) { /* cpu3 is still NULL after entering temp2_input */
 			cpu3 = fopen("/sys/class/hwmon/hwmon1/temp3_input", "r");
-			if (cpu3 == NULL) {
-				TEMP = 0.; /* Ryzen CPU temperature file not found */
-			}
+			/* Ryzen CPU temperature file not found */
 		}
 	} else {
-		char line1_value[128];
 		int x2 = 0;
-		fscanf(cpu3, "%127s", line1_value);
+		fscanf(cpu3, "%d", &x2);
 		fclose(cpu3);
-		sscanf(line1_value, "%d", &x2);
 		TEMP = (x2 / 1000.);
 	}
 #endif /* CPU_TEMP */

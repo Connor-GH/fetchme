@@ -29,7 +29,7 @@ include cc_and_flags.mk
 # rebuild with `make'
 $(TARGET):
 	$(MAKE) remove
-	@# create these directories if needed
+	# create these directories if needed
 	mkdir -p obj/modules
 	mkdir -p bin/
 	@# compile with multiple threads, then link.
@@ -39,11 +39,9 @@ $(TARGET):
 	$(MAKE) $(OBJECTS)
 	$(MAKE) link
 
+	#@[ -n "$(STRIP)" ] && $(STRIP) $(OUTDIR)/$(TARGET);
 link:
 	$(LINKER) $(OBJECTS) $(LFLAGS) -o $(OUTDIR)/$(TARGET)
-	@if [[ -n "$(STRIP)" ]]; then \
-	$(STRIP) $(OUTDIR)/$(TARGET); \
-	fi
 	@echo "$(TARGET)-$(VERSION) linked!"
 
 $(OBJECTS): $(OBJDIR)/%.o : $(SRCDIR)/%.c
@@ -82,13 +80,13 @@ format:
 
 
 pgo:
-	@# only clang is supported for this PGO
+	# only clang is supported for this PGO
+	# terminal and shell modules are turned off for profiling
+	# due to a bug with environ.
 	if [[ -f fetchme.profdata ]]; then \
 		make CC=clang PGO=use && $(rm) fetchme.prof*; \
 	else \
-		make CC=clang PGO=gen && \
-	for x in {0..100}; do \
+		make CC=clang PGO=gen CFLAGS="-DPGO_LOOP $(CFLAGS)" M_TERMINAL=n M_SHELL=n && \
 		LLVM_PROFILE_FILE=fetchme.profraw ./bin/fetchme > /dev/null; \
-	done; \
-	llvm-profdata merge -output=fetchme.profdata fetchme.profraw; \
+		llvm-profdata merge -output=fetchme.profdata fetchme.profraw; \
 	fi

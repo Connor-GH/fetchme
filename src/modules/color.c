@@ -61,6 +61,7 @@ color_distro(void)
 	fscanf(os_release, "%63[^\n]+", os_name); /* get everything
                                                      * that isn't a
                                                      * newline */
+
 	fclose(os_release);
 	/*
      * remove quotation marks from

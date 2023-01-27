@@ -11,9 +11,9 @@ WNOFLAGS= -Wno-unknown-pragmas -Wno-unused-result
 VISIBILITY ?= -fvisibility=hidden
 
 ifeq ($(RELEASE),true)
-	F_CFLAGS = -march=x86-64 -O2
+	F_CFLAGS = -march=x86-64 -O2 -D_POSIX_C_SOURCE=200809L
 else
-	F_CFLAGS = -march=native -O2
+	F_CFLAGS = -march=native -O2 -D_POSIX_C_SOURCE=200809L
 endif
 LFLAGS  =
 
@@ -34,8 +34,7 @@ else ifeq ($(shell $(CC) -v 2>&1 | grep -c "clang version"), 1)
 
 	LINKER 	= $(CC)
 	LTO 	= -flto=thin
-	AR		= llvm-ar
-	NM		= llvm-nm
+	AS		= llvm-as
 	OBJCOPY = llvm-objcopy
 	STRIP 	?= llvm-strip
 
