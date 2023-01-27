@@ -19,36 +19,25 @@ OUTDIR   = bin
 
 # Target and Version
 TARGET 	 = fetchme
-VERSION  = 1.4.7
+VERSION  = 1.4.8
 include config_backend.mk
 # These variables depend on values from config_backend.mk
 INCLUDES:=  $(wildcard $(SRCDIR)/modules/include/*.h)
 OBJECTS :=  $(SOURCES:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
 include cc_and_flags.mk
 
-# rebuild with `make'
-$(TARGET):
-	$(MAKE) remove
-	# create these directories if needed
-	mkdir -p obj/modules
-	mkdir -p bin/
-	@# compile with multiple threads, then link.
-	@echo -e "CC =\t$(CC)"
-	@echo -e "LD =\t$(LINKER)"
-	@echo -e "Building $(TARGET)-$(VERSION)"
-	$(MAKE) $(OBJECTS)
-	$(MAKE) link
+.PHONY: all clean remove install install-strip uninstall format pgo
 
-	#@[ -n "$(STRIP)" ] && $(STRIP) $(OUTDIR)/$(TARGET);
-link:
-	$(LINKER) $(OBJECTS) $(LFLAGS) -o $(OUTDIR)/$(TARGET)
-	@echo "$(TARGET)-$(VERSION) linked!"
+all: remove $(TARGET)
 
-$(OBJECTS): $(OBJDIR)/%.o : $(SRCDIR)/%.c
-	$(CC) $(F_CFLAGS) -c $< -o $@
-	@echo "Compiled "$<" successfully!"
-.PHONY: clean
+$(TARGET): $(OBJECTS) | $(OUTDIR)
+	$(CC) -o $(OUTDIR)/$@ $(F_CFLAGS) $(LFLAGS) $(INCLUDE) $^
 
+$(OBJDIR)/%.o : $(SRCDIR)/%.c | $(OBJDIR)/modules
+	$(CC) -o $@ $(F_CFLAGS) $^ -c
+
+$(PROFDIR) $(OUTDIR) $(OBJDIR)/modules:
+	mkdir -p $@
 
 clean:
 	$(rm) $(OBJECTS)
@@ -58,8 +47,6 @@ remove: clean
 	$(rm) $(OUTDIR)/$(TARGET)
 	@echo "Executable removed!"
 
-.PHONY: install
-
 install: | $(TARGET)
 	$(INSTALL_DIR) $(DESTDIR)$(BINDIR)
 	$(INSTALL_PROGRAM) $(OUTDIR)/$(TARGET) $(DESTDIR)$(BINDIR)
@@ -68,6 +55,8 @@ install: | $(TARGET)
 	$(INSTALL_DATA) docs/fetchme.1 $(DESTDIR)$(MAN1DIR)
 	@echo "Man page installed!"
 
+install-strip:
+	$(MAKE) INSTALL_PROGRAM="install -s" install
 
 uninstall:
 	$(rm) $(DESTDIR)$(BINDIR)/$(TARGET)
@@ -78,15 +67,13 @@ uninstall:
 format:
 	@find . -iname *.h -o -iname *.c | xargs clang-format -style=file:.clang-format -i
 
-
 pgo:
-	# only clang is supported for this PGO
-	# terminal and shell modules are turned off for profiling
-	# due to a bug with environ.
+	@# only clang is supported for this PGO
 	if [[ -f fetchme.profdata ]]; then \
 		make CC=clang PGO=use && $(rm) fetchme.prof*; \
 	else \
-		make CC=clang PGO=gen CFLAGS="-DPGO_LOOP $(CFLAGS)" M_TERMINAL=n M_SHELL=n && \
+		make CC=clang PGO=gen CFLAGS="-DPGO_LOOP $(CFLAGS)" && \
 		LLVM_PROFILE_FILE=fetchme.profraw ./bin/fetchme > /dev/null; \
-		llvm-profdata merge -output=fetchme.profdata fetchme.profraw; \
+	done; \
+	llvm-profdata merge -output=fetchme.profdata fetchme.profraw; \
 	fi
