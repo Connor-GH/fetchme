@@ -45,7 +45,7 @@ refresh_rate(const char *color_distro)
 #ifdef RESOLUTION
 	printf(" %.2fHz\n", active_rate);
 #else
-    printf("%sRefresh Rate: \033[0m%.2fHz\n", color_distro, active_rate);
+	printf("%sRefresh Rate: \033[0m%.2fHz\n", color_distro, active_rate);
 #endif
 
 	XCloseDisplay(display);

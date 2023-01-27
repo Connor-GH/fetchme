@@ -44,11 +44,11 @@ memory_info(const char *color_distro)
 
 	fclose(fp);
 
-    t = atoi(total);
-    f = atoi(freemem);
-    b = atoi(buffers);
-    ca = atoi(cache);
-    r = atoi(reclaimable);
+	t = atoi(total);
+	f = atoi(freemem);
+	b = atoi(buffers);
+	ca = atoi(cache);
+	r = atoi(reclaimable);
 
 	USED_RAM = ((t - f - b - ca - r) / 1000000.);
 
@@ -60,7 +60,8 @@ memory_info(const char *color_distro)
 	} else {
 		MorG = 'G';
 	}
-	printf("%sMemory:\033[0m %.1f%c/%dG", color_distro, USED_RAM, MorG, TOTAL_RAM);
+	printf("%sMemory:\033[0m %.1f%c/%dG", color_distro, USED_RAM, MorG,
+		   TOTAL_RAM);
 #ifdef MEMORY_PERCENT
 	printf(" (%.0f%%)", ((double)(t - f - b - ca - r) / (double)t) * 100);
 #endif

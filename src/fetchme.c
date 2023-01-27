@@ -12,7 +12,7 @@
 int
 main(int argc, char *argv[])
 {
-    const char *colordistro = color_distro();
+	const char *colordistro = color_distro();
 
 	if (argc > 1) {
 		if (argv[1][0] == '-') {
@@ -34,7 +34,6 @@ main(int argc, char *argv[])
 		return 0;
 	}
 
-
 	// disable line wrapping.
 	// yes, I disabled
 	// line wrapping for
@@ -42,66 +41,66 @@ main(int argc, char *argv[])
 	printf("\033[?7l");
 
 #ifdef PGO_LOOP
-    for (int i = 0; i < 100; i++) {
+	for (int i = 0; i < 100; i++) {
 #endif
 #ifdef USERNAME_HOSTNAME
-	username_at_hostname(colordistro);
+		username_at_hostname(colordistro);
 #endif
 
 #ifdef DISTRO
-	distro(colordistro);
+		distro(colordistro);
 #endif
 
 #ifdef KERNEL
-	kernel(colordistro);
+		kernel(colordistro);
 #endif
 
 #ifdef UPTIME
-	uptime_info(colordistro);
+		uptime_info(colordistro);
 #endif
 
 #ifdef PACKAGE
-	package_count(colordistro);
+		package_count(colordistro);
 #endif
 
 #ifdef SHELL
-	shell(colordistro);
+		shell(colordistro);
 #endif
 
 #ifdef RESOLUTION
-	resolution(colordistro);
+		resolution(colordistro);
 #endif
 
 #ifdef REFRESH_RATE
-	refresh_rate(colordistro);
+		refresh_rate(colordistro);
 #endif
 
 #ifdef WM
-	wm(colordistro);
+		wm(colordistro);
 #endif
 
 #ifdef TERMINAL
-	terminal(colordistro);
+		terminal(colordistro);
 #endif
 
 #ifdef CPU
-	cpu_info(colordistro);
+		cpu_info(colordistro);
 #endif
 
 #ifdef GPU
-	gpu_info(colordistro);
+		gpu_info(colordistro);
 #endif
 
 #ifdef MEMORY
-	memory_info(colordistro);
+		memory_info(colordistro);
 #endif
 
 #ifdef DISK
-	disk(colordistro);
+		disk(colordistro);
 #endif
 
 #ifdef PGO_LOOP
-    }
+	}
 #endif
 	// enable line wrapping
 	printf("\033[?7h");

@@ -7,7 +7,7 @@ gpu_info(const char *color_distro)
 #elif GPU_INFO == 1
 	gpu_info_v1(color_distro);
 #else
-    ;
+	;
 #endif
 	return 0;
 }

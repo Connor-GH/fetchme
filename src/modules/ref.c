@@ -53,7 +53,7 @@ refresh_rate(const char *color_distro)
 #ifdef RESOLUTION
 	printf(" %dHz\n", reply->rate);
 #else
-    printf("%sRefresh Rate: %dHz\n", color_distro, reply->rate);
+	printf("%sRefresh Rate: %dHz\n", color_distro, reply->rate);
 #endif
 
 #endif

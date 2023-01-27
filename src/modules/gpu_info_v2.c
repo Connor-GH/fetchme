@@ -35,7 +35,8 @@ gpu_info_v2(const char *color_distro)
          */
 #if __has_builtin(__builtin_expect)
 		/* tell the compiler that the device is likely not 768 (x != 0x300) */
-    if (__builtin_expect(((pci_read_word(dev, PCI_CLASS_DEVICE) ^ 0x300) != 0), 1))
+		if (__builtin_expect(
+				((pci_read_word(dev, PCI_CLASS_DEVICE) ^ 0x300) != 0), 1))
 #else
 
 		if (((pci_read_word(dev, PCI_CLASS_DEVICE) ^ 0x300) != 0))

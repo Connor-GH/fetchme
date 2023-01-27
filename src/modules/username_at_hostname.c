@@ -41,8 +41,8 @@ username_at_hostname(const char *color_distro)
 	/* if this is true, we know that
      * username is a sane size */
 	if (strlen(pwd->pw_name) < sizeof(hostname_value)) {
-		printf("%s%s\033[0m@%s%s\033[0m\n", color_distro, pwd->pw_name, color_distro,
-			   hostname_value);
+		printf("%s%s\033[0m@%s%s\033[0m\n", color_distro, pwd->pw_name,
+			   color_distro, hostname_value);
 
 		for (unsigned long i = 0;
 			 i < (strlen(pwd->pw_name) + strlen(hostname_value) + 1); i++)

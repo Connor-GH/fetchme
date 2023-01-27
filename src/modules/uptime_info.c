@@ -22,7 +22,7 @@ uptime_info(const char *color_distro)
 	fscanf(up, "%63s %*63s", uptime);
 	fclose(up);
 
-    uptime_f = atof(uptime);
+	uptime_f = atof(uptime);
 
 	min = ((int)(uptime_f) / 60) % 60;
 	printf("%sUptime:\033[0m %d hours, %d mins\n", color_distro,

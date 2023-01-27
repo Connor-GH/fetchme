@@ -14,7 +14,7 @@ package_count(const char *color_distro)
 
 #if LINUX_SUPPORT_ONLY
 	glob_t globbuf;
-    FILE *fp;
+	FILE *fp;
 	if ((glob("/var/lib/pacman/local/*", GLOB_NOSORT, NULL,
 			  &globbuf) == 0) // arch-based
 		|| (glob("/var/db/pkg/*/*", GLOB_NOSORT, NULL,
@@ -22,13 +22,13 @@ package_count(const char *color_distro)
 		PKG_COUNT = globbuf.gl_pathc;
 
 	} else if ((fp = fopen("/lib/apk/db/installed", "r")) != NULL) {
-        char buf[64];
-        while (fgets(buf, sizeof(buf), fp) != NULL) {
-            if (*buf == 'P')
-                PKG_COUNT++;
-        }
-        fclose(fp);
-    } else {
+		char buf[64];
+		while (fgets(buf, sizeof(buf), fp) != NULL) {
+			if (*buf == 'P')
+				PKG_COUNT++;
+		}
+		fclose(fp);
+	} else {
 		fprintf(stderr, "No packages found\n");
 		exit(EXIT_FAILURE); // die, no directories work
 	}

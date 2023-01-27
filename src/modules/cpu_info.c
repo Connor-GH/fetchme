@@ -36,7 +36,6 @@ cpu_info(const char *color_distro)
 
 	int c;
 
-
 	FILE *cpu = fopen("/proc/cpuinfo", "r");
 	if (cpu == NULL) {
 		perror("/proc/cpuinfo");
