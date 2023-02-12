@@ -72,7 +72,7 @@ pgo:
 	if [[ -f fetchme.profdata ]]; then \
 		make CC=clang PGO=use && $(rm) fetchme.prof*; \
 	else \
-		make CC=clang PGO=gen CFLAGS="-DPGO_LOOP $(CFLAGS)"
+		make CC=clang PGO=gen CFLAGS="-DPGO_LOOP $(CFLAGS)" \
 	M_TERMINAL=n M_SHELL=n && \
 		LLVM_PROFILE_FILE=fetchme.profraw ./bin/fetchme > /dev/null; \
 		llvm-profdata merge -output=fetchme.profdata fetchme.profraw; \
