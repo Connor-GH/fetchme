@@ -11,7 +11,7 @@ gpu_info_v2(const char *color_distro)
 #if UNIX_SUPPORT
 	struct pci_dev *dev;
 	struct pci_access *pciaccess;
-	char *pci_ids_value = malloc(sizeof(char) * 100);
+	char *pci_ids_value = malloc(sizeof(char) * 128);
 	char *dev_string;
 	int device;
 	size_t len;
@@ -70,11 +70,11 @@ gpu_info_v2(const char *color_distro)
 		}
 
 		while (c != EOF) {
-			fscanf(pci_ids, "%99s", pci_ids_value); /* get the line */
+			fscanf(pci_ids, "%127s", pci_ids_value); /* get the line */
 			if (strcmp(dev_string, pci_ids_value) == 0)
 				break; /* we have our value */
 
-			fscanf(pci_ids, "%99s", pci_ids_value); /* keep searching */
+			fscanf(pci_ids, "%127s", pci_ids_value); /* keep searching */
 			c = fscanf(pci_ids, "%*[^\n]\n"); /* move to another line */
 		}
 		free(dev_string);
@@ -82,7 +82,7 @@ gpu_info_v2(const char *color_distro)
          * we have the proper ID.
          * Get the whole line (GPU name).
          */
-		fscanf(pci_ids, "\t%99[^\n]", pci_ids_value);
+		fscanf(pci_ids, "\t%127[^\n]", pci_ids_value);
 		fclose(pci_ids);
 
 		/* the following lines remove brackets */

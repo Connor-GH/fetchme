@@ -33,7 +33,9 @@ username_at_hostname(const char *color_distro)
 	}
 	strncpy(hostname_value, buffer.nodename, sizeof(hostname_value) - 1);
 
-	if ((pwd = getpwuid(uid = geteuid())) == NULL) {
+    uid = geteuid();
+    pwd = getpwuid(uid);
+	if (pwd == NULL) {
 		perror("getpwuid() error");
 		exit(EXIT_FAILURE);
 	}
