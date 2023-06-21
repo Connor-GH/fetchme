@@ -19,7 +19,7 @@ OUTDIR   = bin
 
 # Target and Version
 TARGET 	 = fetchme
-VERSION  = 1.4.8
+VERSION  = 1.4.9
 include config_backend.mk
 # These variables depend on values from config_backend.mk
 INCLUDES:=  $(wildcard $(SRCDIR)/modules/include/*.h)
