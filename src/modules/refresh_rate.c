@@ -11,9 +11,13 @@ refresh_rate(const char *color_distro)
 {
 #if UNIX_SUPPORT
 	double active_rate = 0;
-	Display *display = XOpenDisplay(NULL);
-	Window default_root_window = XDefaultRootWindow(display);
+	Display *display;
+	Window default_root_window;
 
+    if (!(display = XOpenDisplay(NULL)))
+        /* silently exit upon failure */
+        return 1;
+    default_root_window = XDefaultRootWindow(display);
 	/*
      * XRRGetScreenResourcesCurrent was introduced in XRandr 1.3.
      * It increases refresh rate detection performance by about 23 times

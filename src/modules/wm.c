@@ -85,9 +85,14 @@ wm(const char *color_distro)
 #ifndef WAYLAND
 	Display *disp = XOpenDisplay(NULL);
 	unsigned long len;
-	Window *wlist = (Window *)list(disp, &len);
-	char *wname = name(disp, wlist[0]);
+	Window *wlist;
+	char *wname;
 
+    if (!disp)
+        return 1;
+
+	wlist = (Window *)list(disp, &len);
+	wname = name(disp, wlist[0]);
 	XFree(wlist);
 	printf("%sWM:\033[0m %s\n", color_distro, wname);
 	free(wname);

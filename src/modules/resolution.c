@@ -14,8 +14,9 @@ resolution(const char *color_distro)
 	int height = 0;
 
 	if (!(d = XOpenDisplay(NULL))) {
-		fprintf(stderr, "cannot open display '%s'\n", XDisplayName(0));
-		exit(EXIT_FAILURE);
+        /* odds are we are sitting in a tty, Xorg is broken, or there is
+         * a wayland-only session. */
+		return 1;
 	}
 
 	width = DisplayWidth(d, DefaultScreen(d));
