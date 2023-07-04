@@ -10,7 +10,7 @@ kernel(const char *color_distro)
 {
 #if UNIX_SUPPORT
 	struct utsname buffer;
-	if (uname(&buffer) < 0) {
+	if (unlikely(uname(&buffer) < 0)) {
 		perror("uname");
 		exit(EXIT_FAILURE);
 	}

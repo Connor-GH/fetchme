@@ -17,12 +17,12 @@ distro(const char *color_distro)
 
 	FILE *os_release = fopen("/etc/os-release", "r");
 
-	if (uname(&buffer) < 0) {
+	if (unlikely(uname(&buffer) < 0)) {
 		perror("uname");
 		exit(EXIT_FAILURE);
 	}
 
-	if (os_release == NULL) {
+	if (unlikely(os_release == NULL)) {
 		perror("/etc/os-release");
 		exit(EXIT_FAILURE);
 	}

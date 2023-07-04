@@ -33,21 +33,21 @@ disk(const char *color_distro)
 		free = freeblks * blksize;
 		used = disk_size - free;
 
-		if ((used > 1024L * 1024 * 1024) &&
-			(used < 1024L * 1024 * 1024 * 1024)) {
+		if ((used > 1024UL * 1024 * 1024) &&
+			(used < 1024UL * 1024 * 1024 * 1024)) {
 			unit = 'G';
-		} else if ((used > 1024L * 1024) && (used < 1024L * 1024 * 1024)) {
+		} else if ((used > 1024UL * 1024) && (used < 1024UL * 1024 * 1024)) {
 			unit = 'M';
 		} else {
 			unit = 'T';
 		}
-		printf("%sDisk:\033[0m %ld%c/%ld%c", color_distro,
-			   (used / 1024 / 1024 / 1024), unit,
-			   ((used / 1024 / 1024 / 1024) + free / 1024 / 1024 / 1024), unit);
+		printf("%sDisk:\033[0m %lu%c/%lu%c", color_distro,
+			   (used / 1024UL / 1024 / 1024), unit,
+			   ((used / 1024UL / 1024 / 1024) + free / 1024UL / 1024 / 1024), unit);
 #ifdef DISK_PERCENT
-		printf(" (%.0f%%)", (((double)(used / 1024 / 1024 / 1024.) /
-							  (double)((used / 1024 / 1024 / 1024.) +
-									   free / 1024 / 1024 / 1024.)) *
+		printf(" (%.0f%%)", (((double)(used / 1024UL / 1024 / 1024.) /
+							  (double)((used / 1024UL / 1024 / 1024.) +
+									   free / 1024UL / 1024 / 1024.)) *
 							 100));
 #endif /* DISK_PERCENT */
 		printf("\n");

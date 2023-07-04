@@ -24,7 +24,7 @@ memory_info(const char *color_distro)
 	int t = 0, f = 0, b = 0, ca = 0, r = 0, c;
 
 	FILE *fp = fopen("/proc/meminfo", "r");
-	if (fp == NULL) {
+	if (unlikely(fp == NULL)) {
 		perror("/proc/meminfo");
 		exit(EXIT_FAILURE);
 	}
