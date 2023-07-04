@@ -1,6 +1,14 @@
 #ifndef FETCHME_H
 #define FETCHME_H
 
+#if __GNUC__ > 2 || __GNUC_MINOR__ >= 96 || __has_builtin(__builtin_expect)
+#define likely(x) __builtin_expect(!!(x), 1)
+#define unlikely(x) __builtin_expect(!!(x), 0)
+#else
+#define likely(x) (x)
+#define unlikely(x) (x)
+#endif
+
 #if (defined(__linux__))
 #define LINUX_SUPPORT 1
 #else

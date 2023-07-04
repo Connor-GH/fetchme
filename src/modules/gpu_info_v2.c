@@ -33,14 +33,8 @@ gpu_info_v2(const char *color_distro)
          * large lookup table for the numbers. At that point, it
          * is easier just to call the function.
          */
-#if __has_builtin(__builtin_expect)
 		/* tell the compiler that the device is likely not 768 (x != 0x300) */
-		if (__builtin_expect(
-				((pci_read_word(dev, PCI_CLASS_DEVICE) ^ 0x300) != 0), 1))
-#else
-
-		if (((pci_read_word(dev, PCI_CLASS_DEVICE) ^ 0x300) != 0))
-#endif
+		if (likely((pci_read_word(dev, PCI_CLASS_DEVICE) ^ 0x300) != 0))
 			continue;
 
 		device = pci_read_word(dev, PCI_DEVICE_ID);
