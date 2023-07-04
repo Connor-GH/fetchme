@@ -24,26 +24,26 @@ color_distro(void)
 	};
 
 	const char *const distro_colors[AMOUNT_DISTROS] = { PURPLE,
-											RED,
-											"\033[1;38;5;34m",
-											"\033[1;38;5;202m",
-											BLUE,
-											PURPLE,
-											GREEN,
-											CYAN,
-											CYAN,
-											GREEN,
-											GREEN,
-											GREEN,
-											RED,
-											YELLOW,
-											"\033[1;38;5;29m",
-											"\033[1;38;5;29m",
-											"\033[1;38;5;29m" };
+														RED,
+														"\033[1;38;5;34m",
+														"\033[1;38;5;202m",
+														BLUE,
+														PURPLE,
+														GREEN,
+														CYAN,
+														CYAN,
+														GREEN,
+														GREEN,
+														GREEN,
+														RED,
+														YELLOW,
+														"\033[1;38;5;29m",
+														"\033[1;38;5;29m",
+														"\033[1;38;5;29m" };
 
-	const unsigned long distro_length[AMOUNT_DISTROS] = {
-        6, 6, 4, 6, 5, 6, 4, 4, 5,
-											  8, 8, 7, 7, 7, 5, 6, 7 };
+	const unsigned long distro_length[AMOUNT_DISTROS] = { 6, 6, 4, 6, 5, 6,
+														  4, 4, 5, 8, 8, 7,
+														  7, 7, 5, 6, 7 };
 
 	if (os_release == NULL) {
 		perror("/etc/os-release");

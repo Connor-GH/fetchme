@@ -88,8 +88,8 @@ wm(const char *color_distro)
 	Window *wlist;
 	char *wname;
 
-    if (!disp)
-        return 1;
+	if (!disp)
+		return 1;
 
 	wlist = (Window *)list(disp, &len);
 	wname = name(disp, wlist[0]);

@@ -14,7 +14,7 @@ resolution(const char *color_distro)
 	int height = 0;
 
 	if (!(d = XOpenDisplay(NULL))) {
-        /* odds are we are sitting in a tty, Xorg is broken, or there is
+		/* odds are we are sitting in a tty, Xorg is broken, or there is
          * a wayland-only session. */
 		return 1;
 	}
