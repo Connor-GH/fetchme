@@ -1,4 +1,11 @@
 # fetchme's config.
+###########################################################
+##### ** Everything works with linux.              ** #####
+##### ** Other OS support is explicitly mentioned. ** #####
+##### ** "Hurd" refers to "Debian GNU/Hurd."       ** #####
+##### ** "BSD" refers to "FreeBSD."                ** #####
+###########################################################
+#
 # options can be turned on with either
 # `Y' or `y'. to deselect an option,
 # comment it out.
@@ -10,13 +17,13 @@
 # options are: RED,GREEN,YELLOW,BLUE,PURPLE,CYAN,WHITE
 # M_CUSTOM_COLOR_VALUE=CYAN
 
-# Works with BSD
+# Works with BSD,Hurd
 M_USERNAME_HOSTNAME=y
 
-# Works with BSD
+# Works with BSD,Hurd
 M_DISTRO=y
 
-# Works with BSD
+# Works with BSD,Hurd
 M_KERNEL=y
 
 # Does NOT work with BSD
@@ -24,16 +31,15 @@ M_UPTIME=y
 
 # Off by default.
 # Currently only works
-# with pacman-based
-# distros and
-# portage-based
-# distros and apk-based
-# distros.
+# with pacman-based,
+# portage-based,
+# and apk-based
+# linux distros.
 #
 # Works with BSD
 M_PACKAGE=y
 
-# Works with BSD
+# Works with BSD,Hurd
 # M_SHELL=y
 
 # Might work with BSD
@@ -58,7 +64,7 @@ M_REFRESH_RATE=y
 M_WM=y
 # M_WM_WAYLAND=y
 
-# Works with BSD
+# Works with BSD,Hurd
 M_TERMINAL=y
 
 # any option associated with CPU
@@ -91,5 +97,6 @@ M_MEMORY_PERCENT=y
 # any option associated with DISK
 # needs to have DISK=y
 # Does NOT work with BSD
+# Works with Hurd
 M_DISK=y
 M_DISK_PERCENT=y
