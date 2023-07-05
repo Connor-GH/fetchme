@@ -15,7 +15,7 @@
 #define LINUX_SUPPORT 0
 #endif
 
-#if (defined(__gnu_hurd__)
+#if (defined(__gnu_hurd__))
 #define HURD_SUPPORT 1
 #else
 #define HURD_SUPPORT 0
