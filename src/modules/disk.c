@@ -1,9 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdint.h>
 
 #include "./include/fetchme.h"
 
-#if LINUX_SUPPORT_ONLY
+#if LINUX_SUPPORT_ONLY || HURD_SUPPORT
 #include <sys/vfs.h>
 #elif BSD_SUPPORT_ONLY
 #include <sys/param.h>
@@ -22,10 +23,10 @@ disk(const char *color_distro)
 	const char *const filename = "/";
 	struct statfs buf;
 	if (!statfs(filename, &buf)) {
-		unsigned long blksize, blocks, freeblks, disk_size, used, free;
+		uint64_t blksize, blocks, freeblks, disk_size, used, free;
 		char unit;
 
-		blksize = (unsigned long)buf.f_bsize;
+		blksize = (uint64_t)buf.f_bsize;
 		blocks = buf.f_blocks;
 		freeblks = buf.f_bfree;
 
@@ -33,20 +34,20 @@ disk(const char *color_distro)
 		free = freeblks * blksize;
 		used = disk_size - free;
 
-		if ((used > 1024UL * 1024 * 1024) &&
-			(used < 1024UL * 1024 * 1024 * 1024)) {
+		if ((used > 1024ULL * 1024 * 1024) &&
+			(used < 1024ULL * 1024 * 1024 * 1024)) {
 			unit = 'G';
-		} else if ((used > 1024UL * 1024) && (used < 1024UL * 1024 * 1024)) {
+		} else if ((used > 1024ULL * 1024) && (used < 1024ULL * 1024 * 1024)) {
 			unit = 'M';
 		} else {
 			unit = 'T';
 		}
-		printf("%sDisk:\033[0m %lu%c/%lu%c", color_distro,
-			   (used / 1024UL / 1024 / 1024), unit,
-			   ((used / 1024UL / 1024 / 1024) + free / 1024UL / 1024 / 1024), unit);
+		printf("%sDisk:\033[0m %llu%c/%llu%c", color_distro,
+			   (used / 1024ULL / 1024 / 1024), unit,
+			   ((used / 1024ULL / 1024 / 1024) + free / 1024ULL / 1024 / 1024), unit);
 #ifdef DISK_PERCENT
-		printf(" (%.0f%%)", (((double)(used / 1024UL / 1024 / 1024.) /
-							  (double)((used / 1024UL / 1024 / 1024.) +
+		printf(" (%.0f%%)", (((double)(used / 1024ULL / 1024 / 1024.) /
+							  (double)((used / 1024ULL / 1024 / 1024.) +
 									   free / 1024UL / 1024 / 1024.)) *
 							 100));
 #endif /* DISK_PERCENT */
