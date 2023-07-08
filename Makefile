@@ -28,7 +28,9 @@ include cc_and_flags.mk
 
 .PHONY: all clean remove install install-strip uninstall format pgo
 
-all: remove $(TARGET)
+all:
+	$(MAKE) remove
+	$(MAKE) $(TARGET)
 
 $(TARGET): $(OBJECTS) | $(OUTDIR)
 	$(CC) -o $(OUTDIR)/$@ $(F_CFLAGS) $(LFLAGS) $(INCLUDE) $^
