@@ -2,7 +2,7 @@
 Rewrite of fetchme-bash in C99. Similiar to neofetch, but in C, so it should be able to do more.
 <img src="screenshots/arch.png" align="right">
 
-<img src="screenshots/freebsd.png" align="left">
+<img src="screenshots/freebsd2.png" align="left">
 <img src="screenshots/gentoo.png">
 <img src="screenshots/pinephone.png">
 download with:
