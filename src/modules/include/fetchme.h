@@ -63,6 +63,9 @@
 #else
 #define UNIX_SUPPORT 0
 #endif
+#ifdef LINUX_SUPPORT
+#define _POSIX_C_SOURCE 200809L
+#endif
 
 #ifdef CPU
 int

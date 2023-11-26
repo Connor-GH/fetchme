@@ -11,9 +11,9 @@ WNOFLAGS= -Wno-unknown-pragmas -Wno-unused-result
 VISIBILITY ?= -fvisibility=hidden
 
 ifeq ($(RELEASE),true)
-	F_CFLAGS = -march=x86-64 -O2 -D_POSIX_C_SOURCE=200809L
+	F_CFLAGS = -march=x86-64 -O2
 else
-	F_CFLAGS = -march=native -O2 -D_POSIX_C_SOURCE=200809L
+	F_CFLAGS = -O2
 endif
 LFLAGS  =
 
@@ -22,7 +22,7 @@ LFLAGS  =
 ifeq ($(shell $(CC) -v 2>&1 | grep -c "gcc version"), 1)
 
 	LINKER 	= $(CC)
-	LTO 	= -flto -fno-fat-lto-objects
+	# LTO 	= -flto -fno-fat-lto-objects
 	STRIP	?= strip
 ifeq ($(DEBUG),true)
 	# gcc-specific security/debug flags
@@ -45,7 +45,7 @@ ifeq ($(DEBUG),true)
 			  -mspeculative-load-hardening -mretpoline
 	LFLAGS  = -fsanitize=address
 endif #debug
-F_CFLAGS += -Weverything
+F_CFLAGS += -Wall -Wextra -Wpedantic
 WNOFLAGS += -Wno-disabled-macro-expansion
 endif #compiler
 

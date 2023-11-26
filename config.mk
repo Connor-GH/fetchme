@@ -26,7 +26,7 @@ M_DISTRO=y
 # Works with BSD,Hurd
 M_KERNEL=y
 
-# Does NOT work with BSD
+# Works with BSD
 M_UPTIME=y
 
 # Off by default.
@@ -42,7 +42,7 @@ M_PACKAGE=y
 # Works with BSD,Hurd
 # M_SHELL=y
 
-# Might work with BSD
+# Works with BSD
 # XCB might be faster than Xlib
 # both modules must be uncommented
 # and set to 'y' to use xcb. otherwise,
@@ -50,7 +50,7 @@ M_PACKAGE=y
 M_RESOLUTION=y
 # M_RESOLUTION_XCB=y
 
-# Might work with BSD
+# Does NOT work with BSD (TODO)
 # XCB might be faster than Xlib
 # both modules must be uncommented
 # and set to 'y' to use xcb. otherwise,
@@ -58,7 +58,7 @@ M_RESOLUTION=y
 M_REFRESH_RATE=y
 # M_REFRESH_RATE_XCB=y
 
-# Might work with BSD
+# Works with BSD (X11 tested)
 # M_WM only works with XWayland and X11.
 # M_WM_WAYLAND only works with Wayland (but is slower)
 M_WM=y
@@ -96,7 +96,6 @@ M_MEMORY_PERCENT=y
 
 # any option associated with DISK
 # needs to have DISK=y
-# Does NOT work with BSD
-# Works with Hurd
+# Works with BSD,Hurd
 M_DISK=y
 M_DISK_PERCENT=y

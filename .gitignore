@@ -6,3 +6,4 @@
 *.o
 *.bin
 *.bak
+/cscope.out

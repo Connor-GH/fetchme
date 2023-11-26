@@ -1,5 +1,5 @@
 TOPDIR 	:=  ./src
-IVAR 	:=  -I. -I$(TOPDIR)/include/
+IVAR 	:=  -I. -I$(TOPDIR)/include/ -I/usr/local/include
 
 DESTDIR	=
 PREFIX	= /usr
