@@ -50,7 +50,7 @@ M_PACKAGE=y
 M_RESOLUTION=y
 # M_RESOLUTION_XCB=y
 
-# Does NOT work with BSD (TODO)
+# Works with BSD (outside of VMs)
 # XCB might be faster than Xlib
 # both modules must be uncommented
 # and set to 'y' to use xcb. otherwise,
