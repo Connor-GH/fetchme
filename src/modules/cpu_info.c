@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdint.h>
 
 #include "./include/fetchme.h"
 
@@ -8,6 +9,44 @@
 #elif BSD_SUPPORT_ONLY
 #include <sys/sysctl.h>
 #endif /* string.h or sysctl.h */
+
+size_t
+find(char *str, const char *lookfor)
+{
+	size_t j = 0;
+	for (size_t i = 0; i < strlen(str); i++) {
+		if (str[i] == lookfor[j]) {
+			j++;
+			if (j == strlen(lookfor)) {
+				return i - j + 1;
+			}
+		}
+	}
+	return -1;
+}
+
+static char *
+remove_first_occurance_from_string(char *str, const char *word)
+{
+	if (find(str, word) == -1UL) {
+		return str;
+	} else {
+		char *newstr = malloc(strlen(str) - strlen(word) + 1);
+		size_t j = 0;
+		for (size_t i = 0; i < strlen(str); i++) {
+			if ((find(str, word) <= i) &&
+				(i < find(str, word) + strlen(word))) {
+				continue;
+			} else {
+				newstr[j] = str[i];
+				j++;
+			}
+		}
+		newstr[j] = '\0';
+		free(str);
+		return newstr;
+	}
+}
 int
 cpu_info(const char *color_distro)
 {
@@ -17,12 +56,10 @@ cpu_info(const char *color_distro)
 	for (int i = 0; i < x; i++) \
 		while ((c = fgetc(cpu)) != '\n' && c != EOF)
 
-	char brand[16]; // cpu brand
-	char lineup[16]; // lineup (Ryzen, Core, Xeon, Epyc, etc)
-	char sublineup[16]; // sublineup (5, 7, 9 or i5 i7 i9 etc)
-	char model_num[16]; // model number (3600, 9900k, 3900X, etc)
-	char model_name[16];
+	char model_name[128];
+	char *model_name_string = malloc(128);
 	int file = 0;
+
 #ifdef CPU_FREQUENCY
 	char freq[16]; // cpu frequency
 #endif /* CPU_FREQUENCY */
@@ -41,22 +78,19 @@ cpu_info(const char *color_distro)
 		perror("/proc/cpuinfo");
 		exit(EXIT_FAILURE);
 	}
-	/*
-     * TODO: this code will eventually
-     * be changed to filter out and remove
-     * words like `CPU' and `Processor'
-     */
-	fscanf(cpu, "%15[^\t]\t:", model_name);
+	fscanf(cpu, "%127[^\t]\t:", model_name);
 
 	while ((file != EOF) && (strncmp(model_name, "model name", 10) != 0)) {
 		ITER(1);
-		file = fscanf(cpu, "%15[^\t]\t:", model_name);
+		file = fscanf(cpu, "%127[^\t]\t:", model_name);
 	}
 
 	if (file == EOF)
 		exit(EXIT_FAILURE);
+	fscanf(cpu, "%127[^\n]", model_name_string);
 
-	fscanf(cpu, "%15s %15s %15s %15s", brand, lineup, sublineup, model_num);
+	/* we are on the model name line, get all relevant info */
+
 #if defined(CPU_FREQUENCY) || defined(CPU_THREADS) || defined(CPU_TEMP)
 	ITER(3);
 #ifdef CPU_FREQUENCY
@@ -83,15 +117,16 @@ cpu_info(const char *color_distro)
 		TEMP = (x2 / 1000.);
 	}
 #endif /* CPU_TEMP */
-	if (strcmp(sublineup, "CPU") == 0)
-		printf("%sCPU:\033[0m %s %s %s", color_distro, brand, lineup,
-			   model_num);
-	else if (strcmp(model_num, "CPU") == 0)
-		printf("%sCPU:\033[0m %s %s %s", color_distro, brand, lineup,
-			   sublineup);
-	else
-		printf("%sCPU:\033[0m %s %s %s %s", color_distro, brand, lineup,
-			   sublineup, model_num);
+	/* filter out some words */
+	char *filter_word_list[] = { "CPU", " with Radeon Graphics", "AMD ",
+								 "Intel ", " Processor" };
+#define STATIC_ARRAY_SIZE(arr) sizeof(arr) / sizeof(arr[0])
+	for (size_t i = 0; i < STATIC_ARRAY_SIZE(filter_word_list); i++) {
+		model_name_string = remove_first_occurance_from_string(
+			model_name_string, filter_word_list[i]);
+	}
+	printf("%sCPU:\033[0m%s", color_distro, model_name_string);
+	free(model_name_string);
 
 #ifdef CPU_THREADS
 	printf(" (%s)", threads);

@@ -44,7 +44,8 @@ disk(const char *color_distro)
 		}
 		printf("%sDisk:\033[0m %llu%c/%llu%c", color_distro,
 			   (used / 1024ULL / 1024 / 1024), unit,
-			   ((used / 1024ULL / 1024 / 1024) + free / 1024ULL / 1024 / 1024), unit);
+			   ((used / 1024ULL / 1024 / 1024) + free / 1024ULL / 1024 / 1024),
+			   unit);
 #ifdef DISK_PERCENT
 		printf(" (%.0f%%)", (((double)(used / 1024ULL / 1024 / 1024.) /
 							  (double)((used / 1024ULL / 1024 / 1024.) +
