@@ -48,7 +48,7 @@ M_PACKAGE=y
 # and set to 'y' to use xcb. otherwise,
 # Xlib is used.
 M_RESOLUTION=y
-# M_RESOLUTION_XCB=y
+M_RESOLUTION_XCB=y
 
 # Works with BSD (outside of VMs)
 # XCB might be faster than Xlib

@@ -118,7 +118,7 @@ cpu_info(const char *color_distro)
 	}
 #endif /* CPU_TEMP */
 	/* filter out some words */
-	char *filter_word_list[] = { "CPU", " with Radeon Graphics", "AMD ",
+const char *const filter_word_list[] = { "CPU", " with Radeon Graphics", "AMD ",
 								 "Intel ", " Processor" };
 #define STATIC_ARRAY_SIZE(arr) sizeof(arr) / sizeof(arr[0])
 	for (size_t i = 0; i < STATIC_ARRAY_SIZE(filter_word_list); i++) {

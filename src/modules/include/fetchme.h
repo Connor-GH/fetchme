@@ -1,7 +1,13 @@
 #ifndef FETCHME_H
 #define FETCHME_H
+#ifndef __has_builtin
+#define HAS_BUILTIN(x) false
+#else
+#define HAS_BUILTIN(x) __has__builtin(x)
+#endif
 
-#if __GNUC__ > 2 || __GNUC_MINOR__ >= 96 || __has_builtin(__builtin_expect)
+
+#if __GNUC__ > 2 || __GNUC_MINOR__ >= 96 || HAS_BUILTIN(__builtin_expect)
 #define likely(x) __builtin_expect(!!(x), 1)
 #define unlikely(x) __builtin_expect(!!(x), 0)
 #else
