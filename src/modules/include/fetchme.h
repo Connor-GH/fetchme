@@ -3,7 +3,7 @@
 #ifndef __has_builtin
 #define HAS_BUILTIN(x) false
 #else
-#define HAS_BUILTIN(x) __has__builtin(x)
+#define HAS_BUILTIN(x) __has__builtin
 #endif
 
 
