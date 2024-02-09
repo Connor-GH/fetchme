@@ -14,9 +14,10 @@ refresh_rate(const char *color_distro)
 	Display *display;
 	Window default_root_window;
 
-	if (!(display = XOpenDisplay(NULL)))
+	if (!(display = XOpenDisplay(":0"))) {
 		/* silently exit upon failure */
 		return 1;
+	}
 	default_root_window = XDefaultRootWindow(display);
 	/*
      * XRRGetScreenResourcesCurrent was introduced in XRandr 1.3.
