@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <sys/utsname.h>
 #endif
 
 #include "include/color.h"
@@ -76,8 +77,17 @@ color_distro(void)
 		if (strncmp(os_name, supported_distros[i], distro_length[i]) == 0)
 			return distro_colors[i];
 	}
-	fprintf(stderr, "Exception: distro color not found.");
-	exit(EXIT_FAILURE);
+  struct utsname u;
+  if (uname(&u) < 0) {
+    perror("uname");
+    exit(EXIT_FAILURE);
+  }
+  if (strncmp(u.sysname, "Linux", 5) == 0) {
+    return CYAN;
+  } else {
+	  fprintf(stderr, "Exception: distro color not found.");
+	  exit(EXIT_FAILURE);
+  }
 #endif
 #ifdef CUSTOM_COLOR
 	return CUSTOM_COLOR_VALUE;

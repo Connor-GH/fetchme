@@ -1,6 +1,7 @@
 # fetchme's config.
 ###########################################################
 ##### ** Everything works with linux.              ** #####
+##### ** POSIX support is explicitly mentioned.    ** #####
 ##### ** Other OS support is explicitly mentioned. ** #####
 ##### ** "Hurd" refers to "Debian GNU/Hurd."       ** #####
 ##### ** "BSD" refers to "FreeBSD."                ** #####
@@ -17,7 +18,7 @@
 # options are: RED,GREEN,YELLOW,BLUE,PURPLE,CYAN,WHITE
 # M_CUSTOM_COLOR_VALUE=CYAN
 
-# Works with BSD,Hurd
+# POSIX.1-2008 (uname)
 M_USERNAME_HOSTNAME=y
 
 # Works with BSD,Hurd

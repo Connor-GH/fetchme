@@ -80,6 +80,7 @@ endif
 # resolution the screen is using. detected from libx11.
 # resolution does not work on TTY.
 ifneq (,$(filter $(M_RESOLUTION),Y y))
+	MODULES += -DRESOLUTION
 ifneq (,$(filter $(M_RESOLUTION_XCB),Y y)) # XCB method
 	SOURCES += $(SRCDIR)/modules/res.c
 	M_LFLAGS += -lxcb
@@ -87,11 +88,11 @@ else
 	SOURCES += $(SRCDIR)/modules/resolution.c
 	M_LFLAGS += -lX11
 endif
-	MODULES += -DRESOLUTION
 endif # RESOLUTION
 # refresh rate the screen is using. detected from libxrandr.
 # refresh rate does not work on TTY.
 ifneq (,$(filter $(M_REFRESH_RATE),Y y))
+	MODULES += -DREFRESH_RATE
 ifneq (,$(filter $(M_REFRESH_RATE_XCB),Y y)) # XCB method
 	SOURCES += $(SRCDIR)/modules/ref.c
 	M_LFLAGS += -lxcb -lxcb-randr
@@ -99,7 +100,6 @@ else
 	SOURCES += $(SRCDIR)/modules/refresh_rate.c
 	M_LFLAGS += -lX11 -lXrandr
 endif
-	MODULES += -DREFRESH_RATE
 endif
 
 # window manager detection. detects the window manager of

@@ -9,7 +9,7 @@
 int
 distro(const char *color_distro)
 {
-#if UNIX_SUPPORT
+#if LINUX_SUPPORT_ONLY || BSD_SUPPORT_ONLY || HURD_SUPPORT_ONLY
 	struct utsname buffer;
 
 	char os_name[64];
@@ -50,6 +50,14 @@ distro(const char *color_distro)
 
 	exit(EXIT_FAILURE);
 #else
+	struct utsname buffer;
+  if (unlikely(uname(&buffer) < 0)) {
+		perror("uname");
+		exit(EXIT_FAILURE);
+	}
+		printf("%sOS:\033[0m %s %s\n", color_distro, buffer.sysname,
+				buffer.machine);
+	
 	return EXIT_SUCCESS;
 #endif
 }
