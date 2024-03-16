@@ -2,14 +2,7 @@
 #include <stdlib.h>
 #include <stdint.h>
 
-#include "./include/fetchme.h"
-
-#if LINUX_SUPPORT_ONLY || HURD_SUPPORT
-#include <sys/vfs.h>
-#elif BSD_SUPPORT_ONLY
-#include <sys/param.h>
-#include <sys/mount.h>
-#endif
+#include <sys/statvfs.h>
 int
 disk(const char *color_distro)
 {
@@ -21,17 +14,17 @@ disk(const char *color_distro)
      * (useful in an if-else statement for drives)
      */
 	const char *const filename = "/";
-	struct statfs buf;
-	if (!statfs(filename, &buf)) {
-		uint64_t blksize, blocks, freeblks, disk_size, used, free;
+	struct statvfs buf;
+	if (!statvfs(filename, &buf)) {
+		uint64_t frsize, blocks, freeblks, disk_size, used, free;
 		char unit;
 
-		blksize = (uint64_t)buf.f_bsize;
+		frsize = (uint64_t)buf.f_frsize;
 		blocks = buf.f_blocks;
 		freeblks = buf.f_bfree;
 
-		disk_size = blocks * blksize;
-		free = freeblks * blksize;
+		disk_size = blocks * frsize;
+		free = freeblks * frsize;
 		used = disk_size - free;
 
 		if ((used > 1024ULL * 1024 * 1024) &&
