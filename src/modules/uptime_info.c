@@ -1,6 +1,11 @@
+#ifdef LINUX_SUPPORT_ONLY
+#include "./include/fetchme.h"
+#endif
 #include <stdio.h>
 #include <stdlib.h>
+#ifdef BSD_SUPPORT_ONLY
 #include "./include/fetchme.h"
+#endif
 #include <time.h>
 
 int
