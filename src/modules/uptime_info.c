@@ -1,6 +1,6 @@
-#include "./include/fetchme.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include "./include/fetchme.h"
 #include <time.h>
 
 int
