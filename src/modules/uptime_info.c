@@ -1,4 +1,4 @@
-#ifdef LINUX_SUPPORT_ONLY
+#ifdef __linux__
 #include "./include/fetchme.h"
 #endif
 #include <stdio.h>
