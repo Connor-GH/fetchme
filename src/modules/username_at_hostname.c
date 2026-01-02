@@ -27,7 +27,7 @@ username_at_hostname(const char *color_distro)
                      * bytes long. (this "fixes" a VLA) */
 
 	struct utsname buffer;
-	if (uname(&buffer) < 0) {
+	if (unlikely(uname(&buffer) < 0)) {
 		perror("uname");
 		exit(EXIT_FAILURE);
 	}
@@ -35,22 +35,21 @@ username_at_hostname(const char *color_distro)
 
 	uid = geteuid();
 	pwd = getpwuid(uid);
-	if (pwd == NULL) {
+	if (unlikely(pwd == NULL)) {
 		perror("getpwuid() error");
 		exit(EXIT_FAILURE);
 	}
+	size_t username_len = strlen(pwd->pw_name);
+	size_t hostname_len = strlen(hostname_value);
 
 	/* if this is true, we know that
      * username is a sane size */
-	if (strlen(pwd->pw_name) < sizeof(hostname_value)) {
+	if (likely(username_len < sizeof(hostname_value))) {
 		printf("%s%s\033[0m@%s%s\033[0m\n", color_distro, pwd->pw_name,
 			   color_distro, hostname_value);
 
-		for (unsigned long i = 0;
-			 i < (strlen(pwd->pw_name) + strlen(hostname_value) + 1); i++)
-			line[i] = '~';
-
-		line[(strlen(pwd->pw_name) + strlen(hostname_value) + 1)] = '\0';
+		memset(line, '~', username_len + hostname_len + 1);
+		line[(username_len + hostname_len + 1)] = '\0';
 
 		printf("%s%s\033[0m\n", color_distro, line);
 	} else {

@@ -34,7 +34,7 @@ gpu_info_v2(const char *color_distro)
          * is easier just to call the function.
          */
 		/* tell the compiler that the device is likely not 768 (x != 0x300) */
-		if (likely((pci_read_word(dev, PCI_CLASS_DEVICE) ^ 0x300) != 0))
+		if (likely(pci_read_word(dev, PCI_CLASS_DEVICE) != 768))
 			continue;
 
 		device = pci_read_word(dev, PCI_DEVICE_ID);

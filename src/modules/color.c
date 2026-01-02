@@ -62,14 +62,14 @@ color_distro(void)
 		exit(EXIT_FAILURE);
 
 	fscanf(os_release, "%63[^\n]+", os_name); /* get everything
-                                                     * that isn't a
-                                                     * newline */
+																										 * that isn't a
+																										 * newline */
 
 	fclose(os_release);
 	/*
-     * remove quotation marks from
-     * os name if needed.
-     */
+		 * remove quotation marks from
+		 * os name if needed.
+		 */
 	sscanf(os_name, "\"%[^\"]", os_name);
 	/* Iterate arrays of distro info. If one is right, return it. */
 
@@ -77,17 +77,17 @@ color_distro(void)
 		if (strncmp(os_name, supported_distros[i], distro_length[i]) == 0)
 			return distro_colors[i];
 	}
-  struct utsname u;
-  if (uname(&u) < 0) {
-    perror("uname");
-    exit(EXIT_FAILURE);
-  }
-  if (strncmp(u.sysname, "Linux", 5) == 0) {
-    return CYAN;
-  } else {
-	  fprintf(stderr, "Exception: distro color not found.");
-	  exit(EXIT_FAILURE);
-  }
+	struct utsname u;
+	if (uname(&u) < 0) {
+		perror("uname");
+		exit(EXIT_FAILURE);
+	}
+	if (strncmp(u.sysname, "Linux", 5) == 0) {
+		return CYAN;
+	} else {
+		fprintf(stderr, "Exception: distro color not found.");
+		exit(EXIT_FAILURE);
+	}
 #endif
 #ifdef CUSTOM_COLOR
 	return CUSTOM_COLOR_VALUE;

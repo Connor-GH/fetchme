@@ -1,11 +1,6 @@
-#ifdef __linux__
 #include "./include/fetchme.h"
-#endif
 #include <stdio.h>
 #include <stdlib.h>
-#ifdef BSD_SUPPORT_ONLY
-#include "./include/fetchme.h"
-#endif
 #include <time.h>
 
 int
@@ -20,7 +15,7 @@ uptime_info(const char *color_distro)
 
 	time_t uptime = time_spec.tv_sec;
 
-	min = ((int)(uptime) / 60) % 60;
+	min = ((int)uptime / 60) % 60;
 	hours = (int)(uptime / 3600);
 	days = hours / 24;
 	hours %= 60;

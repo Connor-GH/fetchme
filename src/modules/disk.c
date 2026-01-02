@@ -1,7 +1,10 @@
+#include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
 
+#include "include/fetchme.h"
+#include <string.h>
 #include <sys/statvfs.h>
 int
 disk(const char *color_distro)
@@ -15,7 +18,7 @@ disk(const char *color_distro)
      */
 	const char *const filename = "/";
 	struct statvfs buf;
-	if (!statvfs(filename, &buf)) {
+	if (likely(statvfs(filename, &buf) == 0)) {
 		uint64_t frsize, blocks, freeblks, disk_size, used, free;
 		char unit;
 
@@ -47,7 +50,9 @@ disk(const char *color_distro)
 #endif /* DISK_PERCENT */
 		printf("\n");
 	} else {
-		fprintf(stderr, "Couldn't get file system statistics\n");
+		int tmp_errno = errno;
+		fprintf(stderr, "Couldn't get file system statistics: %s",
+				strerror(tmp_errno));
 		exit(EXIT_FAILURE);
 	}
 	return EXIT_SUCCESS;

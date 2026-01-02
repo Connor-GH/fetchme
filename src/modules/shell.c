@@ -1,33 +1,20 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <libgen.h>
 
 #include "./include/fetchme.h"
 int
 shell(const char *color_distro)
 {
 #if UNIX_SUPPORT
-	extern char **environ;
-	char *shell = NULL;
+	char *shell = getenv("SHELL");
 
-	for (size_t i = 0; environ[i] != NULL; i++) {
-		char *eq = strchr(environ[i], '=');
-		if (eq == NULL)
-			exit(EXIT_FAILURE);
-
-		*eq = '\0';
-
-		if (strncmp(environ[i], "SHELL", 5) == 0)
-			shell = eq + 1;
-
-		*eq = '=';
-	}
 	if (shell == NULL) {
-		perror("SHELL (env var)");
+		perror("getenv SHELL");
 		exit(EXIT_FAILURE);
 	}
-	sscanf(shell, "/bin/%s", shell);
-	printf("%sShell:\033[0m %s\n", color_distro, shell);
+	printf("%sShell:\033[0m %s\n", color_distro, basename(shell));
 #endif
 	return EXIT_SUCCESS;
 }
