@@ -8,7 +8,7 @@ WGCC  += -Wall -Wextra -Wpedantic -Wshadow -Wvla -Wpointer-arith -Wwrite-strings
 		 -Wunreachable-code -Wundef -Werror=format-security -Werror=array-bounds
 
 WNOFLAGS= -Wno-unknown-pragmas -Wno-unused-result
-VISIBILITY ?= -fvisibility=hidden
+VISIBILITY ?= # -fvisibility=hidden
 
 ifeq ($(RELEASE),true)
 	F_CFLAGS = -march=x86-64 -O2

@@ -33,7 +33,7 @@ distro(const char *color_distro)
          * remove quotation marks from
          * os name if needed.
          */
-		sscanf(os_name, "%31[^=]=\"%63[^\"]", info_desc, os_name);
+		sscanf(os_name, "%31[^=]=%63[^\n]\n", info_desc, os_name);
 		/*
          * only check the first 11 bytes for
          * PRETTY_NAME.
@@ -51,13 +51,13 @@ distro(const char *color_distro)
 	exit(EXIT_FAILURE);
 #else
 	struct utsname buffer;
-  if (unlikely(uname(&buffer) < 0)) {
+	if (unlikely(uname(&buffer) < 0)) {
 		perror("uname");
 		exit(EXIT_FAILURE);
 	}
-		printf("%sOS:\033[0m %s %s\n", color_distro, buffer.sysname,
-				buffer.machine);
-	
+	printf("%sOS:\033[0m %s %s\n", color_distro, buffer.sysname,
+		   buffer.machine);
+
 	return EXIT_SUCCESS;
 #endif
 }

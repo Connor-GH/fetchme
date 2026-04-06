@@ -52,7 +52,7 @@ color_distro(void)
 	}
 	fscanf(os_release, "%63[^=]=", os_name);
 
-	while ((file != EOF) && (strncmp(os_name, "NAME", 11) != 0)) {
+	while ((file != EOF) && (strncmp(os_name, "NAME", 4) != 0)) {
 		while ((c = fgetc(os_release)) != '\n' && c != EOF)
 			;
 		file = fscanf(os_release, "%63[^=]=", os_name);
@@ -70,7 +70,7 @@ color_distro(void)
 		 * remove quotation marks from
 		 * os name if needed.
 		 */
-	sscanf(os_name, "\"%[^\"]", os_name);
+	sscanf(os_name, "\"%[^']", os_name);
 	/* Iterate arrays of distro info. If one is right, return it. */
 
 	for (int i = 0; i < AMOUNT_DISTROS; i++) {
